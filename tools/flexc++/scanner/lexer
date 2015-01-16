@@ -1,0 +1,210 @@
+%class-name = "Scanner" 
+%lex-source = "lex.cc"
+//%skeleton-directory = "../skeletons"
+
+%filenames scanner
+
+// %debug
+
+DECIMAL                 0|[1-9][[:digit:]]*
+OCTAL                   [0-7]
+ESCAPE_SEQUENCE         \\{OCTAL}{3}|\\x[[:xdigit:]]{2}|\\.
+IDENTIFIER              [A-Za-z_][-A-Za-z0-9_]*
+BL                      [[:blank:]]+
+OPTBL                   [[:blank:]]*
+
+// STRINGS and QUOTES include their
+// INITIAL surrounding delimiters allowing receiving functions to determine the
+// nature of the returned STRING
+// pre is the miniscanner the scanner starts in. Since this is only used for
+// the first section the scanner won't start in its INITIAL mode, as this
+// would needlessly complicate the formulation of the rules now in INITIAL
+// line is a small miniscanner reading the rest of the line as-is, presumably
+// holding a named pattern RE.
+
+%x pre line comment string rawstring optws
+
+// IDENTIFIER is also used in character classes to represent any series of
+// characters (in matched()) that should enter the character set
+
+%%
+
+{BL}\|                          return handle(Parser::ORNL);
+
+{BL}[^[:space:]]                {
+                                    if (int token = handleCharAfterBlanks())
+                                        return token;
+                                }
+{BL}                            {   // skip white space unless in a block
+                                    if (d_inBlock || d_inCharClass)
+                                        return ' ';
+                                }
+
+<INITIAL,pre>{
+    {OPTBL}"//".*               {   // in a charclass: return blanks + //
+                                    if (handleEOLNcomment())
+                                        return Parser::IDENTIFIER;
+                                }
+    ^"//include"[[:blank:]].*   maybeSwitchStream();
+
+    {OPTBL}"/*"                 {   // in a charclass: return blanks + /*
+                                    if (handleStdComment())
+                                        return Parser::IDENTIFIER;
+                                }
+    \"                          {   // in a charclass: return "
+                                    if (handleDquote())
+                                        return Parser::CHAR;
+                                }
+
+    R\"{IDENTIFIER}?\(          {
+                                    if (not handleRawString())
+                                        return 'R';
+                                }
+
+    {IDENTIFIER}                return handleMulti(Parser::IDENTIFIER);
+
+    \n{OPTBL}                   return closeCC('\n');
+
+    =                           return '=';
+}
+
+    // this is used by parser/inc/msspec to skip all ws following the > of a
+    // mini scanner specification
+<optws>{
+    [[:space:]]+                // ignore ws
+    .                           {
+                                    popSc();
+                                    redo(1);
+                                }
+}
+
+<comment>{
+    .                           // ignore
+    \n                          closeCC();
+    "*/"                        {
+                                    popSc();
+                                    push(' ');
+                                }
+}
+
+<string>{
+    "\\".                       more();
+    \"                          return popSc(Parser::STRING);
+    .                           more();
+}
+
+<rawstring>{
+    \){IDENTIFIER}?\"           {
+                                    if (endOfRawString())
+                                        return popSc(Parser::RAWSTRING);
+                                }
+    .|\n                        more();
+}
+
+    // A quote is 
+    //      1. a single quote followed by 
+    //      2. either an escape sequence or a single character not being 
+    //          a newline, quote, or backslash
+    //      3. a single quote
+    // In all other cases a quote is returned as a literal quote.
+\'({ESCAPE_SEQUENCE}|[^\n'\\])\'    return Parser::QUOTES;
+
+{DECIMAL}                       return handleMulti(Parser::DECIMAL);
+
+{ESCAPE_SEQUENCE}               return Parser::ESCAPE_SEQUENCE;
+
+"{+}"                           return handle(Parser::CC_PLUS);
+
+"{-}"                           return handle(Parser::CC_MINUS);
+
+'['                             return handleOpenBracket();
+']'                             return closeCC(']');
+        
+"[]"                            |   
+"[]["                           return openCC(Parser::CC_START);
+
+"[^"                            |
+"[^]"                           |
+"[^]["                          return openCC(Parser::CC_NEGATED);
+
+"[:"\^?"alnum:]"                |
+"[:"\^?"alpha:]"                |
+"[:"\^?"blank:]"                |
+"[:"\^?"cntrl:]"                |
+"[:"\^?"digit:]"                |
+"[:"\^?"graph:]"                |
+"[:"\^?"lower:]"                |
+"[:"\^?"print:]"                |
+"[:"\^?"punct:]"                |
+"[:"\^?"space:]"                |
+"[:"\^?"upper:]"                |
+"[:"\^?"xdigit:]"               return Parser::PREDEFINED_CLASS;
+
+"<<EOF>>"                       return Parser::EOF_PATTERN;
+
+\{{IDENTIFIER}\}                pushNameExpansion();
+
+    // A $ followed by a non-space always is a literal dollar
+    // Otherwise, it is handled by the parser as a Parser::DOLLAR
+    // or block, but in the context of a regex 
+\$/[^[:space:]]                 return '$';
+
+\$                              return Parser::DOLLAR;  // push("/\\n");
+
+^"%%"                           {
+                                    if (secondSectionDelimiter())
+                                        return 0;
+                                }
+
+                                    // return special chars as themselves
+['.,^/|()*+?{}<>-]              return matched()[0];
+
+                                    // return other chars as CHAR
+.                               return Parser::CHAR;
+
+<pre>{
+    {BL}                        // skip white space
+
+    "%%"                        {
+                                    switchToINITIAL();
+                                    return Parser::SECTION_DELIMITER;
+                                }
+
+    %baseclass-header           return Parser::BASECLASSHEADER;
+    %case-insensitive           return Parser::CASEINSENSITIVE;
+    %class-header               return Parser::CLASSHEADER;
+    %class-name                 return Parser::CLASSNAME;
+    %debug                      return Parser::DEBUG;
+    %filenames                  return Parser::FILENAMES;
+    %implementation-header      return Parser::IMPLEMENTATIONHEADER;
+    %input-implementation       return Parser::INPUTIMPLEMENTATION;
+    %input-interface            return Parser::INPUTINTERFACE;
+    %interactive                return Parser::INTERACTIVE;
+    %lex-function-name          return Parser::LEXFUNCTIONNAME;
+    %lex-source                 return Parser::LEXSOURCE;
+    %no-lines                   return Parser::NOLINES;
+    %namespace                  return Parser::NAMESPACE;
+    %print-tokens               return Parser::PRINT;
+    %skeleton-directory         return Parser::SKELETON_DIRECTORY;
+    %target-directory           return Parser::TARGET_DIRECTORY;
+
+    "%s"                        return Parser::INCL_START_CONDITION;
+    "%x"                        return Parser::EXCL_START_CONDITION;
+
+    .                           return matched()[0];
+}
+
+//%nowarn
+<line>.*                        return Parser::STRING;
+<line>\n                        return popSc('\n');
+
+<<EOF>>                         {
+                                    if (not moreInput())
+                                        return 0;
+                                }
+
+
+
+
+
+

@@ -1,0 +1,470 @@
+_baseclass_header:
+    BASECLASS_HEADER
+    {
+        d_expect = "baseclass header name";
+    }
+;
+
+_baseclass_preinclude:
+    BASECLASS_PREINCLUDE
+    {
+        d_expect = "baseclass pre-include name";
+    }
+;
+
+_class_header:
+    CLASS_HEADER
+    {
+        d_expect = "class header name";
+    }
+;
+
+_class_name:
+    CLASS_NAME
+    {
+        d_expect = "class name";
+    }
+;
+
+_expect:
+    EXPECT
+    {
+        d_expect = "number (of conflicts)";
+    }
+;
+
+_filenames:
+    FILENAMES
+    {
+        d_expect = "generic name of files";
+    }
+;
+
+_implementation_header:
+    IMPLEMENTATION_HEADER
+    {
+        d_expect = "implementation header name";
+    }
+;
+
+_incrementPrecedence:
+    {
+        Terminal::incrementPrecedence();
+    }
+;
+
+_left:
+    LEFT
+    _typesymbol
+    {
+        d_association = Terminal::LEFT;
+    }
+;
+
+_locationstruct:
+    LOCATIONSTRUCT
+    {
+        d_expect = "Location struct definition";
+    }
+;
+
+_ltype:
+    LTYPE
+    {
+        d_expect = "Location type specification";
+    }
+;
+
+_namespace:
+    NAMESPACE
+    {
+        d_expect = "Namespace identifier";
+    }
+;
+
+_nonassoc:
+    NONASSOC
+    _typesymbol
+    {
+        d_association = Terminal::NONASSOC;
+    }
+;
+
+_parsefun_source:
+    PARSEFUN_SOURCE
+    {
+        d_expect = "File name for the parse() member";
+    }
+;
+
+_pushPrecedence:
+    {
+        $$ = Terminal::sPrecedence();
+        Terminal::resetPrecedence();
+    }
+;
+
+_required:
+    REQUIRED
+    {
+        d_expect = "Required number of tokens between errors";
+    }
+;
+
+_right:
+    RIGHT
+    _typesymbol
+    {
+        d_association = Terminal::RIGHT;
+    }
+;
+
+_scanner:
+    SCANNER
+    {
+        d_expect = "Path to the scanner header filename";
+    }
+;
+
+_scanner_class_name:
+    SCANNER_CLASS_NAME
+    {
+        d_expect = "Name of the Scanner class";
+    }
+;
+
+_scanner_token_function:
+    SCANNER_TOKEN_FUNCTION
+    {
+        d_expect = "Scanner function returning the next token";
+    }
+;
+
+_scanner_matched_text_function:
+    SCANNER_MATCHED_TEXT_FUNCTION
+    {
+        d_expect = "Scanner function returning the matched text";
+    }
+;
+
+_start:
+    START
+    {
+        d_expect = "Start rule" ;
+    }
+;
+
+_symbol_exp:
+    {
+        d_expect = "identifier or character-constant";
+    }
+;
+
+_symbol:
+    QUOTE
+    {
+        defineTerminal(d_scanner.canonicalQuote(), Symbol::CHAR_TERMINAL);
+    }
+|
+    identifier
+    optNumber
+    {                                               // try to define as 
+        defineTokenName($1, $2);                    // symbolic terminal
+    }
+;
+
+_symbolList:
+    _symbolList optComma _symbol
+|
+    _symbol
+;
+
+_symbols:
+    _symbol_exp
+    _symbolList
+    optSemiCol
+;
+
+_target_directory:
+    TARGET_DIRECTORY
+    {
+        d_expect = "target directory";
+    }
+;
+
+_type:
+    TYPE
+    {
+        d_expect = "type-name";
+        d_typeDirective = true;
+    }
+;
+
+_stype:
+    STYPE
+    {
+        d_expect = "STYPE type name" ;
+    }
+;
+    
+_typesymbol:
+    {
+        d_expect = "opt. <type> identifier(s) or char constant(s)";
+    }
+;
+
+_token:
+    TOKEN
+    _typesymbol
+    {
+        d_association = Terminal::UNDEFINED;
+    }
+;
+
+_union:
+    UNION
+    {
+        d_expect = "Semantic value union definition";
+    }
+;
+
+_polymorphic:
+    POLYMORPHIC
+    {
+        setPolymorphicDecl();
+    }
+;
+
+_typespec:
+    ':'
+    {
+        d_scanner.beginTypeSpec();
+    }
+;
+
+_polyspec:
+    identifier _typespec identifier     // identifier holds the typespec
+    {
+        addPolymorphic($1, $3);
+    }
+;
+
+
+_polyspecs:
+    _polyspecs ';' _polyspec
+|
+    _polyspec
+;
+
+_directiveSpec:
+    _baseclass_header
+    STRING
+    {
+        d_options.setBaseClassHeader(); 
+    }
+|
+    _baseclass_preinclude
+    STRING
+    {
+        d_options.setPreInclude();
+    }
+|
+    _class_header
+    STRING
+    {
+        d_options.setClassHeader();
+    }
+|
+    _class_name
+    IDENTIFIER
+    {
+        d_options.setClassName();
+    }
+|
+    DEBUGFLAG
+    {
+        d_options.setDebug();
+    }
+|
+    ERROR_VERBOSE
+    {
+        d_options.setErrorVerbose();
+    }
+|
+    _expect
+    NUMBER
+    {
+        setExpectedConflicts();
+    }
+|
+    _filenames
+    STRING
+    {
+        d_options.setGenericFilename();
+    }
+|
+    FLEX
+    {
+        d_options.setFlex();
+    }
+|
+    _implementation_header
+    STRING
+    {
+        d_options.setImplementationHeader();
+    }
+|
+    _left
+    _incrementPrecedence
+    optTypename
+    _symbols
+|
+    _locationstruct
+    BLOCK
+    optSemiCol
+    {
+        d_options.setLocationDecl(d_scanner.block().str());
+    }
+|
+    LSP_NEEDED
+    {
+        d_options.setLspNeeded();
+    }
+|
+    _ltype
+    STRING
+    {
+        d_options.setLtype();
+    }
+|
+    _namespace
+    IDENTIFIER
+    {
+        d_options.setNamespace();
+    }
+|
+    NEG_DOLLAR
+    {
+        setNegativeDollarIndices();
+    }
+|
+    NOLINES
+    {
+        d_options.unsetLines();
+    }
+|
+    _nonassoc
+    _incrementPrecedence
+    optTypename
+    _symbols
+|
+    _parsefun_source
+    STRING
+    {
+        d_options.setParsefunSource();
+    }
+|
+    PRINT_TOKENS
+    {
+        d_options.setPrintTokens();
+    }
+|
+    _required
+    NUMBER
+    {
+        d_options.setRequiredTokens(d_scanner.number());
+    }
+|
+    _right
+    _incrementPrecedence
+    optTypename
+    _symbols
+|
+    _scanner
+    STRING
+    {
+        d_options.setScannerInclude();
+    }
+|
+    _scanner_class_name
+    STRING
+    {
+        d_options.setScannerClassName();
+    }
+|
+    _scanner_token_function
+    STRING
+    {
+        d_options.setScannerTokenFunction();
+    }
+|
+    _scanner_matched_text_function
+    STRING
+    {
+        d_options.setScannerMatchedTextFunction();
+    }
+|
+    _start
+    IDENTIFIER
+    {
+        setStart();
+    }
+|
+    _stype
+    STRING
+    {
+        d_options.setStype();
+    }
+|
+    _target_directory
+    STRING
+    {
+        d_options.setTargetDirectory();
+    }
+|
+    _token
+    optTypename
+    _pushPrecedence        // make sure %token precedences are zero
+    _symbols
+    {
+        Terminal::set_sPrecedence($3);
+    }
+|
+    _type
+    typename
+    _symbols
+|
+    _union
+    BLOCK
+    optSemiCol
+    {
+        setUnionDecl();
+    }
+|
+    _polymorphic
+    _polyspecs
+    optSemiCol
+|
+    WEAK_TAGS
+    {
+        d_options.unsetStrongTags();
+    }
+|
+    error
+;
+
+
+_directive:
+    _directiveSpec
+    {
+        d_expect.erase();
+        d_typeDirective = false;
+    }
+;
+
+directives:
+    directives _directive
+|
+    // empty
+;
+

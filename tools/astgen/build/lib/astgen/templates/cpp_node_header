@@ -1,0 +1,24 @@
+
+{% import "cpp_common" as cpp_common with context %}
+
+{{ cpp_common.ifndef_define(backendConfig.NAMESPACE, node.nodeName()) }}
+
+{% if node.parent() %}
+#include "{{ layout.headerFilenameForNode(node.parent()) }}"
+{% else %}
+{%if layout.fwddefs_filename %}
+#include "{{layout.fwddefs_filename}}"
+{% endif %}
+{% endif %}
+{{backendConfig.NODE_INITIAL_HEADERS}}
+{{ cpp_common.start_externc() }}
+{{backendConfig.NODE_HEADER_PREAMBLE}}
+{{ cpp_common.start_namespace(backendConfig.NAMESPACE) }}
+{{backendConfig.NODE_NAMESPACE_PREAMBLE}}
+{{ cpp_common.render_node_class(node) }}
+
+{{ cpp_common.end_namespace(backendConfig.NAMESPACE) }}
+{{ cpp_common.end_externc() }}
+
+#endif
+

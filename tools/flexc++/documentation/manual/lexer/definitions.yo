@@ -1,0 +1,22 @@
+Flc() supports command-line em(options) and input-file em(directives)
+controlling flc()'s behavior. Directives are covered in the next section
+(ref(DIRECTIVES)), options are covered in the section ref(OPTIONS).
+
+The definitions section may also contain declarations of named regular
+expressions. A named regular expression looks like
+this:
+
+verb(name   pattern)
+
+Here, tt(name) is an identfier, which may also contain hyphens (tt(-));
+`tt(pattern)' is a regular expression, see section ref(patterns). Patterns
+start at the first non-blank character following the name, and end at the
+line's last non-blank character. A named regular expression cannot contain
+comment.
+
+Finally, the definitions section may be used to declare em(mini-scanners)
+(a.k.a.  em(start conditions)), cf. section ref(STARTCONDITIONS).  Start
+conditions are very useful for defining small `sub-languages' inside the
+language whose tokens must be recognized by the scanner. A commonly
+encountered example is the start condition recognizing bf(C) style multi-line
+comment.

@@ -1,0 +1,78 @@
+namespace Meta__
+{
+    template <Tag__ tag>
+    struct TypeOf;
+
+    template <typename Tp_>
+    struct TagOf;
+
+$insert polymorphicSpecializations
+
+        // The Base class: 
+        // Individual semantic value classes are derived from this class.
+        // This class offers a member returning the value's Tag__
+        // and two member templates get() offering const/non-const access to
+        // the actual semantic value type.
+    class Base
+    {
+        Tag__ d_tag;
+    
+        protected:
+            Base(Tag__ tag);
+
+        public:
+            Base(Base const &other) = delete;
+
+            Tag__ tag() const;
+    
+            template <Tag__ tg_>
+            typename TypeOf<tg_>::type &get();
+    };
+    
+        // The class Semantic is derived from Base. It stores a particular
+        // semantic value type. 
+    template <Tag__ tg_>
+    class Semantic: public Base
+    {
+        typedef typename TypeOf<tg_>::type DataType;
+    
+        DataType d_data;
+    
+        public:
+                // The default constructor and constructors for 
+                // defined data types are available
+            Semantic();
+            Semantic(DataType const &data);
+            Semantic(DataType &&tmp);
+
+            DataType &data();
+    };
+
+        // The class Stype wraps the shared_ptr holding a pointer to Base.
+        // It becomes the polymorphic STYPE__
+        // It also wraps Base's get members, allowing constructions like
+        // $$.get<INT> to be used, rather than $$->get<INT>.
+        // Its operator= can be used to assign a Semantic *
+        // directly to the SType object. The free functions (in the parser's
+        // namespace (if defined)) semantic__ can be used to obtain a 
+        // Semantic *. 
+    struct SType: public std::shared_ptr<Base>
+    {
+        template <typename Tp_>
+        SType &operator=(Tp_ &&value);
+
+        Tag__ tag() const;
+
+            // this get()-member checks for 0-pointer and correct tag 
+            // in shared_ptr<Base>, and resets the shared_ptr's Base * 
+            // to point to Meta::__Semantic<tg_>() if not
+        template <Tag__ tg_>
+        typename TypeOf<tg_>::type &get();
+
+            // the data()-member does not check, and may result in a 
+            // segfault if used incorrectly
+        template <Tag__ tg_>
+        typename TypeOf<tg_>::type &data();
+    };
+
+}  // namespace Meta__

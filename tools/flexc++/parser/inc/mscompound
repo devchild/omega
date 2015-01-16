@@ -1,0 +1,46 @@
+    // following ORNL continue parsing  at the next line, with a new regex
+    // which again may start with a ^
+_msCompound_regex_list:
+    _msCompound_regex_list ORNL '\n' reset _msCompound_regex_list  
+    {
+        orAction();
+    }
+|
+    regexOrEOF
+    {
+        addRule($1);
+    }
+;
+
+    // _msCompound_rule: rules specified within a <ms_spec>{ ms-rules } 
+    //      compound. These rules may not themselves specify miniscanners
+_msCompound_rule:
+    // empty
+|
+    _msCompound_regex_list 
+    {
+        noActions();
+    }
+|
+    _msCompound_regex_list action
+    {
+        assignBlock();
+    }
+;
+
+_msCompound_nl_rule:
+    _msCompound_rule '\n' reset
+;
+
+_opt_msCompound_nl_rules:
+    // empty
+|
+    _opt_msCompound_nl_rules _msCompound_nl_rule
+;
+
+msCompound:
+    ms_spec '{' reset _opt_msCompound_nl_rules '}'
+    {   // following an msCompound, reset the startconditions to 'INITIAL'
+        d_rules.resetStartConditions();
+    }
+;

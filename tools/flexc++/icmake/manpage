@@ -1,0 +1,25 @@
+
+void _manpage(string dest, string manpage, string source)
+{
+
+    if (source younger dest + manpage || "release.yo" younger dest + manpage)
+    {
+        run("yodl2man  -o " + dest + manpage + " "  + source);
+        run("yodl2html  "
+                "-o ../../tmp/manhtml/" + manpage + ".html " + source);
+    }
+}
+
+void manpage()
+{
+    md("tmp/man tmp/manhtml");
+
+    chdir("documentation/man");
+
+    _manpage("../../tmp/man/",  PROGRAM ".1", PROGRAM ".yo");
+    _manpage("../../tmp/man/",  PROGRAM "api.3", PROGRAM "api.yo");
+    _manpage("../../tmp/man/",  PROGRAM "input.7", PROGRAM "input.yo");
+
+
+    exit(0);
+}

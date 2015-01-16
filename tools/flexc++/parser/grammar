@@ -1,0 +1,113 @@
+%class-name Parser
+
+%filenames parser
+%parsefun-source parse.cc
+%scanner ../scanner/scanner.h
+%debug
+
+%baseclass-preinclude preinclude.h
+
+// definition section
+%token  EXCL_START_CONDITION
+        INCL_START_CONDITION
+        SECTION_DELIMITER
+
+// directives
+%token  BASECLASSHEADER
+        CASEINSENSITIVE
+        CLASSHEADER
+        CLASSNAME
+        DEBUG
+        FILENAMES
+        IMPLEMENTATIONHEADER
+        INPUTIMPLEMENTATION
+        INPUTINTERFACE
+        INTERACTIVE
+        LEXFUNCTIONNAME
+        LEXSOURCE
+        NAMESPACE
+        NOLINES
+        PRINT
+        SKELETON_DIRECTORY
+        TARGET_DIRECTORY
+ 
+// rules
+%token  BLOCK
+        IDENTIFIER
+        EOF_PATTERN
+        RAWSTRING
+        STRING
+        QUOTES
+        DECIMAL
+        DOLLAR
+        ESCAPE_SEQUENCE
+        CC_START
+        CC_NEGATED
+ 
+// character classes
+%token  PREDEFINED_CLASS
+ 
+// rule operators:
+
+//  lowest precedence
+
+%left       ORNL
+%left       '/'
+%left       '|'
+%left       CHAR 
+%left       '*' '?' '+' '{' 
+%left       CC_PLUS CC_MINUS
+
+//  highest precedence
+
+%polymorphic    TEXTTYPE:       FlexTypes::TextType;
+                STRING:         std::string;
+                PATTERN:        Pattern;
+                CHARCLASS:      CharClass;
+                INTERVAL:       Interval;
+                VECTOR:         std::vector<std::string>
+
+%type <TEXTTYPE>    _stringOrIdent _stringType
+%type <STRING>      identifier _name_def _decimal _cc_element
+%type <CHARCLASS>   characterclass 
+                    _cc_set _cc_start _cc_negated
+%type <INTERVAL>    _interval
+%type <PATTERN>     _unit _regex _optMs_regex regexOrEOF
+%type <VECTOR>      _cc_contents 
+
+%%
+
+input:
+    opt_directives          // in inc/directives; options in inc/options
+    section_delimiter
+    rules
+;
+
+section_delimiter:
+    SECTION_DELIMITER   '\n'
+    {
+        d_nLOPstartConditions = d_rules.startConditions().size();
+        d_rules.setEndUserSC();
+        reset();
+    }
+;
+
+identifier:
+    IDENTIFIER
+    {
+        $$ = d_matched;
+    }
+;
+
+%include inc/directives
+%include inc/options
+
+%include inc/combichars
+%include inc/msspec
+%include inc/characterclass
+%include inc/regexoreof
+%include inc/action
+%include inc/reset
+%include inc/mscompound
+%include inc/optmsrule
+%include inc/rules

@@ -1,0 +1,39 @@
+_ms_name:
+    identifier
+    {
+        d_rules.addStartCondition($1);
+    }
+;
+
+_ms_name_list:
+    _ms_name_list ',' _ms_name
+|
+    _ms_name
+;
+
+_ms_specs:
+    '*'
+    {   // following <*> all mini scanners apply
+        d_rules.useAll();
+    }    
+|
+    _ms_name_list
+;
+
+_ms_angular:
+    '<'
+    {
+        d_scanner.acceptMulti();
+        d_scanner.forceCaseSensitive();
+    }
+;
+
+ms_spec:
+    _ms_angular _ms_specs '>' 
+    {
+        d_scanner.ignoreWS();
+        d_scanner.multiAsChar();
+    }
+;
+
+

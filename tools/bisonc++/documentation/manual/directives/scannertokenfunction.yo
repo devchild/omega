@@ -1,0 +1,15 @@
+Syntax: bf(%scanner-token-function) tt(function-call) nl()
+
+           The scanner function returning the next token, called from the
+            generated parser's tt(lex) function. A complete function
+            call expression should be provided (including a scanner object, if
+            used). Example: 
+            verb(
+    %scanner-token-function d_scanner.lex()
+                )
+           If the function call contains white space
+            tt(scanner-token-function) should be surrounded by double quotes.
+
+It is an error if this directive is used and the specified scanner token
+function is not called from the code in an already existing implementation
+header.

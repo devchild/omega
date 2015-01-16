@@ -1,0 +1,55 @@
+%no-lines
+%filenames parser
+
+%scanner ../scanner/scanner.h
+
+%baseclass-preinclude preheaders.h
+
+%debug
+
+%print-tokens
+
+%token BASECLASS_HEADER BASECLASS_PREINCLUDE BLOCK CLASS_HEADER CLASS_NAME
+        DEBUGFLAG ERROR_VERBOSE EXPECT FILENAMES FLEX IDENTIFIER
+        IMPLEMENTATION_HEADER LEFT LOCATIONSTRUCT LSP_NEEDED LTYPE NAMESPACE
+        NEG_DOLLAR NOLINES NONASSOC NUMBER PARSEFUN_SOURCE POLYMORPHIC PREC
+        PRINT_TOKENS QUOTE REQUIRED RIGHT SCANNER SCANNER_CLASS_NAME
+        SCANNER_MATCHED_TEXT_FUNCTION SCANNER_TOKEN_FUNCTION START STRING
+        STYPE TARGET_DIRECTORY TOKEN TWO_PERCENTS TYPE UNION WEAK_TAGS 
+        
+%polymorphic    BOOL:       bool;
+                SIZE_T:     size_t;
+                TEXT:       std::string;
+                BLOCK:      Block;
+                TERMINAL:   Terminal *;
+                SYMBOL:     Symbol *;
+
+%type <TEXT>    identifier
+%type <BOOL>    optNumber
+%type <SIZE_T>  _pushPrecedence _precSpec
+
+   // NEW: USE THIS TO ASSIGN A GENERIC POLYMORPHIC VALUE TO (NON-)TERMINALS
+    // these (non-)terminals MUST explicitly return an STYPE__
+%type <STYPE__> _productionElements _productionElement
+
+%%
+
+input:
+    directives
+    _two_percents
+    rules
+    optTwo_percents
+;
+
+_two_percents:
+    TWO_PERCENTS
+    {
+        expectRules();
+    }
+;
+
+%include inc/identifier
+%include inc/typename
+%include inc/opt
+%include inc/directives
+%include inc/rules

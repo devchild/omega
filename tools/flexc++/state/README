@@ -1,0 +1,41 @@
+The State class contains the data describing various states.
+Each State has a type, defined in the Type enum, and depending on the state
+type different data are required. 
+
+State objects contain a Type and StateData *. Sometimes the StateData * can be
+0, (e.g., with type FINAL), usually it contains two size_t fields holding
+indices in vector<State> d_state where the next state is found on a
+transition, sometimes the transition is a concatenation of characters stored
+in a std::string, and StateData * points to a struct containing the indices
+and a std::string. 
+
+StateData, therefore is polymorphic. 
+
+To facilitate assignment to d_state State defines several static 
+`factory members' (called `factory' in various overloaded forms) 
+producing the required State object.
+
+State is a traditional class offering pointers. It has a copy constructor,
+overloaded assignment operator and swap-functionality.
+
+
+The special character EOF__
+===========================
+
+TODO: BOL handling has been changed, and there's no special BOL character
+anymore. This section of the README file needs an update -- FBB 7/5/2011
+
+
+The special characters BOL and EOF__ are transformed by Ranges to d_nsubsets +
+1 and d_nsubsets + 2 and are entering the DFA as normal characters.
+
+However, when lex() executes it will inspect the DFA for a BOL transition when
+called following the processing of a \n character. If the DFA contains a BOL
+it handles that transition and only then it will process the next character
+from its input buffer. If the DFA does not contain a BOL transition the next
+character is directly processed.
+
+If an EOF is returned and the DFA contains an EOF transition it will perform
+that transition. If not and there are files on the FileInfo stack the next
+file is popped and processing continues with the next available character. If
+neither takes place lex returns -1.

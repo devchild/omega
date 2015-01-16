@@ -1,0 +1,291 @@
+%{ /* -*- C++ -*- */
+# include <cstdlib>
+# include <cerrno>
+# include <climits>
+# include <iomanip>
+# include <string>
+# include "mlang_scanner.hh"
+# include "mlang_parser.hh"
+
+/* By default yylex returns int, we use token_type.
+   Unfortunately yyterminate by default returns 0, which is
+   not of token_type.  */
+#define yyterminate() return token::END
+
+// Flex expects the signature of yylex to be defined in the macro YY_DECL, and
+// the C++ parser expects it to be declared. We can factor both as follows.
+#ifndef YY_DECL
+
+#define	YY_DECL									\
+    yy::mlang_parser::token_type				\
+    yy::Scanner::lex(							\
+	yy::mlang_parser::semantic_type* yylval,	\
+	yy::mlang_parser::location_type* yylloc		\
+    )
+#endif
+
+%}
+
+%x BLOCK
+
+%option prefix="MLang"
+%option stack noyywrap nounput batch debug c++
+
+hex_digit              				[0-9A-Fa-f]
+
+uni_esc_seq1        			   	\\u{hex_digit}{4}
+uni_esc_seq2           				\\U{hex_digit}{8}
+uni_esc_seq            				{uni_esc_seq1}|{uni_esc_seq2}
+
+simple_esc_seq         				\\[\'\"\\0abfnrtv]
+hex_esc_seq            				\\x{hex_digit}{1,4}
+
+single_string_char     				[^\\\"]
+reg_string_char        				{single_string_char}|{simple_esc_seq}|{hex_esc_seq}|{uni_esc_seq}
+regular_string         				\"{reg_string_char}*\"
+single_verbatim_char   				[^\"]
+quote_esc_seq          				\"\"
+verb_string_char       				{single_verbatim_char}|{quote_esc_seq}
+verbatim_string        				@\"{verb_string_char}*\"
+string_literal         				{regular_string}|{verbatim_string}
+
+%{
+# define YY_USER_ACTION  yylloc->columns (yyleng);
+%}
+
+%% /*** Regular Expressions Part ***/
+
+ /* code to place at the beginning of yylex() */
+%{
+    // reset location
+  	yylloc->step ();
+%}
+
+ /*** BEGIN EXAMPLE - Change the example lexer rules below ***/
+%{
+  typedef yy::mlang_parser::token token;
+  typedef yy::mlang_parser::token_type token_type;
+%}
+
+{string_literal} {
+	//auto res = new std::string(yytext, yyleng);
+    yylval->stringVal = new std::string(yytext, yyleng);
+    return token::STRING_LITERAL;
+}
+
+"==" {
+	return token::OP_EQUALS;
+}
+
+"!=" {
+	return token::OP_NOT_EQUALS;
+}
+
+[0-9]+ {
+    yylval->integerVal = atoi(yytext);
+    return token::INTEGER;
+}
+
+[0-9]*"."[0-9]+ {
+    yylval->doubleVal = atof(yytext);
+    return token::DOUBLE;
+}
+
+[A-Za-z_][A-Za-z0-9_]* {
+    yylval->stringVal = new std::string(yytext, yyleng);
+    std::string s = *yylval->stringVal;
+    return token_for(s);
+}
+
+\[\] 	{
+	yylval->integerVal = 1;
+	return token::RANK;
+}
+
+ /* gobble up white-spaces */
+[ \t\r]+ {
+    yylloc->step();
+}
+
+ /* gobble up end-of-lines */
+\n {
+    yylloc->lines(yyleng); yylloc->step();
+    //ignore
+    //return token::EOL;
+}
+
+ /* pass all other characters up to bison */
+. {
+    return static_cast<token_type>(*yytext);
+}
+
+<BLOCK>[ \t\r]+ {
+    yylloc->step();
+    m_block_content.append(std::string(yytext, yyleng));	
+}
+
+<BLOCK>\n {
+    yylloc->lines(yyleng); yylloc->step();
+    m_block_content.append(std::string(yytext, yyleng));	
+}
+
+<BLOCK>"end" {
+
+/*
+You can use yyless(x) to subtract one or more characters from yytext and push those 
+characters back onto the input stream. Counterintuitively, the argument to yyless is
+the number of characters from yytext that you wish to keep, and the remainder will
+be pushed back onto the input stream. yyleng keeps track of the current length of
+yytext, so the command: 
+*/
+	yyless(yyleng-3);
+	yylval->stringVal = new std::string(m_block_content);
+    return mlang_parser::token::BLOCKCONTENT;
+}
+
+<BLOCK>. {
+	m_block_content.append(std::string(yytext, yyleng));	
+}
+
+
+
+ /*** END EXAMPLE - Change the example lexer rules above ***/
+
+%% /*** Additional Code ***/
+
+
+namespace yy {
+
+Scanner::Scanner(std::istream* in,
+		 std::ostream* out)
+    : MLangFlexLexer(in, out)
+{
+ 	this->keywords = std::map<std::string, mlang_parser::token_type>();
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("return", mlang_parser::token::TOK_RETURN));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("end", mlang_parser::token::BLOCK_END));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("if", mlang_parser::token::IF));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("else", mlang_parser::token::ELSE));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("while", mlang_parser::token::WHILE));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("namespace", mlang_parser::token::NAMESPACE));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("class", mlang_parser::token::CLASS));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("struct", mlang_parser::token::STRUCT));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("import", mlang_parser::token::IMPORT));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("ir", mlang_parser::token::IR));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("asm", mlang_parser::token::ASM));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("new", mlang_parser::token::NEW));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("external", mlang_parser::token::EXTERNAL));
+}
+
+Scanner::~Scanner()
+{
+}
+
+void Scanner::set_debug(bool b)
+{
+    yy_flex_debug = b;
+}
+void
+Scanner::end_block() {
+	yy_pop_state();
+	m_block_content = "";
+}
+
+void
+Scanner::begin_block() {
+	m_block_content = "";
+	yy_push_state(BLOCK);
+}
+
+mlang_parser::token_type 
+Scanner::token_for(const std::string lexeme)
+{
+  std::map<std::string, mlang_parser::token_type>::const_iterator ret = this->keywords.find(lexeme);
+  if (ret == this->keywords.end())
+  {
+    return mlang_parser::token::IDENTIFIER;
+  }
+  return ret->second;
+}
+
+
+/*
+int line_nr = 0;
+std::string current_line = "";
+void DumpRow(bool end_of_file = false) {
+  if (  line_nr == 0  ) 
+  {
+    int i;
+    std::cout << "       |";
+    for (i=1; i<71; i++)
+      if (  i % 10 == 0  )
+        std::cout << ":"; 
+      else if (  i % 5 == 0  )
+        std::cout << "+"; 
+      else
+        std::cout << ".";
+      std::cout << std::endl;	
+  }
+  else 
+  {
+  	std::cout << std::setfill(' ') << std::setw(6) << line_nr << " |" << current_line;
+  	if (end_of_file)
+  		std::cout << "$-EOF";
+  	std::cout << std::endl;	
+  }
+}
+
+int Scanner::LexerInput( char* buf, int max_size )
+{
+	if ( yyin->eof() || yyin->fail() )
+		return 0;
+
+	int position = 0;
+	while(position < max_size)
+	{	
+		yyin->get(buf[position]); 	// reading one character from file to array
+		position++;					// we read 1 char
+		
+		if (buf[position - 1] == '\n')
+		{
+			break;
+		}
+		else if (yyin->eof())
+		{
+			buf[position - 1] = EOF;
+			break;
+		}
+	}
+
+	if ( yyin->bad() )
+		return -1;
+	else
+	{
+		int backup_char = buf[position - 1];
+		buf[position - 1] = '\0';
+		current_line = std::string(buf);
+		buf[position - 1] = backup_char;
+		
+		if (line_nr == 0)
+			DumpRow();
+		line_nr++;
+		DumpRow(buf[position - 1] == EOF);
+			
+		return position;
+	}
+}
+*/
+
+}
+
+/* This implementation of ExampleFlexLexer::yylex() is required to fill the
+ * vtable of the class ExampleFlexLexer. We define the scanner's main yylex
+ * function via YY_DECL to reside in the Scanner class instead. */
+#ifdef yylex
+#undef yylex
+#endif
+
+int MLangFlexLexer::yylex()
+{
+    std::cerr << "in ExampleFlexLexer::yylex() !" << std::endl;
+    return 0;
+}

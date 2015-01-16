@@ -1,0 +1,51 @@
+{% import "cpp_common" as cpp_common with context %}
+
+{{ cpp_common.ifndef_define(backendConfig.NAMESPACE, "GENERATED_AST_NODES_H") }}
+
+{{backendConfig.INITIAL_HEADERS}}
+
+{{ cpp_common.start_externc() }}
+
+{{backendConfig.HEADER_PREAMBLE}}
+
+{% if backendConfig.NAMESPACE %}
+namespace {{backendConfig.NAMESPACE}} {
+{% endif %}
+
+{{backendConfig.NAMESPACE_PREAMBLE}}
+
+// Foward defs
+{% for node in nodelist.nodes %}
+class {{node.nodeName()}};
+typedef {{node.nodeName()}} *{{node.nodeName()}}Ptr;
+{% endfor %}
+
+{% for enumtype in nodelist.allEnumTypes() %}
+{{ cpp_common.render_enum(enumtype) }}
+{% endfor %}
+
+class AstVisitor {
+public:
+    {% for node in nodelist.nodes %}
+    virtual void on_begin_visit({{node.nodeName()}}* node) = 0;
+    virtual void on_end_visit({{node.nodeName()}}* node) = 0;
+    {% endfor %}
+};
+
+class AstNode {
+public:
+    
+};
+
+{% for node in nodelist.nodes %}
+{{ cpp_common.render_node_class(node) }}
+{% endfor %}
+
+{% if backendConfig.NAMESPACE %}
+}
+{% endif %}
+
+{{ cpp_common.end_externc() }}
+
+#endif
+

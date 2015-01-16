@@ -1,0 +1,14 @@
+
+{% import "cpp_common" as cpp_common with context %}
+
+{{ cpp_common.ifndef_define(backendConfig.NAMESPACE, "PUBLIC_HEADERS") }}
+
+{% if layout.fwddefs_filename %}
+#include "{{layout.fwddefs_filename}}"
+{% endif %}
+{% for node in nodelist.nodes %}
+#include "{{layout.headerFilenameForNode(node)}}"
+{% endfor %}
+
+#endif
+

@@ -1,0 +1,10 @@
+%filenames scanner
+%interactive
+
+%%
+
+[ \t]+                          // Often used: skip white space
+
+[0-9]+                          return Parser::NR;
+
+.|\n                            return matched()[0];

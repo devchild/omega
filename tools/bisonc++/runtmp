@@ -1,0 +1,14 @@
+#!/bin/sh
+
+PRE=`dirname $0`
+
+if [ $# == 0 ] 
+then
+    echo "
+Provide arguments to $PRE/tmp/bin/bisonc++. 
+The skeletons in ${PRE}/skeletons are used.
+"
+    exit 1
+fi
+
+${PRE}/tmp/bin/bisonc++ -S ${PRE}/skeletons $*

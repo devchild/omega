@@ -1,0 +1,5 @@
+%%
+[_a-zA-Z][_a-zA-Z0-9]*      {
+            std::cout << "[Identifier: " << matched() << "]\n";
+        }
+.|\n                        // ignore

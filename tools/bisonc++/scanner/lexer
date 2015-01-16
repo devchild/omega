@@ -1,0 +1,317 @@
+%filenames scanner
+
+%class-name = "Scanner" 
+%debug
+// %print-tokens
+
+%x xstring pstring pxstring string rawstring comment quote block typespec
+
+OCTAL   [0-7]
+OCT3    {OCTAL}{3}
+HEX     [[:xdigit:]]
+HEX2    {HEX}{2}
+ID1     [[:alpha:]_]
+ID2     [[:alnum:]_]
+IDENT   {ID1}{ID2}*
+NR      [[:digit:]]+
+
+%%
+
+<INITIAL,block>{
+
+"{"         {
+                    // open or count a nested a block 
+                d_block.open(lineNr(), filename()); 
+                begin(StartCondition__::block);
+            }
+
+    //  The whitespace-eating RegExes (REs) will normally simply consume the
+    //  WS. However, if d_retWS is unequal 0 then WS is returned. This is
+    //  sometimes needed (e.g., inside code blocks to be able to return the ws
+    //  as part of the code-block). Comment is part of the WS returning REs
+[ \t]+       {
+                 if (d_block)
+                     d_block += " ";
+             }
+             
+[\n]+        {
+                setLineNrs();
+                if (d_block)
+                    d_block += "\n";
+             }
+
+"//".*       // ignore eoln comment in source blocks
+
+    // If comment is entered from `block' either a blank or a newline will be
+    //  added to the block as soon as the matching end-comment is seen, and
+    //  the scanner will return to its block-miniscanner state
+"/*"         {
+                 d_commentChar[0] = ' ';
+                 begin(StartCondition__::comment);
+             }
+}
+
+    //  Blocks start at { and end at their matching } char. They may contain
+    //  comment and whitespace, but whitespace is reduced to single blanks or
+    //  newlines. All STRING and QUOTE constants are kept as-is, and are
+    //  registered as skip-ranges for $-checks
+<block>{
+    R\"{IDENT}?\(   rawString();
+
+    "}"         {
+                    if (d_block.close())    // close a block
+                    {
+                        begin(StartCondition__::INITIAL);
+                        return Parser::BLOCK;
+                    }
+                }
+    
+    "\""        {
+                    begin(StartCondition__::string);
+                    // d_block.beginSkip();
+                    more();
+                }
+    
+    "'"         {
+                    begin(StartCondition__::quote);
+                    // d_block.beginSkip();
+                    more();
+                }
+
+    "$$"                    |
+    "@@"                    d_block.dollar(lineNr(), d_matched, false);
+                            
+    "$$."                   d_block.dollar(lineNr(), d_matched, true);
+                            
+    @{NR}                   d_block.atIndex(lineNr(), d_matched);
+
+    \$-?{NR}                d_block.dollarIndex(lineNr(), d_matched, false);
+
+    \$-?{NR}\.              d_block.dollarIndex(lineNr(), d_matched, true);
+
+    "$<>$"                  |
+    "$<"{IDENT}">$"         d_block.IDdollar(lineNr(), d_matched);
+
+    "$<>"-?{NR}             |
+    "$<"{IDENT}">"-?{NR}    d_block.IDindex(lineNr(), d_matched);
+
+    .           d_block(d_matched);
+}
+
+%baseclass-header[ \t]+         {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::BASECLASS_HEADER;
+                                }
+%baseclass-preinclude[ \t]+     {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::BASECLASS_PREINCLUDE;
+                                }
+%class-header[ \t]+             {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::CLASS_HEADER;
+                                }
+%class-name                     return Parser::CLASS_NAME;
+%debug                          return Parser::DEBUGFLAG;
+%error-verbose                  return Parser::ERROR_VERBOSE;
+%expect                         return Parser::EXPECT;
+%filenames[ \t]+                {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::FILENAMES;
+                                }
+"%flex"                         return Parser::FLEX;
+%implementation-header[ \t]+    {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::IMPLEMENTATION_HEADER;
+                                }
+%include[ \t]+                  {
+                                    begin(StartCondition__::pxstring);
+                                    d_include = true;
+                                }
+%left                           return Parser::LEFT;
+%locationstruct                 return Parser::LOCATIONSTRUCT;
+%lsp-needed                     return Parser::LSP_NEEDED;
+%ltype[ \t]+                    {
+                                    begin(StartCondition__::xstring);
+                                    return Parser::LTYPE;
+                                }
+%namespace                      return Parser::NAMESPACE;
+%negative-dollar-indices        return Parser::NEG_DOLLAR;
+%no-lines                       return Parser::NOLINES;
+%nonassoc                       return Parser::NONASSOC;
+%parsefun-source[ \t]+          {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::PARSEFUN_SOURCE;
+                                }
+%polymorphic                    return Parser::POLYMORPHIC;
+%prec                           return Parser::PREC;
+%print-tokens                   return Parser::PRINT_TOKENS;
+%required-tokens                return Parser::REQUIRED;
+%right                          return Parser::RIGHT;
+%scanner[ \t]+                  {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::SCANNER;
+                                }
+%scanner-class-name[ \t]+       {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::SCANNER_CLASS_NAME;
+                                }
+%scanner-token-function[ \t]+   {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::SCANNER_TOKEN_FUNCTION;
+                                }
+%scanner-matched-text-function[ \t]+ {
+                                    begin(StartCondition__::pxstring);
+                                    return 
+                                        Parser::SCANNER_MATCHED_TEXT_FUNCTION;
+                                }
+%start                          return Parser::START;
+%stype[ \t]+                    {
+                                    begin(StartCondition__::xstring);
+                                    return Parser::STYPE;
+                                }
+%target-directory[ \t]+         {
+                                    begin(StartCondition__::pxstring);
+                                    return Parser::TARGET_DIRECTORY;
+                                }
+%token                          return Parser::TOKEN;
+%type                           return Parser::TYPE;
+%union                          return Parser::UNION;
+%weak-tags                      return Parser::WEAK_TAGS;
+"%%"                            return Parser::TWO_PERCENTS;
+
+"'"                             {
+                                    begin(StartCondition__::quote);
+                                    more();
+                                }
+
+"\""                            {
+                                    begin(StartCondition__::string);
+                                    more();
+                                }
+
+{IDENT}                         return Parser::IDENTIFIER;
+
+[[:digit:]]+                    {
+                                    d_number = stoul(d_matched);
+                                    return Parser::NUMBER;
+                                }
+
+.                               return d_matched[0];
+
+    // pxstring is activated after a directive has been sensed.
+    // it extracts a string, pstring or any sequence of non-blank characters,
+<pxstring>{
+    "\""    {
+                more();
+                begin(StartCondition__::string);
+            }
+    "<"     {
+                more();
+                begin(StartCondition__::pstring);
+            }
+    .       {
+                accept(0);
+                begin(StartCondition__::xstring);
+            }
+    \n      return eoln();
+}
+    // string may be entered from block and pxstring
+    // strings are all series (including escaped chars, like \") surrounded by
+    // double quotes:
+<string>{
+    "\""    {
+                if (handleXstring(0))
+                    return Parser::STRING;
+            }
+    "\\".   |              
+    .       more();
+    \n      return eoln();
+}
+
+    // a pstring is a string surrounded by < and >
+<pstring>{      
+    ">"     {
+                if (handleXstring(0))
+                    return Parser::STRING;
+            }
+    "\\".   |              
+    .       more();
+    \n      return eoln();
+}
+
+    //  xstring returns the next string delimited by either blanks, tabs,
+    //  newlines or C/C++ comment. 
+<xstring>{
+    [[:space:]]     {
+                        if (handleXstring(1))
+                            return Parser::STRING;
+                    }
+
+    "//"            |
+    "/*"            {
+                        if (handleXstring(2))
+                            return Parser::STRING;
+                    }
+
+    .           more();
+}
+
+<rawstring>{
+    \){IDENT}?\"    checkEndOfRawString();
+
+    .|\n            more();
+}
+
+<comment>{
+.                  
+\n                 {
+                        setLineNrs();
+                        d_commentChar[0] = '\n';
+                    }
+"*/"               {
+                       if (!d_block)
+                           begin(StartCondition__::INITIAL);
+                       else
+                       {
+                           d_block += d_commentChar;
+                           begin(StartCondition__::block);
+                       }
+                   }
+}
+    //  quote may be entered from INITIAL and block. 
+    //  quoted constants start with a quote. They may be octal or hex numbers,
+    //  escaped chars, or quoted constants 
+<quote>{
+
+"\\"{OCT3}"'"        returnQuoted(&Scanner::octal);
+                     
+"\\x"{HEX2}"'"       returnQuoted(&Scanner::hexadecimal);
+                     
+"\\"[abfnrtv]"'"     {
+                         if (d_block(d_matched))
+                             begin(StartCondition__::block);
+                         else
+                         {
+                             begin(StartCondition__::INITIAL);
+                             escape();       // quoted escape char
+                             return Parser::QUOTE;
+                         }
+                     }
+
+"\\"."'"            returnQuoted(&Scanner::matched2);
+
+."'"                returnQuoted(&Scanner::matched1);
+
+[^']+"'"            returnQuoted(&Scanner::multiCharQuote);
+
+}
+
+    // a typespec holds all chars after a ':' until a ';' or '%' (which are
+    // pushed back). It is used as a type specification in
+    // parser/inc/directives. Escape characters are interpreted
+<typespec>{
+    \\.             |
+    [^;%]           more();
+
+    [;%]            returnTypeSpec();   // back to INITIAL, returns IDENTIFIER
+}

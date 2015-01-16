@@ -1,0 +1,6 @@
+identifier:
+    IDENTIFIER
+    {
+        $$ = d_matched;
+    }
+;
