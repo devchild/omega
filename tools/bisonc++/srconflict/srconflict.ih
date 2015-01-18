@@ -1,6 +1,0 @@
-#include "srconflict.h"
-
-#include "../enumsolution/enumsolution.h"
-
-using namespace std;
-

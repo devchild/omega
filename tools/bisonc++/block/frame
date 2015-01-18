@@ -1,5 +1,0 @@
-#include "block.ih"
-
-void Block::() const
-{
-}

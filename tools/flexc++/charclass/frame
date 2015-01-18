@@ -1,5 +1,0 @@
-#include "charclass.ih"
-
-CharClass::
-{
-}

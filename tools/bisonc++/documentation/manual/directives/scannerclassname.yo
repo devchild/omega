@@ -1,9 +1,0 @@
-Syntax: bf(%scanner-class-name) tt(scannerClassName) nl() 
-           Defines the name of the scanner class, declared by the tt(pathname)
-            header file that is specified at the tt(scanner) option or 
-            directive. By default the class name ttt(Scanner) is used.
-
-It is an error if this directive is used and either the tt(scanner) directive
-was not provided, or the parser class interface in an already existing parser
-class header file does not declare a scanner class tt(d_scanner) object.
-

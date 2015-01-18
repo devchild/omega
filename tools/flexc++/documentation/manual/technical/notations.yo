@@ -1,9 +1,0 @@
-    itemization(
-    itt(BOL): Begin-of-line.
-    itt(LOP): the lookahead operator (tt(/)).
-    itt(RE): A regular expression.
-    itt(F): A final state.
-    itt(x[y]): at state tt(x) an empty transition to state tt(y) is allowed.
-        See figure ref(NFA1FIG).
-    )
-

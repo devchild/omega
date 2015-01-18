@@ -1,8 +1,0 @@
-typename:
-    '<'
-    identifier
-    '>'
-    {
-        d_field = $2; 
-    }
-;

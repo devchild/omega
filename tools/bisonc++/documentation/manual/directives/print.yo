@@ -1,9 +1,0 @@
-Syntax: bf(%print-tokens) nl()
-
-    The tt(%print-tokens) directive provides an implementation of the Parser
-class's tt(print__) function displaying the current token value and the text
-matched by the lexical scanner as received by the generated tt(parse)
-function.
-
-    The tt(print__) function is also implemented if the tt(--print)
-command-line option is provided.
