@@ -1,12 +1,12 @@
 /*
- * File:   code_file_import.hh
+ * File:   code_file_include.hh
  * Author: mario
  *
  * Created on September 3, 2014, 11:12 PM
  */
 
-#ifndef CODE_FILE_IMPORT_HH
-#define	CODE_FILE_IMPORT_HH
+#ifndef CODE_FILE_INCLUDE_HH
+#define	CODE_FILE_INCLUDE_HH
 
 #include <string>
 
@@ -15,11 +15,11 @@
 #include "code_object_visitor.hh"
 
 namespace mlang {
-    class CodeFileImport : public CodeObject {
+    class CodeFileInclude : public CodeObject {
     public:
         using CodeObject::scope;
-        CodeFileImport();
-        ~CodeFileImport();
+        CodeFileInclude();
+        ~CodeFileInclude();
         virtual void accept(CodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);
@@ -32,5 +32,5 @@ namespace mlang {
 }
 
 
-#endif	/* CODE_FILE_IMPORT_HH */
+#endif	/* CODE_FILE_INCLUDE_HH */
 
