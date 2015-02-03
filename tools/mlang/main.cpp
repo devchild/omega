@@ -10,65 +10,56 @@
 using namespace std;
 using namespace TCLAP;
 
+int main(int argc, char ** argv) {
+	CmdLine cmd("mlang", ' ', "0.01");
+	UnlabeledMultiArg<string> file_names("fileName", "file names", false,
+			"string");
+	SwitchArg optimized("O", "optimized", "compile using optimizations");
+	SwitchArg dump("D", "dump-ir", "dump generated ir to stdout");
+	cmd.add(file_names);
+	cmd.add(optimized);
+	cmd.add(dump);
+	cmd.parse(argc, argv);
 
-int
-main (int argc, char ** argv)
-{
-    CmdLine cmd("mlang", ' ', "0.01" );
-    UnlabeledMultiArg<string> file_names("fileName", "file names", false, "string");
-    SwitchArg optimized("O", "optimized", "compile using optimizations");
-    SwitchArg dump("D", "dump-ir", "dump generated ir to stdout");
-    cmd.add( file_names );
-    cmd.add(optimized);
-    cmd.add(dump);
-    cmd.parse(argc,argv);
-    
-    vector<string> v = file_names.getValue();
-    if (v.size() > 0)
-    {
-        for ( int i = 0; static_cast<unsigned int>(i) < v.size(); i++ )
-        {
-            std::string file_name = v[i];
-            MLangDomProvider provider;
-            auto parser = provider.CreateParser();
-            auto compile_unit = parser->parse(file_name);
-            
-            auto errors = parser->errors();
-                            if (errors.size() > 0)
-                            {
-            					for(auto e:errors)
-            					{
-            						std::cerr << file_name << ": " << e->location()->to_string() << ": error: " << e->message() << std::endl;
-            					}
-            					//exit(EXIT_FAILURE);
-                            }
+	vector<string> v = file_names.getValue();
+	if (v.size() > 0) {
+		for (int i = 0; static_cast<unsigned int>(i) < v.size(); i++) {
+			std::string file_name = v[i];
+			MLangDomProvider provider;
+			auto parser = provider.CreateParser();
+			auto compile_unit = parser->parse(file_name);
 
-            if (parser->sucess())
-            {
+			auto errors = parser->errors();
+			if (errors.size() > 0) {
+				for (auto e : errors) {
+					std::cerr << e->location()->to_string() << ": error: "
+							<< e->message() << std::endl;
+				}
+			}
 
+			if (errors.size() == 0 && parser->sucess()) {
+				CompilerParameters parameters;
+				parameters.optimize(optimized.getValue());
+				parameters.dump_ir(dump.getValue());
+				auto compiler = provider.CreateCompiler();
+				auto result = compiler->FromDomBatch(parameters, compile_unit);
+				for (auto x : result->errors()) {
+					if (x->has_location())
+						std::cerr << x->location()->to_string() << x->message() << std::endl;
+					else
+						std::cerr << x->message() << std::endl;
+				}
+			}
+			else
+			{
+				exit(EXIT_FAILURE);
+			}
+		}
+	} else {
+		cerr << "mlang: error: no input files" << endl;
+		exit(EXIT_FAILURE);
+	}
 
-                CompilerParameters parameters;
-                parameters.optimize(optimized.getValue());
-                parameters.dump_ir(dump.getValue());
-                auto compiler = provider.CreateCompiler();
-                auto result = compiler->FromDomBatch(parameters, compile_unit);
-                for(auto x:result->errors()) {
-                    std::cerr << x->location()->to_string() << x->message() << std::endl;
-                }
-            }
-            else
-            {
-            	std::cerr << file_name << ": (-,-): error: this is embarrassing, I could not completely parse the file." << std::endl;
-            	exit(EXIT_FAILURE);
-            }
-        }
-    }
-    else
-    {
-        cerr << "mlang: error: no input files" << endl;
-        exit(EXIT_FAILURE);
-    }
-
-    exit (EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 

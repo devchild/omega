@@ -28,7 +28,7 @@ public:
   bool parse_file(const std::string &filename);
   bool parse_string(const std::string &input, const std::string& sname);
 
-  bool import(const std::string &search_string);
+  bool include(const std::string &search_string);
   std::string* streamname();
   yy::Scanner *scanner();
 
@@ -39,6 +39,8 @@ public:
   void success(bool value);
 
 
+  mlang::Location* get_location(const YYLTYPE& location);
+  mlang::Location* get_location(const YYLTYPE& begin, const YYLTYPE& end);
 
 private:
   mlang::CodeCompileUnit* m_root;

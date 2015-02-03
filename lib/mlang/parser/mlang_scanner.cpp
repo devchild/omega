@@ -404,8 +404,8 @@ int yyFlexLexer::yywrap() { return 1; }
 	(yy_c_buf_p) = yy_cp;
 
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 15
-#define YY_END_OF_BUFFER 16
+#define YY_NUM_RULES 20
+#define YY_END_OF_BUFFER 21
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -413,14 +413,15 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[57] =
+static yyconst flex_int16_t yy_accept[63] =
     {   0,
-        0,    0,    0,    0,   16,   10,    8,    9,   10,   10,
-       10,    4,   10,   10,    6,   10,   14,   11,   12,   14,
-        8,    3,    0,    1,    0,    5,    0,    4,    2,    0,
-        6,    7,   11,    0,    0,    0,    0,    0,    1,   13,
+        0,    0,    0,    0,    0,    0,   21,   12,   10,   11,
+       12,   12,   12,    4,   12,   12,    6,    8,    9,   15,
+       14,   13,   19,   17,   18,   16,   10,    3,    0,    1,
+        0,    5,    0,    4,    2,    0,    6,    7,   13,   17,
+       16,    0,    0,    0,    0,    1,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0
+        0,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -428,17 +429,17 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    4,    5,    1,    1,    1,    1,    6,    1,
-        1,    1,    1,    1,    1,    7,    1,    8,    9,    9,
-        9,    9,    9,    9,    9,    9,    9,    1,    1,    1,
-       10,    1,    1,   11,   12,   12,   12,   12,   12,   12,
-       13,   13,   13,   13,   13,   13,   13,   13,   13,   13,
-       13,   13,   13,   13,   14,   13,   13,   13,   13,   13,
-       15,   16,   17,    1,   13,    1,   18,   18,   12,   19,
+        1,    4,    5,    6,    1,    1,    1,    1,    7,    1,
+        1,    1,    1,    1,    1,    8,    1,    9,   10,   10,
+       10,   10,   10,   10,   10,   10,   10,    1,    1,    1,
+       11,    1,    1,   12,   13,   13,   13,   13,   13,   13,
+       14,   14,   14,   14,   14,   14,   14,   14,   14,   14,
+       14,   14,   14,   14,   15,   14,   14,   14,   14,   14,
+       16,   17,   18,    1,   14,    1,   19,   19,   13,   13,
 
-       20,   18,   13,   13,   13,   13,   13,   13,   13,   21,
-       13,   13,   13,   22,   13,   22,   23,   22,   13,   24,
-       13,   13,    1,    1,    1,    1,    1,    1,    1,    1,
+       13,   19,   14,   14,   14,   14,   14,   14,   14,   20,
+       14,   14,   14,   20,   14,   20,   21,   20,   14,   22,
+       14,   14,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -455,85 +456,87 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[25] =
+static yyconst flex_int32_t yy_meta[23] =
     {   0,
-        1,    1,    1,    1,    2,    2,    1,    3,    4,    1,
-        1,    4,    5,    6,    1,    2,    1,    3,    4,    4,
-        6,    6,    6,    6
+        1,    1,    1,    1,    1,    2,    2,    1,    3,    4,
+        1,    1,    4,    5,    6,    1,    2,    1,    3,    6,
+        6,    6
     } ;
 
-static yyconst flex_int16_t yy_base[74] =
+static yyconst flex_int16_t yy_base[81] =
     {   0,
-        0,    0,   23,   25,   83,  145,   75,  145,   66,   24,
-       22,   25,   65,   69,    0,   56,  145,   68,  145,   41,
-       59,  145,   30,  145,   24,   28,   33,   42,  145,   53,
-        0,  145,   55,   35,    0,    0,    0,   39,   34,  145,
-        0,    0,   47,    0,    0,   60,    0,    0,   73,    0,
-       48,   55,    0,    0,    0,  145,   93,   99,  103,  108,
-      114,  118,  120,  122,  124,  126,  128,  130,  132,  134,
-      136,  138,  140
+        0,    0,   20,   22,   25,   28,   85,  150,   31,  150,
+       73,   28,   27,   30,   69,   73,    0,   60,  150,  150,
+      150,   73,  150,   74,  150,   70,   39,  150,   36,  150,
+       29,   37,   39,   46,  150,   67,    0,  150,   63,   64,
+       61,    0,    0,    0,   56,   53,    0,    0,   51,    0,
+        0,   62,    0,    0,   73,    0,   46,   52,    0,    0,
+        0,  150,   92,   98,  104,  108,  113,  119,  123,  125,
+      127,  129,  131,  133,  135,  137,  139,  141,  143,  145
     } ;
 
-static yyconst flex_int16_t yy_def[74] =
+static yyconst flex_int16_t yy_def[81] =
     {   0,
-       56,    1,   57,   57,   56,   56,   56,   56,   56,   58,
-       56,   56,   56,   56,   59,   56,   56,   56,   56,   56,
-       56,   56,   58,   56,   60,   56,   56,   56,   56,   61,
-       59,   56,   56,   56,   62,   63,   64,   61,   56,   56,
-       65,   66,   58,   67,   68,   43,   69,   70,   43,   71,
-       58,   58,   72,   73,   70,    0,   56,   56,   56,   56,
-       56,   56,   56,   56,   56,   56,   56,   56,   56,   56,
-       56,   56,   56
+       62,    1,   63,   63,   64,   64,   62,   62,   62,   62,
+       62,   65,   62,   62,   62,   62,   66,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   65,   62,
+       67,   62,   62,   62,   62,   68,   66,   62,   62,   62,
+       62,   69,   70,   71,   68,   62,   72,   73,   65,   74,
+       75,   49,   76,   77,   49,   78,   65,   65,   79,   80,
+       77,    0,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62
     } ;
 
-static yyconst flex_int16_t yy_nxt[170] =
+static yyconst flex_int16_t yy_nxt[173] =
     {   0,
-        6,    7,    8,    9,   10,    6,   11,   12,   12,   13,
-       14,   15,   15,   15,   16,    6,    6,   15,   15,   15,
-       15,   15,   15,   15,   18,   19,   18,   19,   24,   26,
-       26,   27,   28,   28,   24,   26,   26,   35,   38,   25,
-       26,   26,   20,   39,   20,   25,   36,   37,   27,   28,
-       28,   24,   24,   40,   46,   46,   33,   39,   46,   24,
-       21,   34,   25,   25,   46,   46,   46,   49,   49,   33,
-       25,   49,   32,   30,   29,   22,   21,   49,   49,   49,
-       52,   52,   56,   56,   52,   56,   56,   56,   56,   56,
-       52,   52,   52,   17,   17,   17,   17,   17,   17,   23,
+        8,    9,   10,    9,   11,   12,    8,   13,   14,   14,
+       15,   16,   17,   17,   17,   18,    8,   19,   17,   17,
+       17,   17,   21,   22,   21,   22,   24,   25,   26,   24,
+       25,   26,   27,   30,   27,   32,   32,   33,   34,   34,
+       27,   30,   27,   42,   31,   32,   32,   32,   32,   43,
+       44,   30,   31,   33,   34,   34,   30,   30,   45,   52,
+       52,   46,   31,   52,   41,   40,   39,   31,   31,   52,
+       55,   55,   46,   41,   55,   40,   39,   38,   36,   35,
+       55,   58,   58,   28,   62,   58,   62,   62,   62,   62,
+       62,   58,   20,   20,   20,   20,   20,   20,   23,   23,
 
-       23,   23,   23,   23,   23,   31,   31,   31,   31,   23,
-       23,   56,   56,   23,   38,   38,   38,   38,   38,   38,
-       41,   41,   42,   42,   43,   43,   44,   44,   45,   45,
-       47,   47,   48,   48,   50,   50,   51,   51,   53,   53,
-       54,   54,   55,   55,    5,   56,   56,   56,   56,   56,
-       56,   56,   56,   56,   56,   56,   56,   56,   56,   56,
-       56,   56,   56,   56,   56,   56,   56,   56,   56
+       23,   23,   23,   23,   29,   29,   29,   29,   29,   29,
+       37,   37,   37,   37,   29,   29,   62,   62,   29,   45,
+       45,   45,   45,   45,   45,   47,   47,   48,   48,   49,
+       49,   50,   50,   51,   51,   53,   53,   54,   54,   56,
+       56,   57,   57,   59,   59,   60,   60,   61,   61,    7,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,   62
     } ;
 
-static yyconst flex_int16_t yy_chk[170] =
+static yyconst flex_int16_t yy_chk[173] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    3,    3,    4,    4,   10,   11,
-       11,   12,   12,   12,   23,   26,   26,   25,   39,   10,
-       27,   27,    3,   38,    4,   23,   25,   25,   28,   28,
-       28,   43,   51,   34,   43,   43,   33,   30,   43,   52,
-       21,   20,   43,   51,   43,   43,   43,   46,   46,   18,
-       52,   46,   16,   14,   13,    9,    7,   46,   46,   46,
-       49,   49,    5,    0,   49,    0,    0,    0,    0,    0,
-       49,   49,   49,   57,   57,   57,   57,   57,   57,   58,
+        1,    1,    3,    3,    4,    4,    5,    5,    5,    6,
+        6,    6,    9,   12,    9,   13,   13,   14,   14,   14,
+       27,   29,   27,   31,   12,   32,   32,   33,   33,   31,
+       31,   57,   29,   34,   34,   34,   49,   58,   46,   49,
+       49,   45,   57,   49,   41,   40,   39,   49,   58,   49,
+       52,   52,   36,   26,   52,   24,   22,   18,   16,   15,
+       52,   55,   55,   11,    7,   55,    0,    0,    0,    0,
+        0,   55,   63,   63,   63,   63,   63,   63,   64,   64,
 
-       58,   58,   58,   58,   58,   59,   59,   59,   59,   60,
-       60,    0,    0,   60,   61,   61,   61,   61,   61,   61,
-       62,   62,   63,   63,   64,   64,   65,   65,   66,   66,
-       67,   67,   68,   68,   69,   69,   70,   70,   71,   71,
-       72,   72,   73,   73,   56,   56,   56,   56,   56,   56,
-       56,   56,   56,   56,   56,   56,   56,   56,   56,   56,
-       56,   56,   56,   56,   56,   56,   56,   56,   56
+       64,   64,   64,   64,   65,   65,   65,   65,   65,   65,
+       66,   66,   66,   66,   67,   67,    0,    0,   67,   68,
+       68,   68,   68,   68,   68,   69,   69,   70,   70,   71,
+       71,   72,   72,   73,   73,   74,   74,   75,   75,   76,
+       76,   77,   77,   78,   78,   79,   79,   80,   80,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,   62,   62,   62,   62,   62,   62,   62,   62,   62,
+       62,   62
     } ;
 
-static yyconst flex_int16_t yy_rule_linenum[15] =
+static yyconst flex_int16_t yy_rule_linenum[20] =
     {   0,
-       70,   76,   80,   84,   89,   94,  100,  106,  111,  118,
-      122,  127,  132,  146
+       70,   76,   80,   84,   89,   93,   98,  102,  105,  108,
+      112,  131,  135,  138,  157,  175,  180,  184,  194
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -573,10 +576,11 @@ static yyconst flex_int16_t yy_rule_linenum[15] =
 
 #line 53 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 # define YY_USER_ACTION  yylloc->columns (yyleng);
-#line 577 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.cpp"
+#line 580 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.cpp"
 
 #define INITIAL 0
-#define BLOCK 1
+#define INDENTSTATE 1
+#define BLOCK 2
 
 #ifndef YY_NO_UNISTD_H
 /* Special case for "unistd.h", since it is non-ANSI. We include it way
@@ -781,7 +785,7 @@ YY_DECL
   typedef yy::mlang_parser::token_type token_type;
 
 
-#line 785 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.cpp"
+#line 789 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.cpp"
 
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
@@ -810,13 +814,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 57 )
+				if ( yy_current_state >= 63 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_current_state != 56 );
+		while ( yy_current_state != 62 );
 		yy_cp = (yy_last_accepting_cpos);
 		yy_current_state = (yy_last_accepting_state);
 
@@ -835,12 +839,12 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				std::cerr << "--scanner backing up\n";
-			else if ( yy_act < 15 )
+			else if ( yy_act < 20 )
 				std::cerr << "--accepting rule at line " << yy_rule_linenum[yy_act] <<
 				         "(\"" << yytext << "\")\n";
-			else if ( yy_act == 15 )
+			else if ( yy_act == 20 )
 				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
-			else if ( yy_act == 16 )
+			else if ( yy_act == 21 )
 				std::cerr << "--(end of buffer or a NUL)\n";
 			else
 				std::cerr << "--EOF (start condition " << YY_START << ")\n";
@@ -892,105 +896,212 @@ case 5:
 YY_RULE_SETUP
 #line 89 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-    yylval->doubleVal = atof(yytext);
-    return token::DOUBLE;
-}
+									    yylval->doubleVal = atof(yytext);
+									    return token::DOUBLE;
+									}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 94 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 93 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-    yylval->stringVal = new std::string(yytext, yyleng);
-    std::string s = *yylval->stringVal;
-    return token_for(s);
-}
+									    yylval->stringVal = new std::string(yytext, yyleng);
+									    std::string s = *yylval->stringVal;
+									    return token_for(s);
+									}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 100 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 98 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-	yylval->integerVal = 1;
-	return token::RANK;
-}
+										yylval->integerVal = 1;
+										return token::RANK;
+									}
 	YY_BREAK
-/* gobble up white-spaces */
 case 8:
 YY_RULE_SETUP
-#line 106 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 102 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-    yylloc->step();
-}
+										return token::LEFT_BRACKET;
+									}
 	YY_BREAK
-/* gobble up end-of-lines */
 case 9:
-/* rule 9 can match eol */
 YY_RULE_SETUP
-#line 111 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 105 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-    yylloc->lines(yyleng); yylloc->step();
-    //ignore
-    //return token::EOL;
-}
+										return token::RIGHT_BRACKET;
+									}
 	YY_BREAK
-/* pass all other characters up to bison */
 case 10:
 YY_RULE_SETUP
-#line 118 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 108 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-    return static_cast<token_type>(*yytext);
-}
+										/* gobble up white-spaces */
+    									yylloc->step();
+									}
 	YY_BREAK
 case 11:
+/* rule 11 can match eol */
 YY_RULE_SETUP
-#line 122 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 112 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-    yylloc->step();
-    m_block_content.append(std::string(yytext, yyleng));	
-}
+										yyless(0);
+										yylloc->columns(-1);
+                                        BEGIN(INDENTSTATE);
+                                       	//return (token::END_STATEMENT);
+                                    }
+	YY_BREAK
+case YY_STATE_EOF(INITIAL):
+#line 118 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+{
+										if (indent.size() > 0)
+                                        {
+                                            indent.pop();
+                                            unput(0);
+                                            return(token::DEDENT);
+                                            
+                                        }
+                                        else
+                                        {
+                                        	yyterminate();
+                                        }
+                                    }
 	YY_BREAK
 case 12:
-/* rule 12 can match eol */
 YY_RULE_SETUP
-#line 127 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 131 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-    yylloc->lines(yyleng); yylloc->step();
-    m_block_content.append(std::string(yytext, yyleng));	
-}
+										/* pass all other characters up to bison */
+									    return static_cast<token_type>(*yytext);
+									}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 132 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 135 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-
-/*
-You can use yyless(x) to subtract one or more characters from yytext and push those 
-characters back onto the input stream. Counterintuitively, the argument to yyless is
-the number of characters from yytext that you wish to keep, and the remainder will
-be pushed back onto the input stream. yyleng keeps track of the current length of
-yytext, so the command: 
-*/
-	yyless(yyleng-3);
-	yylval->stringVal = new std::string(m_block_content);
-    return mlang_parser::token::BLOCKCONTENT;
-}
+										current_line_indent+=yyleng;
+									}
 	YY_BREAK
 case 14:
+/* rule 14 can match eol */
 YY_RULE_SETUP
-#line 146 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 138 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 {
-	m_block_content.append(std::string(yytext, yyleng));	
-}
+										yylloc->lines(yyleng); 
+										yylloc->step();
+										current_line_indent = 0;
+										
+									}
 	YY_BREAK
-/*** END EXAMPLE - Change the example lexer rules above ***/
+case YY_STATE_EOF(INDENTSTATE):
+#line 144 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+{
+										if (indent.size() > 0)
+                                        {
+                                            indent.pop();
+                                            unput(0);
+                                            return(token::DEDENT);
+                                            
+                                        }
+                                        else
+                                        {
+                                        	yyterminate();
+                                        }
+                                    }
+	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 154 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 157 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+{
+										yyless(0);
+										yylloc->columns(-1);
+                                        int current_indent = current_line_indent;
+                                        int previous_indent = indent.size() > 0 ? indent.top() : 0;
+
+                                        if (current_indent > previous_indent) {
+                                        	indent.push(current_line_indent);
+	                                        return(token::INDENT);
+                                        }
+
+                                        if (current_indent < previous_indent) {
+                                        	indent.pop();
+	                                        return (token::DEDENT);
+                                        }
+
+                                        BEGIN(INITIAL);
+                                    }
+	YY_BREAK
+case 16:
+YY_RULE_SETUP
+#line 175 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+{
+										current_line_indent+=yyleng;
+									    yylloc->step();
+									    m_block_content.append(std::string(yytext, yyleng));	
+									}
+	YY_BREAK
+case 17:
+YY_RULE_SETUP
+#line 180 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+{
+									    yylloc->step();
+									    m_block_content.append(std::string(yytext, yyleng));	
+									}
+	YY_BREAK
+case 18:
+/* rule 18 can match eol */
+YY_RULE_SETUP
+#line 184 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+{
+										current_line_indent = 0;
+									    yylloc->lines(yyleng); 
+									    yylloc->step();
+									    m_block_content.append(std::string(yytext, yyleng));	
+									}
+	YY_BREAK
+case YY_STATE_EOF(BLOCK):
+#line 190 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+{
+                                        unput(0);
+                                        return token::BLOCKCONTENT;
+                                    }
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 194 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+{
+										/*
+										If a dedent was detected we consider this blockcontent complete
+										push back the last char and return the content token.
+										*/
+                                        int current_indent = current_line_indent;
+                                        int previous_indent = indent.size() > 0 ? indent.top() : 0;
+                                        
+                                        if (current_indent < previous_indent) 
+                                        {
+                                        	/*
+											You can use yyless(x) to subtract one or more characters from yytext and push those 
+											characters back onto the input stream. Counterintuitively, the argument to yyless is
+											the number of characters from yytext that you wish to keep, and the remainder will
+											be pushed back onto the input stream. yyleng keeps track of the current length of
+											yytext, so the command: 
+											*/
+	                                        yyless(0);
+											yylloc->columns(-1);
+                                        	// BEGIN(INITIAL); this get done by the parser
+                                        	yylval->stringVal = new std::string(m_block_content);
+                                        	return token::BLOCKCONTENT;
+                                        }
+
+                                       	m_block_content.append(std::string(yytext, yyleng));
+									}
+	YY_BREAK
+/*** END EXAMPLE - Change the example lexer rules above ***/
+case 20:
+YY_RULE_SETUP
+#line 223 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 ECHO;
 	YY_BREAK
-#line 991 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.cpp"
-case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(BLOCK):
-	yyterminate();
+#line 1105 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1391,7 +1502,7 @@ int yyFlexLexer::yy_get_next_buffer()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 57 )
+			if ( yy_current_state >= 63 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1424,11 +1535,11 @@ int yyFlexLexer::yy_get_next_buffer()
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 57 )
+		if ( yy_current_state >= 63 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 56);
+	yy_is_jam = (yy_current_state == 62);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2029,7 +2140,7 @@ void MLangfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 154 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
+#line 223 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_scanner.ll"
 
 
 
@@ -2040,8 +2151,11 @@ Scanner::Scanner(std::istream* in,
 		 std::ostream* out)
     : MLangFlexLexer(in, out)
 {
+	this->current_line_indent = 0;
  	this->keywords = std::map<std::string, mlang_parser::token_type>();
+ 	this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("def", mlang_parser::token::DEF));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("return", mlang_parser::token::TOK_RETURN));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("sizeof", mlang_parser::token::SIZEOF));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("end", mlang_parser::token::BLOCK_END));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("if", mlang_parser::token::IF));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("else", mlang_parser::token::ELSE));
@@ -2049,7 +2163,7 @@ Scanner::Scanner(std::istream* in,
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("namespace", mlang_parser::token::NAMESPACE));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("class", mlang_parser::token::CLASS));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("struct", mlang_parser::token::STRUCT));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("import", mlang_parser::token::IMPORT));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("include", mlang_parser::token::INCLUDE));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("ir", mlang_parser::token::IR));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("asm", mlang_parser::token::ASM));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("new", mlang_parser::token::NEW));

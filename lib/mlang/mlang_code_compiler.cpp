@@ -37,6 +37,7 @@
 #include "mlang_code_compiler.hh"
 #include "mlang_dom_provider.hh"
 #include "mlang_code_generator.hh"
+#include "mlang_semantic_analysis.hh"
 
 using namespace mlang;
 
@@ -140,56 +141,64 @@ static int generateobj(llvm::tool_output_file* Out, llvm::Module * module) {
 CompilerResults*
 MLangCodeCompiler::FromDomBatch(CompilerParameters options,
 		mlang::CodeCompileUnit* compile_unit) {
-
-	MLangCodeGenerator* code_gen = this->m_provider.CreateGenerator();
-	auto module = code_gen->GenerateCodeFromCompileUnit(compile_unit);
-
-	if (options.optimize()) {
-		runLLVMOptimizations1(module);
-	}
-
 	auto ret = new CompilerResults();
 
-	/*
-	 std::string err;
-	 llvm::raw_fd_ostream myfile("a.bc", err);
-	 llvm::WriteBitcodeToFile(module, myfile);
-	 myfile.close();
-	 */
+	MLangSemanticAnalysis* semantics = this->m_provider.CreateSemanticAnalysis();
+	semantics->analyse(compile_unit);
 
-	if (options.dump_ir()) {
-		module->dump();
-	}
-	/*
-	 redi::ipstream llc(
-	 "/home/mario/Projects/llvm.obj/Debug/bin/llc a.bc -filetype=obj");
-	 std::string llc_out;
-	 while (llc >> llc_out) {
-	 std::cout << llc_out << std::endl;
-	 }
-	 */
+	if (semantics->errors().size() > 0) {
+		for (auto er : semantics->errors())
+			ret->errors().push_back(er);
+	} else {
+		MLangCodeGenerator* code_gen = this->m_provider.CreateGenerator();
+		auto module = code_gen->GenerateCodeFromCompileUnit(compile_unit);
 
-	llvm::InitializeAllTargets();
-	llvm::InitializeAllTargetMCs();
-	llvm::InitializeAllAsmPrinters();
-	llvm::InitializeAllAsmParsers();
+		if (options.optimize()) {
+			runLLVMOptimizations1(module);
+		}
 
-	std::string err;
-	std::string out_file_name = "a.o";
-	llvm::tool_output_file outp(out_file_name.c_str(), err, llvm::sys::fs::F_Binary);
-	generateobj(&outp, module);
+		/*
+		 std::string err;
+		 llvm::raw_fd_ostream myfile("a.bc", err);
+		 llvm::WriteBitcodeToFile(module, myfile);
+		 myfile.close();
+		 */
 
-	// if you want the .o file to stay on disk then uncomment following line
-	// outp.keep();
+		if (options.dump_ir()) {
+			module->dump();
+		}
+		/*
+		 redi::ipstream llc(
+		 "/home/mario/Projects/llvm.obj/Debug/bin/llc a.bc -filetype=obj");
+		 std::string llc_out;
+		 while (llc >> llc_out) {
+		 std::cout << llc_out << std::endl;
+		 }
+		 */
 
-	redi::ipstream ld(
-			"ld --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o a.out /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crt1.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/crtbegin.o -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2 -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../.. -L/lib -L/usr/lib a.o -lm -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/crtend.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crtn.o");
+		llvm::InitializeAllTargets();
+		llvm::InitializeAllTargetMCs();
+		llvm::InitializeAllAsmPrinters();
+		llvm::InitializeAllAsmParsers();
 
-	//redi::ipstream ld("ld -m elf_x86_64 a.o -o a.out");
+		std::string err;
+		std::string out_file_name = "a.o";
+		llvm::tool_output_file outp(out_file_name.c_str(), err,
+				llvm::sys::fs::F_Binary);
+		generateobj(&outp, module);
 
-	std::string ld_out;
-	while (ld >> ld_out) {
-		std::cout << ld_out << std::endl;
+		// if you want the .o file to stay on disk then uncomment following line
+		// outp.keep();
+
+		redi::ipstream ld(
+				"ld --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o a.out /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crt1.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/crtbegin.o -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2 -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../.. -L/lib -L/usr/lib a.o -lm -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/crtend.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crtn.o");
+
+		//redi::ipstream ld("ld -m elf_x86_64 a.o -o a.out");
+
+		std::string ld_out;
+		while (ld >> ld_out) {
+			std::cout << ld_out << std::endl;
+		}
 	}
 
 	return ret;

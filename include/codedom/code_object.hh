@@ -56,10 +56,13 @@ namespace mlang {
 		CodeObjectCreateExpression,
 		CodeIrBlockStatement,
 		CodeAssemblyCallExpression,
-		CodeFileImport,
+		CodeFileInclude,
 		CodeArrayCreateExpression,
 		CodeArrayIndexerExpression,
-		CodeFieldReferenceExpression
+		CodeFieldReferenceExpression,
+		CodeSizeOfExpression,
+		CodeAttributeArgument,
+		CodeAttributeDeclaration
     };
 
     class CodeObject {
@@ -81,7 +84,7 @@ namespace mlang {
         CodeTypeDeclaration* resolve_type(CodeTypeReference* type_reference);
         std::list<CodeObject*>* resolve_variable(std::string variable_name);
         CodeMemberMethod* resolve_method(std::string method_name, std::list<CodeTypeDeclaration*>* parameter_types);
-
+        CodeMemberMethod* resolve_method(std::string method_name, CodeTypeDeclaration* return_type, std::list<CodeTypeDeclaration*>* parameter_types);
         std::map<std::string, void*>& user_data();
         virtual Location* location();
         virtual void location(Location* value);

@@ -27,7 +27,7 @@ public:
     mlang::CodeCompileUnit* parse(const std::string &filename);
     const MLangDomProvider& provider();
 private:
-    std::vector<mlang::p_CompilerError> * m_errors;
+    std::vector<mlang::p_CompilerError> m_errors;
 
     // indicates whether the parser could parse the complete file, this says nothing about the errors
     bool m_sucess;

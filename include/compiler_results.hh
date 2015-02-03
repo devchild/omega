@@ -18,7 +18,7 @@ public:
     CompilerResults();
     CompilerResults(const CompilerResults& orig);
     virtual ~CompilerResults();
-    vector<mlang::p_CompilerError> errors();
+    vector<mlang::p_CompilerError>& errors();
     
 private:
     vector<mlang::p_CompilerError> m_errors;

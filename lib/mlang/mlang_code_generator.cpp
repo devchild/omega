@@ -152,6 +152,18 @@ llvm::Module* MLangCodeGenerator::GenerateCodeFromCompileUnit(
 	system_namespace->types()->push_back(_object);
 	_object->parent(system_namespace);
 
+	CodeTypeDeclaration * _intptr = new CodeTypeDeclaration();
+	_intptr->name("IntPtr");
+	_intptr->is_struct(true);
+	system_namespace->types()->push_back(_intptr);
+	_intptr->parent(system_namespace);
+
+	CodeTypeDeclaration * _type = new CodeTypeDeclaration();
+	_type->name("Type");
+	_type->is_class(true);
+	system_namespace->types()->push_back(_type);
+	_type->parent(system_namespace);
+
 	/*
 	 CodeTypeDeclaration * _string = new CodeTypeDeclaration();
 	 _string->name("Char[]");
@@ -223,6 +235,9 @@ llvm::Module* MLangCodeGenerator::GenerateCodeFromCompileUnit(
 
 	//auto _decimal = compile_unit->resolve_type("Decimal");
 	_decimal->user_data()[UserDataKind::LLVM_TYPE] = llvm::Type::getFP128Ty(
+			m_context);
+
+	_intptr->user_data()[UserDataKind::LLVM_TYPE] = llvm::Type::getInt64PtrTy(
 			m_context);
 
 	//
@@ -331,6 +346,14 @@ llvm::Function* MLangCodeGenerator::CreateFunction(llvm::Module * module,
 		}
 	}
 
+	for(auto attribute: method->custom_attributes())
+	{
+		if (attribute->name() == "Inline" && attribute->arguments().size() == 0)
+		{
+			function->addFnAttr(llvm::Attribute::InlineHint);
+		}
+	}
+
 	return function;
 }
 
@@ -378,7 +401,7 @@ llvm::BasicBlock* MLangCodeStatementGenerator::block() {
 }
 
 void MLangCodeStatementGenerator::visit(CodeBinaryOperatorExpression* object) {
-	std::cout << ">> CodeBinaryOperatorExpression" << std::endl;
+	// // std::cout << ">> CodeBinaryOperatorExpression" << std::endl;
 	llvm::LLVMContext& ctx = this->m_block->getContext();
 	llvm::Constant *zero = llvm::Constant::getNullValue(llvm::IntegerType::getInt32Ty(ctx));
 
@@ -506,28 +529,28 @@ void MLangCodeStatementGenerator::visit(CodeBinaryOperatorExpression* object) {
 			this->m_result = llvm::CallInst::Create(f, method_args, "", this->m_block);
 			break;
 		case CodeBinaryOperatorType::LessThan:
-			method_name = "compare";
+			method_name = "less_than";
 			resolved_method = object->resolve_method(method_name, &method_arg_types);
 			f = mod->getFunction(resolved_method->id());
 			this->m_result = llvm::CallInst::Create(f, method_args, "", this->m_block);
-			this->m_result = llvm::ICmpInst::Create(llvm::Instruction::ICmp, llvm::ICmpInst::ICMP_ULT, this->m_result, zero, "", this->m_block);
+			//this->m_result = llvm::ICmpInst::Create(llvm::Instruction::ICmp, llvm::ICmpInst::ICMP_ULT, this->m_result, zero, "", this->m_block);
 			break;
 		case CodeBinaryOperatorType::LessThanOrEqual:
-			method_name = "compare";
+			method_name = "less_than_or_equal";
 			resolved_method = object->resolve_method(method_name, &method_arg_types);
 			f = mod->getFunction(resolved_method->id());
 			this->m_result = llvm::CallInst::Create(f, method_args, "", this->m_block);
 			this->m_result = llvm::ICmpInst::Create(llvm::Instruction::ICmp, llvm::ICmpInst::ICMP_ULE, this->m_result, zero, "", this->m_block);
 			break;
 		case CodeBinaryOperatorType::GreaterThan:
-			method_name = "compare";
+			method_name = "greater_than";
 			resolved_method = object->resolve_method(method_name, &method_arg_types);
 			f = mod->getFunction(resolved_method->id());
 			this->m_result = llvm::CallInst::Create(f, method_args, "", this->m_block);
 			this->m_result = llvm::ICmpInst::Create(llvm::Instruction::ICmp, llvm::ICmpInst::ICMP_UGT, this->m_result, zero, "", this->m_block);
 			break;
 		case CodeBinaryOperatorType::GreaterThanOrEqual:
-			method_name = "compare";
+			method_name = "greater_than_or_equal";
 			resolved_method = object->resolve_method(method_name, &method_arg_types);
 			f = mod->getFunction(resolved_method->id());
 			this->m_result = llvm::CallInst::Create(f, method_args, "", this->m_block);
@@ -537,28 +560,28 @@ void MLangCodeStatementGenerator::visit(CodeBinaryOperatorExpression* object) {
 }
 
 void MLangCodeStatementGenerator::visit(CodeCompileUnit* object) {
-	std::cout << ">> CodeCompileUnit" << std::endl;
+	// std::cout << ">> CodeCompileUnit" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeExpression* object) {
-	std::cout << ">> CodeExpression" << std::endl;
+	// std::cout << ">> CodeExpression" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeMemberField* object) {
-	std::cout << ">> CodeMemberField" << std::endl;
+	// std::cout << ">> CodeMemberField" << std::endl;
 
 }
 
 void MLangCodeStatementGenerator::visit(CodeMemberMethod* object) {
-	std::cout << ">> CodeMemberMethod" << std::endl;
+	// std::cout << ">> CodeMemberMethod" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeMemberProperty* object) {
-	std::cout << ">> CodeMemberProperty" << std::endl;
+	// std::cout << ">> CodeMemberProperty" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeMethodReturnStatement* object) {
-	std::cout << ">> CodeMethodReturnStatement" << std::endl;
+	// std::cout << ">> CodeMethodReturnStatement" << std::endl;
 	auto expression = object->expression();
 	if (expression != nullptr) {
 		auto expression_gen = MLangCodeStatementGenerator(this->m_block);
@@ -576,16 +599,16 @@ void MLangCodeStatementGenerator::visit(CodeMethodReturnStatement* object) {
 }
 
 void MLangCodeStatementGenerator::visit(CodeNamespace* object) {
-	std::cout << ">> CodeNamespace" << std::endl;
+	// std::cout << ">> CodeNamespace" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeObject* object) {
-	std::cout << ">> CodeObject" << std::endl;
+	// std::cout << ">> CodeObject" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(
 		CodeParameterDeclarationExpression* object) {
-	std::cout << ">> CodeParameterDeclarationExpression" << std::endl;
+	// std::cout << ">> CodeParameterDeclarationExpression" << std::endl;
 
 	auto type_reference = object->type();
 	CodeTypeDeclaration * td = object->resolve_type(type_reference);
@@ -601,7 +624,7 @@ void MLangCodeStatementGenerator::visit(
 }
 
 void MLangCodeStatementGenerator::visit(CodePrimitiveExpression* object) {
-	std::cout << ">> CodePrimitiveExpression" << std::endl;
+	// std::cout << ">> CodePrimitiveExpression" << std::endl;
 
 	auto module = this->m_block->getParent()->getParent();
 	llvm::LLVMContext& ctx = this->m_block->getContext();
@@ -640,16 +663,15 @@ void MLangCodeStatementGenerator::visit(CodePrimitiveExpression* object) {
 		m_result = var_ref;
 	}
 
-	std::cout << "<< CodePrimitiveExpression" << std::endl;
+	// std::cout << "<< CodePrimitiveExpression" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeStatement* object) {
-	std::cout << ">> CodeStatement" << std::endl;
+	// std::cout << ">> CodeStatement" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeTypeDeclaration* object) {
-	std::cout << ">> CodeTypeDeclaration \"" << object->name() << "\""
-			<< std::endl;
+	// std::cout << ">> CodeTypeDeclaration \"" << object->name() << "\"" << std::endl;
 
 	llvm::LLVMContext& ctx = this->m_block->getContext();
 
@@ -703,21 +725,21 @@ void MLangCodeStatementGenerator::visit(CodeTypeDeclaration* object) {
 		object->user_data()[UserDataKind::LLVM_TYPE] = tp;
 	}
 
-	std::cout << "<< CodeTypeDeclaration" << std::endl;
+	// std::cout << "<< CodeTypeDeclaration" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeTypeMember* object) {
-	std::cout << ">> CodeTypeMember" << std::endl;
+	// std::cout << ">> CodeTypeMember" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeTypeReference* object) {
-	std::cout << ">> CodeTypeReference" << std::endl;
+	// std::cout << ">> CodeTypeReference" << std::endl;
 
 }
 
 void MLangCodeStatementGenerator::visit(
 		CodeVariableDeclarationStatement* object) {
-	std::cout << ">> CodeVariableDeclarationStatement" << std::endl;
+	// std::cout << ">> CodeVariableDeclarationStatement" << std::endl;
 
 	// find out the llvm type
 	auto type_reference = object->type();
@@ -746,12 +768,12 @@ void MLangCodeStatementGenerator::visit(
 		}
 	}
 
-	std::cout << "<< CodeVariableDeclarationStatement" << std::endl;
+	// std::cout << "<< CodeVariableDeclarationStatement" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(
 		CodeVariableReferenceExpression* object) {
-	std::cout << ">> CodeVariableReferenceExpression" << std::endl;
+	// std::cout << ">> CodeVariableReferenceExpression" << std::endl;
 	//not used
 	//CodeScope * scope = object->scope();
 
@@ -816,35 +838,58 @@ void MLangCodeStatementGenerator::visit(
 	}
 
 	this->m_result = left;
-	std::cout << "<< CodeVariableReferenceExpression" << std::endl;
+	// std::cout << "<< CodeVariableReferenceExpression" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeCastExpression* object) {
-	std::cout << ">> CodeCastExpression" << std::endl;
-	CodeTypeDeclaration* td = object->resolve_type(object->target_type());
+	// std::cout << ">> CodeCastExpression" << std::endl;
 
+	llvm::LLVMContext& ctx = this->m_block->getContext();
+	llvm::Constant *zero = llvm::Constant::getNullValue(llvm::IntegerType::getInt32Ty(ctx));
+
+	llvm::Function* parent_function = this->m_block->getParent();
+	llvm::Module* mod = parent_function->getParent();
+
+
+	std::list<CodeTypeDeclaration*> method_arg_types;
+	std::vector<llvm::Value*> method_args;
+
+	// infer the type of the target_expression
+	MLangCodeTypeInference type_inf;
+	object->expression()->accept(&type_inf);
+	auto expression_type = type_inf.result();
+	auto expression_type_decl = object->resolve_type(expression_type);
+	method_arg_types.push_back(expression_type_decl);
+
+	// I'll need the return type of the method to resolve
+	CodeTypeDeclaration* td_return = object->resolve_type(object->target_type());
+
+	std::string method_name = "cast";
+	auto resolved_method = object->resolve_method(method_name, td_return, &method_arg_types);
+
+	// generate the code for the target_expression
 	auto tp_gen = new MLangCodeStatementGenerator(this->m_block);
 	object->expression()->accept(tp_gen);
+	auto expression_value = tp_gen->result();
 
-	if (td->name() == "Int32") {
-		auto result_tmp = tp_gen->result();
-		auto llvm_type =
-				static_cast<llvm::Type*>(td->user_data()[UserDataKind::LLVM_TYPE]); //td->llvm_type();
-		llvm::CastInst* int32_18 = new llvm::TruncInst(result_tmp, llvm_type,
-				"", this->m_block);
-		m_result = int32_18;
-	} else if (td->name() == "Int64") {
-		auto result_tmp = tp_gen->result();
-		auto llvm_type =
-				static_cast<llvm::Type*>(td->user_data()[UserDataKind::LLVM_TYPE]); //td->llvm_type();
-		llvm::CastInst* int64_21 = new llvm::SExtInst(result_tmp, llvm_type, "",
-				this->m_block);
-		m_result = int64_21;
+	// prepare a list of parameters i need to pass to the target method
+	expression_value = load_if_needed(object->expression(), expression_value, this->m_block);
+
+	if (resolved_method != nullptr)
+	{
+		method_args.push_back(expression_value);
+		auto f = mod->getFunction(resolved_method->id());
+		this->m_result = llvm::CallInst::Create(f, method_args, "", this->m_block);
+	}
+	else
+	{
+		auto create_type = static_cast<llvm::Type*>(td_return->user_data()[UserDataKind::LLVM_TYPE]);
+		this->m_result = new llvm::BitCastInst(expression_value, create_type, "", this->m_block);
 	}
 }
 
 void MLangCodeStatementGenerator::visit(CodeObjectCreateExpression* object) {
-	std::cout << ">> CodeObjectCreateExpression" << std::endl;
+	// std::cout << ">> CodeObjectCreateExpression" << std::endl;
 
 	auto resolved = object->resolve_type(object->create_type());
 
@@ -860,26 +905,22 @@ void MLangCodeStatementGenerator::visit(CodeObjectCreateExpression* object) {
 		auto element_type = create_type->getElementType();
 
 		llvm::DataLayout l = llvm::DataLayout(module);
-		llvm::ConstantInt* const_int64_14 = llvm::ConstantInt::get(
-				module->getContext(),
-				llvm::APInt(64, l.getTypeAllocSize(element_type)));
+		llvm::ConstantInt* const_int64_14 = llvm::ConstantInt::get(module->getContext(), llvm::APInt(64, l.getTypeAllocSize(element_type)));
 
 		llvm::Function* func_malloc = module->getFunction("malloc");
-		llvm::CallInst* ptr_19 = llvm::CallInst::Create(func_malloc,
-				const_int64_14, "", this->m_block);
-		this->m_result = new llvm::BitCastInst(ptr_19, create_type, "",
-				this->m_block);
+		llvm::CallInst* ptr_19 = llvm::CallInst::Create(func_malloc, const_int64_14, "", this->m_block);
+		this->m_result = new llvm::BitCastInst(ptr_19, create_type, "", this->m_block);
 	} else {
 		this->m_result = nullptr;
 	}
 }
 
-void MLangCodeStatementGenerator::visit(CodeFileImport* object) {
-	std::cout << ">> CodeFileImport" << std::endl;
+void MLangCodeStatementGenerator::visit(CodeFileInclude* object) {
+	// std::cout << ">> CodeFileImport" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeFieldReferenceExpression* object) {
-	std::cout << ">> CodeFieldReferenceExpression" << std::endl;
+	// std::cout << ">> CodeFieldReferenceExpression" << std::endl;
 
 	MLangCodeTypeInference type_inf;
 	object->target_object()->accept(&type_inf);
@@ -917,7 +958,7 @@ void MLangCodeStatementGenerator::visit(CodeFieldReferenceExpression* object) {
 }
 
 void MLangCodeStatementGenerator::visit(CodeArrayIndexerExpression* object) {
-	std::cout << ">> CodeArrayIndexerExpression" << std::endl;
+	// std::cout << ">> CodeArrayIndexerExpression" << std::endl;
 
 	auto m_func = this->m_block->getParent();
 	auto m_module = m_func->getParent();
@@ -954,7 +995,7 @@ void MLangCodeStatementGenerator::visit(CodeArrayIndexerExpression* object) {
 }
 
 void MLangCodeStatementGenerator::visit(CodeArrayCreateExpression* object) {
-	std::cout << ">> CodeArrayCreateExpression" << std::endl;
+	// std::cout << ">> CodeArrayCreateExpression" << std::endl;
 
 	auto m_func = this->m_block->getParent();
 	auto m_module = m_func->getParent();
@@ -975,15 +1016,30 @@ void MLangCodeStatementGenerator::visit(CodeArrayCreateExpression* object) {
 	//auto alloca = new llvm::AllocaInst(create_type, size_expression, "", this->m_block);
 	//this->m_result = alloca;
 
-	auto func_malloc = m_module->getOrInsertFunction("malloc",
-			get_malloc_functiontype(m_module));
+	auto func_malloc = m_module->getOrInsertFunction("malloc", get_malloc_functiontype(m_module));
 	llvm::CallInst* ptr_55 = llvm::CallInst::Create(func_malloc,
 			size_expression, "", this->m_block);
 	this->m_result = ptr_55;
 }
 
+void MLangCodeStatementGenerator::visit(CodeSizeOfExpression* object) {
+	auto m_func = this->m_block->getParent();
+	auto m_module = m_func->getParent();
+	llvm::LLVMContext & m_context = m_module->getContext();
+
+	auto resolved = object->resolve_type(object->type());
+	auto create_type = static_cast<llvm::Type*>(resolved->user_data()[UserDataKind::LLVM_TYPE]); //resolved->llvm_type();
+
+	if (create_type->isPointerTy())
+		create_type = ((llvm::PointerType*)create_type)->getElementType();
+
+	llvm::DataLayout l = llvm::DataLayout(m_module);
+	llvm::ConstantInt* const_int64_14 = llvm::ConstantInt::get(m_context, llvm::APInt(64, l.getTypeAllocSize(create_type), /* isSigned = */ false));
+	this->m_result = const_int64_14;
+}
+
 void MLangCodeStatementGenerator::visit(CodeAssemblyCallExpression* object) {
-	std::cout << ">> CodeAsmBlockStatement" << std::endl;
+	// std::cout << ">> CodeAsmBlockStatement" << std::endl;
 
 	auto m_func = this->m_block->getParent();
 	auto m_module = m_func->getParent();
@@ -1021,24 +1077,24 @@ void MLangCodeStatementGenerator::visit(CodeAssemblyCallExpression* object) {
 	}
 
 	auto FT = llvm::FunctionType::get(return_type, parameter_llvm_types, false);
-	llvm::InlineAsm* ia = llvm::InlineAsm::get(FT, object->content(),
-			object->constraints(), true);
+	llvm::InlineAsm* ia = llvm::InlineAsm::get(FT, object->content(), object->constraints(), true);
 
-	llvm::CallInst* call_inst = llvm::CallInst::Create(ia, args, "",
-			this->m_block);
+	llvm::CallInst* call_inst = llvm::CallInst::Create(ia, args, "", this->m_block);
 	call_inst->setCallingConv(llvm::CallingConv::C);
 	call_inst->setTailCall(false);
+
+
 
 	this->m_result = call_inst;
 	/*		::get(FT, code, constraints, sideeffect);
 	 llvm::Value* rv = gIR->ir->CreateCall(ia, args, "");
 	 */
 
-	std::cout << "<< CodeAsmBlockStatement" << std::endl;
+	// std::cout << "<< CodeAsmBlockStatement" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeIrBlockStatement* object) {
-	std::cout << ">> CodeIrBlockStatement" << std::endl;
+	// std::cout << ">> CodeIrBlockStatement" << std::endl;
 
 	auto m_func = this->m_block->getParent();
 	auto m_module = m_func->getParent();
@@ -1097,7 +1153,7 @@ void MLangCodeStatementGenerator::visit(CodeIrBlockStatement* object) {
 
 	std::string errstr = err.getMessage();
 	if (errstr != "")
-		std::cout << "can't parse inline LLVM IR:\n"
+		 std::cout << "can't parse inline LLVM IR:\n"
 				<< err.getLineContents().str().c_str() << "\n"
 				<< (std::string(err.getColumnNo(), ' ') + '^').c_str()
 				<< errstr.c_str() << "\nThe input string was: \n"
@@ -1113,7 +1169,7 @@ void MLangCodeStatementGenerator::visit(CodeIrBlockStatement* object) {
 }
 
 void MLangCodeStatementGenerator::visit(CodeAssignExpression* object) {
-	std::cout << ">> CodeAssignExpression" << std::endl;
+	// std::cout << ">> CodeAssignExpression" << std::endl;
 
 	llvm::Value* left = nullptr;
 
@@ -1217,11 +1273,11 @@ void MLangCodeStatementGenerator::visit(CodeAssignExpression* object) {
 
 	auto st = new llvm::StoreInst(right, left, false, this->m_block);
 	this->m_result = left;
-	std::cout << "<< CodeAssignExpression" << std::endl;
+	// std::cout << "<< CodeAssignExpression" << std::endl;
 }
 
 void MLangCodeStatementGenerator::visit(CodeExpressionStatement* object) {
-	std::cout << ">> CodeExpressionStatement" << std::endl;
+	// std::cout << ">> CodeExpressionStatement" << std::endl;
 
 	MLangCodeStatementGenerator * gen = new MLangCodeStatementGenerator(
 			this->m_block);
@@ -1232,7 +1288,7 @@ void MLangCodeStatementGenerator::visit(CodeExpressionStatement* object) {
 }
 
 void MLangCodeStatementGenerator::visit(CodeMethodInvokeExpression* object) {
-	std::cout << ">> CodeMethodInvokeExpression" << std::endl;
+	// std::cout << ">> CodeMethodInvokeExpression" << std::endl;
 
 	auto parent_function = this->m_block->getParent();
 	auto module = parent_function->getParent();
@@ -1271,8 +1327,7 @@ void MLangCodeStatementGenerator::visit(CodeMethodInvokeExpression* object) {
 		args.push_back(res);
 	}
 
-	auto resolved_method = object->resolve_method(
-			object->method()->method_name(), parameter_types);
+	auto resolved_method = object->resolve_method(object->method()->method_name(), parameter_types);
 	llvm::Function* f = nullptr;
 
 	/*if (resolved_method == nullptr
@@ -1292,7 +1347,7 @@ void MLangCodeStatementGenerator::visit(CodeMethodInvokeExpression* object) {
 }
 
 void MLangCodeStatementGenerator::visit(CodeConditionStatement* object) {
-	std::cout << ">> CodeConditionStatement" << std::endl;
+	// std::cout << ">> CodeConditionStatement" << std::endl;
 
 	bool has_false_block = object->false_statements()->size();
 	llvm::LLVMContext& context = this->m_block->getContext();
@@ -1360,11 +1415,19 @@ void MLangCodeStatementGenerator::visit(CodeConditionStatement* object) {
 }
 
 void MLangCodeStatementGenerator::visit(CodeMethodReferenceExpression* object) {
-	std::cout << ">> CodeMethodReferenceExpression" << std::endl;
+	// std::cout << ">> CodeMethodReferenceExpression" << std::endl;
+}
+
+void MLangCodeStatementGenerator::visit(CodeAttributeArgument* object){
+
+}
+
+void MLangCodeStatementGenerator::visit(CodeAttributeDeclaration* object){
+
 }
 
 void MLangCodeStatementGenerator::visit(CodeIterationStatement* object) {
-	std::cout << ">> CodeIterationStatement" << std::endl;
+	// std::cout << ">> CodeIterationStatement" << std::endl;
 
 	llvm::LLVMContext& context = this->m_block->getContext();
 	auto parent_function = this->m_block->getParent();

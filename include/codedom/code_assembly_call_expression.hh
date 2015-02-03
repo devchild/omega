@@ -31,11 +31,15 @@ namespace mlang {
         void constraints(std::string value);
         std::string constraints();
 
+        CodeTypeReference* return_type();
+        void return_type(CodeTypeReference* value);
+
         CodeExpressionCollection* parameters();
 
         virtual bool type_of(CodeObjectKind kind);
         void scope(CodeScope* scope) override;
     private:
+        CodeTypeReference* m_return_type;
         std::string m_content;
         std::string m_constraints;
         CodeExpressionCollection* m_parameters;

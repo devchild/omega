@@ -12,6 +12,11 @@ namespace mlang {
         return this->m_name;
     }
     
+    CodeAttributeDeclarationCollection&
+	CodeTypeMember::custom_attributes() {
+    	return this->m_custom_attributes;
+    }
+
     void
     CodeTypeMember::name(std::string name) {
         this->m_name = name;

@@ -21,6 +21,8 @@ namespace mlang {
     class CodeTypeMember;
     class CodeStatement;
     class CodeExpression;
+    class CodeAttributeArgument;
+    class CodeAttributeDeclaration;
     
     typedef std::list<CodeMemberMethod*> CodeMemberMethodCollection;
     typedef std::list<CodeExpression*> CodeExpressionCollection;
@@ -31,6 +33,8 @@ namespace mlang {
     typedef std::list<CodeTypeMember*> CodeTypeMemberCollection;
     typedef std::list<CodeStatement*> CodeStatementCollection;
     typedef std::list<CodeObject*> CodeObjectCollection;
+    typedef std::list<CodeAttributeArgument*> CodeAttributeArgumentCollection;
+    typedef std::list<CodeAttributeDeclaration*> CodeAttributeDeclarationCollection;
 }
 
 

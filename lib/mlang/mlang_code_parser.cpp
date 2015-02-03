@@ -19,7 +19,6 @@
 
 MLangCodeParser::MLangCodeParser(const MLangDomProvider& p) :
 		m_provider(p) {
-	this->m_errors = new std::vector<mlang::p_CompilerError>();
 }
 
 MLangCodeParser::MLangCodeParser(const MLangCodeParser& orig) :
@@ -35,7 +34,7 @@ MLangCodeParser::provider() {
 }
 
 std::vector<mlang::p_CompilerError>& MLangCodeParser::errors() {
-	return *this->m_errors;
+	return this->m_errors;
 }
 
 bool MLangCodeParser::sucess() {
@@ -46,7 +45,7 @@ mlang::CodeCompileUnit*
 MLangCodeParser::parse(const std::string &filename) {
 	this->m_sucess = false;
 	mlang_driver p;
-	p.trace_parsing = true;
+	p.trace_parsing = false;
 
 	this->m_sucess = p.parse_file(filename);
 
@@ -57,7 +56,7 @@ MLangCodeParser::parse(const std::string &filename) {
 	}
 
 	for(auto e: p.errors())
-		this->m_errors->push_back(e);
+		this->m_errors.push_back(e);
 
 	return p.root();
 }
@@ -72,7 +71,7 @@ MLangCodeParser::parse(std::istream* in) {
 	p.root()->scope(global_scope);
 
 	for(auto e: p.errors())
-		this->m_errors->push_back(e);
+		this->m_errors.push_back(e);
 
 	return p.root();
 }

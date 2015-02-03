@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.0.2.
+// A Bison parser, made by GNU Bison 3.0.4.
 
 // Skeleton interface for Bison GLR parsers in C++
 
-// Copyright (C) 2002-2013 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -100,41 +100,51 @@ namespace yy {
         END = 0,
         EOL = 258,
         NEW = 259,
-        BLOCK_END = 260,
-        IF = 261,
-        ELSE = 262,
-        WHILE = 263,
-        NAMESPACE = 264,
-        CLASS = 265,
-        STRUCT = 266,
-        ASSIGN = 267,
-        TOK_RETURN = 268,
-        IMPORT = 269,
-        IR = 270,
-        ASM = 271,
-        OP_LESS_THAN_OR_EQUAL = 272,
-        OP_GREATER_THAN_OR_EQUAL = 273,
-        OP_EQUALS = 274,
-        OP_NOT_EQUALS = 275,
-        OP_OROR = 276,
-        OP_ANDAND = 277,
-        OP_SHIFT_RIGHT = 278,
-        OP_SHIFT_LEFT = 279,
-        RANK = 280,
-        BLOCKCONTENT = 281,
-        EXTERNAL = 282,
-        IDENTIFIER = 283,
-        INTEGER = 284,
-        DOUBLE = 285,
-        STRING_LITERAL = 286
+        DEF = 260,
+        LEFT_BRACKET = 261,
+        RIGHT_BRACKET = 262,
+        END_STATEMENT = 263,
+        INDENT = 264,
+        DEDENT = 265,
+        BLOCK_END = 266,
+        IF = 267,
+        ELSE = 268,
+        WHILE = 269,
+        NAMESPACE = 270,
+        CLASS = 271,
+        STRUCT = 272,
+        ASSIGN = 273,
+        TOK_RETURN = 274,
+        INCLUDE = 275,
+        IR = 276,
+        SIZEOF = 277,
+        ASM = 278,
+        OP_LESS_THAN_OR_EQUAL = 279,
+        OP_GREATER_THAN_OR_EQUAL = 280,
+        OP_EQUALS = 281,
+        OP_NOT_EQUALS = 282,
+        OP_OROR = 283,
+        OP_ANDAND = 284,
+        OP_SHIFT_RIGHT = 285,
+        OP_SHIFT_LEFT = 286,
+        RANK = 287,
+        BLOCKCONTENT = 288,
+        EXTERNAL = 289,
+        IDENTIFIER = 290,
+        INTEGER = 291,
+        DOUBLE = 292,
+        STRING_LITERAL = 293
       };
     };
 
     /// (External) token type, as returned by yylex.
     typedef token::yytokentype token_type;
 
-    /// Internal symbol number.
+    /// Symbol type: an internal symbol number.
     typedef int symbol_number_type;
+
+    /// The symbol type number to denote an empty symbol.
+    enum { empty_symbol = -2 };
 
     /// Internal symbol number for tokens (subsumed by symbol_number_type).
     typedef unsigned char token_number_type;
@@ -166,7 +176,14 @@ namespace yy {
                     const semantic_type& v,
                     const location_type& l);
 
+      /// Destroy the symbol.
       ~basic_symbol ();
+
+      /// Destroy contents, and record that is empty.
+      void clear ();
+
+      /// Whether empty.
+      bool empty () const;
 
       /// Destructive move, \a s is emptied into this.
       void move (basic_symbol& s);
@@ -197,21 +214,23 @@ namespace yy {
       /// Constructor from (external) token numbers.
       by_type (kind_type t);
 
+      /// Record that this symbol is empty.
+      void clear ();
+
       /// Steal the symbol type from \a that.
       void move (by_type& that);
 
       /// The (internal) type number (corresponding to \a type).
-      /// -1 when this symbol is empty.
+      /// \a empty when empty.
       symbol_number_type type_get () const;
 
       /// The token.
       token_type token () const;
 
-      enum { empty = 0 };
-
       /// The symbol type.
-      /// -1 when this symbol is empty.
-      token_number_type type;
+      /// \a empty_symbol when empty.
+      /// An int, not token_number_type, to be able to store empty_symbol.
+      int type;
     };
 
     /// "External" symbols: returned by the scanner.
@@ -282,7 +301,7 @@ namespace yy {
 
 
 } // yy
-#line 286 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:329
+#line 305 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:329
 
 
 #endif // !YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_MLANG_PARSER_HH_INCLUDED

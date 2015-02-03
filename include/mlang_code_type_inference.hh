@@ -47,11 +47,16 @@ public:
 	virtual void visit(CodeCastExpression* object);
 	virtual void visit(CodeObjectCreateExpression* object);
 	virtual void visit(CodeIrBlockStatement* object);
-	virtual void visit(CodeFileImport* object);
+	virtual void visit(CodeFileInclude* object);
 	virtual void visit(CodeArrayCreateExpression* object);
 	virtual void visit(CodeArrayIndexerExpression* object);
 	virtual void visit(CodeFieldReferenceExpression* object);
 	virtual void visit(CodeAssemblyCallExpression* object);
+
+    virtual void visit(CodeAttributeArgument* object);
+    virtual void visit(CodeAttributeDeclaration* object);
+	virtual void visit(CodeSizeOfExpression* object);
+
 };
 
 #endif /* INCLUDE_MLANG_CODE_TYPE_INFERENCE_HH_ */

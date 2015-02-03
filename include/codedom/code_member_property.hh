@@ -18,9 +18,16 @@ namespace mlang {
     public:
         using CodeObject::scope;
         CodeMemberProperty();
+        ~CodeMemberProperty();
         virtual void accept(CodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);
+
+        CodeStatementCollection& get_statements();
+        CodeStatementCollection& set_statements();
+    private:
+        CodeStatementCollection m_get_statements;
+        CodeStatementCollection m_set_statements;
     };
 }
 

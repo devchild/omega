@@ -24,78 +24,96 @@ void MLangCodeTypeInference::visit(CodeBinaryOperatorExpression* object) {
 	params.push_back(object->resolve_type(inf_right.result()));
 
 	std::string method_name = "";
-	switch(object->operator_()) {
+	switch (object->operator_()) {
 	case CodeBinaryOperatorType::Add:
 		method_name = "add";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::Divide:
 		method_name = "divide";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::Subtract:
 		method_name = "subtract";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::Multiply:
 		method_name = "multiply";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::BitwiseOr:
 		method_name = "bitwise_or";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::BooleanOr:
 		method_name = "boolean_or";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::BitwiseAnd:
 		method_name = "bitwise_and";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::BooleanAnd:
 		method_name = "boolean_or";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::ExlusiveOr:
 		method_name = "exclusive_or";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::IdentityEquality:
 		method_name = "equals";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::IdentityInEquality:
 		method_name = "not_equals";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::LessThan:
 		method_name = "not_equals";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::LessThanOrEqual:
 		method_name = "not_equals";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::GreaterThan:
 		method_name = "not_equals";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::GreaterThanOrEqual:
 		method_name = "not_equals";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::Modulus:
 		method_name = "modulus";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::ShiftLeft:
 		method_name = "shift_left";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	case CodeBinaryOperatorType::ShiftRight:
 		method_name = "shift_right";
-		this->m_result = object->resolve_method(method_name, &params)->return_type();
+		this->m_result =
+				object->resolve_method(method_name, &params)->return_type();
 		break;
 	}
 }
@@ -114,6 +132,17 @@ void MLangCodeTypeInference::visit(CodeMemberField* object) {
 }
 void MLangCodeTypeInference::visit(CodeMemberMethod* object) {
 	this->m_result = object->return_type();
+	if (this->m_result == nullptr) {
+		for (auto x : *object->statements()) {
+			if (x->type_of(CodeObjectKind::CodeMethodReturnStatement)) {
+				CodeMethodReturnStatement* return_statement =
+						(CodeMethodReturnStatement*) x;
+				MLangCodeTypeInference inf;
+				return_statement->accept(&inf);
+				this->m_result = inf.result();
+			}
+		}
+	}
 }
 void MLangCodeTypeInference::visit(CodeMemberProperty* object) {
 }
@@ -126,16 +155,17 @@ void MLangCodeTypeInference::visit(CodeMethodInvokeExpression* object) {
 		param_types.push_back(object->resolve_type(param_inf.result()));
 	}
 
-	for (auto p: *object->parameters()) {
+	for (auto p : *object->parameters()) {
 		MLangCodeTypeInference param_inf;
 		p->accept(&param_inf);
 		param_types.push_back(object->resolve_type(param_inf.result()));
 	}
 
-	auto method = object->resolve_method(object->method()->method_name(), &param_types);
+	auto method = object->resolve_method(object->method()->method_name(),
+			&param_types);
 	this->m_result = method->return_type();
 }
-void MLangCodeTypeInference::visit(CodeFileImport* object) {
+void MLangCodeTypeInference::visit(CodeFileInclude* object) {
 }
 void MLangCodeTypeInference::visit(CodeArrayCreateExpression* object) {
 	this->m_result = object->create_type();
@@ -145,10 +175,8 @@ void MLangCodeTypeInference::visit(CodeFieldReferenceExpression* object) {
 	object->target_object()->accept(&exp_inf);
 	auto target_object_type = object->resolve_type(exp_inf.result());
 
-
 	for (auto x : *target_object_type->members()) {
-		if (x->name() == object->field_name())
-		{
+		if (x->name() == object->field_name()) {
 			auto field = static_cast<CodeMemberField*>(x);
 			this->m_result = field->type();
 			break;
@@ -214,8 +242,22 @@ void MLangCodeTypeInference::visit(CodeIrBlockStatement* object) {
 	this->m_result = res;
 }
 
+void MLangCodeTypeInference::visit(CodeSizeOfExpression* object) {
+	auto res = new CodeTypeReference();
+	res->base_type("UInt64");
+	this->m_result = res;
+}
+
 void MLangCodeTypeInference::visit(CodeAssemblyCallExpression* object) {
 	auto res = new CodeTypeReference();
 	res->base_type("Void");
 	this->m_result = res;
+}
+
+void MLangCodeTypeInference::visit(CodeAttributeDeclaration* object) {
+
+}
+
+void MLangCodeTypeInference::visit(CodeAttributeArgument* object) {
+
 }

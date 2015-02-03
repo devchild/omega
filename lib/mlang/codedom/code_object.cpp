@@ -13,7 +13,7 @@ namespace mlang {
     {
         this->m_parent = nullptr;
         this->m_scope = nullptr;
-
+        this->m_location = nullptr;
         uuid_t id;
         uuid_generate(id);
         char *str = new char[50];
@@ -112,6 +112,16 @@ namespace mlang {
         else
             return nullptr;
     }
+
+    CodeMemberMethod*
+    CodeObject::resolve_method(std::string method_name, CodeTypeDeclaration* return_type, std::list<CodeTypeDeclaration*>* parameter_types) {
+        	CodeMemberMethodResolver * resolver = new CodeMemberMethodResolver(this->scope(), return_type, method_name, parameter_types);
+            auto ret = resolver->resolve();
+            if (ret->size() == 1 && ret->back()->type_of(CodeObjectKind::CodeMemberMethod))
+                return static_cast<CodeMemberMethod*> (ret->back());
+            else
+                return nullptr;
+     }
 
     std::list<CodeObject*>*
     CodeObject::resolve_variable(std::string variable_name) {

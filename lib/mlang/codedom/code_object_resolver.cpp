@@ -112,7 +112,7 @@ namespace mlang {
 
     }
 
-    void CodeObjectResolver::visit(CodeFileImport* object){
+    void CodeObjectResolver::visit(CodeFileInclude* object){
 
     }
 
@@ -131,6 +131,19 @@ namespace mlang {
     void CodeObjectResolver::visit(CodeAssemblyCallExpression* object){
 
     }
+
+    void CodeObjectResolver::visit(CodeSizeOfExpression* object){
+
+    }
+
+    void CodeObjectResolver::visit(CodeAttributeArgument* object){
+
+    }
+
+    void CodeObjectResolver::visit(CodeAttributeDeclaration* object){
+
+    }
+
 
     VariableFieldOrParameterResolver::VariableFieldOrParameterResolver(CodeScope* scope, std::string name) {
         this->m_name = name;
@@ -270,6 +283,15 @@ namespace mlang {
     }
 
     CodeMemberMethodResolver::CodeMemberMethodResolver(CodeScope* scope, std::string name, CodeTypeDeclarationCollection* parameter_types) {
+    	this->m_return_type = nullptr;
+    	this->m_scope = scope;
+    	this->m_name = name;
+    	this->m_parameter_types = parameter_types;
+    	this->m_result = new std::list<CodeObject*>();
+    }
+
+    CodeMemberMethodResolver::CodeMemberMethodResolver(CodeScope* scope, CodeTypeDeclaration* return_type, std::string name, CodeTypeDeclarationCollection* parameter_types) {
+    	this->m_return_type = return_type;
     	this->m_scope = scope;
     	this->m_name = name;
     	this->m_parameter_types = parameter_types;
@@ -296,6 +318,13 @@ namespace mlang {
     CodeMemberMethodResolver::visit(CodeMemberMethod* object) {
     	if(object->name() == this->m_name)
     	{
+    		if (this->m_return_type != nullptr)
+    		{
+    			auto resolved_return_type = object->resolve_type(object->return_type());
+    			if (resolved_return_type != this->m_return_type)
+    				return;
+    		}
+
     		auto my_parameter_types = new CodeTypeDeclarationCollection();
 
     		for (auto x: *this->m_parameter_types)

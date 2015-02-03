@@ -35,11 +35,14 @@ namespace mlang {
     class CodeCastExpression;
     class CodeObjectCreateExpression;
     class CodeIrBlockStatement;
-    class CodeFileImport;
+    class CodeFileInclude;
     class CodeArrayCreateExpression;
     class CodeArrayIndexerExpression;
     class CodeFieldReferenceExpression;
     class CodeAssemblyCallExpression;
+    class CodeSizeOfExpression;
+    class CodeAttributeArgument;
+	class CodeAttributeDeclaration;
 
 class CodeObjectVisitor {
     public:
@@ -70,11 +73,14 @@ class CodeObjectVisitor {
         virtual void visit(CodeCastExpression* object) = 0;
         virtual void visit(CodeObjectCreateExpression* object) = 0;
         virtual void visit(CodeIrBlockStatement* object) = 0;
-        virtual void visit(CodeFileImport* object) = 0;
+        virtual void visit(CodeFileInclude* object) = 0;
         virtual void visit(CodeArrayCreateExpression* object) = 0;
         virtual void visit(CodeArrayIndexerExpression* object) = 0;
         virtual void visit(CodeFieldReferenceExpression* object) = 0;
         virtual void visit(CodeAssemblyCallExpression* object) = 0;
+        virtual void visit(CodeSizeOfExpression* object) = 0;
+        virtual void visit(CodeAttributeDeclaration* object) = 0;
+        virtual void visit(CodeAttributeArgument* object) = 0;
     };
 }
 #endif	/* CODE_OBJECT_VISITOR_HH */

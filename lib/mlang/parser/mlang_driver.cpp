@@ -38,7 +38,7 @@ bool mlang_driver::parse_file(const std::string &filename) {
 	return parse_stream(in, filename);
 }
 
-bool mlang_driver::import(const std::string &import_statement) {
+bool mlang_driver::include(const std::string &import_statement) {
 	bool ret = true;
 	SourceFile sf(this->m_streamname);
 
@@ -88,6 +88,26 @@ bool mlang_driver::parse_string(const std::string &input,
 	return parse_stream(iss, sname);
 }
 
+mlang::Location* mlang_driver::get_location(const YYLTYPE& l) {
+	mlang::Location * loc = new mlang::Location();
+	loc->file_name(this->m_streamname);
+	loc->first_column(l.begin.column);
+	loc->last_column(l.end.column);
+	loc->first_line(l.begin.line);
+	loc->last_line(l.end.line);
+	return loc;
+}
+
+mlang::Location* mlang_driver::get_location(const YYLTYPE& begin, const YYLTYPE& end) {
+	mlang::Location * loc = new mlang::Location();
+	loc->file_name(this->m_streamname);
+	loc->first_column(begin.begin.column);
+	loc->last_column(end.end.column);
+	loc->first_line(begin.begin.line);
+	loc->last_line(end.end.line);
+	return loc;
+}
+
 void mlang_driver::error(const yy::location& l, const std::string& m) {
 	/*
 	 int i = 0;
@@ -105,6 +125,7 @@ void mlang_driver::error(const yy::location& l, const std::string& m) {
 	error->message(m);
 
 	mlang::Location * loc = new mlang::Location();
+	loc->file_name(this->m_streamname);
 	loc->first_column(l.begin.column);
 	loc->last_column(l.end.column);
 	loc->first_line(l.begin.line);

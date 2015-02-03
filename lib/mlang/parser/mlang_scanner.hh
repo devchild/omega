@@ -12,7 +12,9 @@
 #endif
 
 # include <map>
+# include <stack>
 # include "mlang_parser.hh"
+# include "compiler_error.hh"
 
 namespace yy {
 
@@ -51,6 +53,8 @@ public:
     void begin_block();
     void end_block();
 private:
+    int current_line_indent;
+    std::stack<int> indent;
     std::string m_block_content;
     std::map<std::string, mlang_parser::token_type> keywords;
 };

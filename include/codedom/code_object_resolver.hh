@@ -50,11 +50,14 @@ namespace mlang {
         virtual void visit(CodeCastExpression* object);
         virtual void visit(CodeObjectCreateExpression* object);
         virtual void visit(CodeIrBlockStatement* object);
-        virtual void visit(CodeFileImport* object);
+        virtual void visit(CodeFileInclude* object);
         virtual void visit(CodeArrayCreateExpression* object);
         virtual void visit(CodeArrayIndexerExpression* object);
         virtual void visit(CodeFieldReferenceExpression* object);
         virtual void visit(CodeAssemblyCallExpression* object);
+        virtual void visit(CodeSizeOfExpression* object);
+        virtual void visit(CodeAttributeArgument* object);
+        virtual void visit(CodeAttributeDeclaration* object);
     };
     
     class VariableFieldOrParameterResolver : public CodeObjectResolver
@@ -99,10 +102,12 @@ namespace mlang {
     public:
     	using CodeObjectResolver::visit;
     	CodeMemberMethodResolver(CodeScope* scope, std::string name, CodeTypeDeclarationCollection* parameter_types);
+    	CodeMemberMethodResolver(CodeScope* scope, CodeTypeDeclaration* return_type, std::string name, CodeTypeDeclarationCollection* parameter_types);
     	~CodeMemberMethodResolver();
     	virtual std::list<CodeObject*>* resolve();
     	virtual void visit(CodeMemberMethod* object);
     private:
+    	CodeTypeDeclaration* m_return_type;
     	std::string m_name;
     	CodeScope* m_scope;
     	CodeTypeDeclarationCollection* m_parameter_types;

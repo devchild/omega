@@ -9,6 +9,7 @@
 #include "mlang_code_compiler.hh"
 #include "mlang_dom_provider.hh"
 #include "mlang_code_generator.hh"
+#include "mlang_semantic_analysis.hh"
 
 MLangDomProvider::MLangDomProvider() {
 }
@@ -17,6 +18,10 @@ MLangDomProvider::MLangDomProvider(const MLangDomProvider& orig) {
 }
 
 MLangDomProvider::~MLangDomProvider() {
+}
+
+MLangSemanticAnalysis* MLangDomProvider::CreateSemanticAnalysis() {
+    return new MLangSemanticAnalysis(*this);
 }
 
 MLangCodeGenerator* MLangDomProvider::CreateGenerator() {

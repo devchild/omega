@@ -16,7 +16,7 @@ CompilerResults::CompilerResults(const CompilerResults& orig) {
 CompilerResults::~CompilerResults() {
 }
 
-vector<mlang::p_CompilerError> CompilerResults::errors() {
+vector<mlang::p_CompilerError>& CompilerResults::errors() {
     return this->m_errors;
 }
 

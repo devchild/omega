@@ -4,6 +4,7 @@ namespace mlang {
 	CodeAssemblyCallExpression::CodeAssemblyCallExpression()
 		: CodeExpression()
 	{
+		this->m_return_type = nullptr;
 		this->m_content = "";
 		this->m_constraints = "";
 		this->m_parameters = new CodeExpressionCollection();
@@ -42,6 +43,14 @@ namespace mlang {
 		return this->m_constraints;
 	}
 
+	CodeTypeReference* CodeAssemblyCallExpression::return_type(){
+		return this->m_return_type;
+	}
+
+	void CodeAssemblyCallExpression::return_type(CodeTypeReference* value){
+		this->m_return_type = value;
+	}
+
 	bool
 	CodeAssemblyCallExpression::type_of(CodeObjectKind kind) {
 		return kind == CodeObjectKind::CodeAssemblyCallExpression || CodeExpression::type_of(kind);
@@ -53,5 +62,8 @@ namespace mlang {
 
         for(auto x:*this->m_parameters)
             x->scope(scope);
+
+        if (this->return_type() != nullptr)
+        	this->return_type()->scope(scope);
 	}
 }

@@ -26,7 +26,7 @@
 
 %}
 
-%x BLOCK
+%x INDENTSTATE BLOCK
 
 %option prefix="MLang"
 %option stack noyywrap nounput batch debug c++
@@ -86,68 +86,137 @@ string_literal         				{regular_string}|{verbatim_string}
     return token::INTEGER;
 }
 
-[0-9]*"."[0-9]+ {
-    yylval->doubleVal = atof(yytext);
-    return token::DOUBLE;
-}
+[0-9]*"."[0-9]+ 					{
+									    yylval->doubleVal = atof(yytext);
+									    return token::DOUBLE;
+									}
+[A-Za-z_][A-Za-z0-9_]* 				{
+									    yylval->stringVal = new std::string(yytext, yyleng);
+									    std::string s = *yylval->stringVal;
+									    return token_for(s);
+									}
+\[\] 								{
+										yylval->integerVal = 1;
+										return token::RANK;
+									}
+"[" 								{
+										return token::LEFT_BRACKET;
+									}
+"]" 								{
+										return token::RIGHT_BRACKET;
+									}
+<INITIAL>[ \t\r]+ 					{
+										/* gobble up white-spaces */
+    									yylloc->step();
+									}
+<INITIAL>\n                			{
+										yyless(0);
+										yylloc->columns(-1);
+                                        BEGIN(INDENTSTATE);
+                                       	//return (token::END_STATEMENT);
+                                    }
+<INITIAL><<EOF>>           			{
+										if (indent.size() > 0)
+                                        {
+                                            indent.pop();
+                                            unput(0);
+                                            return(token::DEDENT);
+                                            
+                                        }
+                                        else
+                                        {
+                                        	yyterminate();
+                                        }
+                                    }
+<INITIAL>. 							{
+										/* pass all other characters up to bison */
+									    return static_cast<token_type>(*yytext);
+									}
+<INDENTSTATE>[ ]+ 					{
+										current_line_indent+=yyleng;
+									}
+<INDENTSTATE>\n 					{
+										yylloc->lines(yyleng); 
+										yylloc->step();
+										current_line_indent = 0;
+										
+									}
+<INDENTSTATE><<EOF>>       			{
+										if (indent.size() > 0)
+                                        {
+                                            indent.pop();
+                                            unput(0);
+                                            return(token::DEDENT);
+                                            
+                                        }
+                                        else
+                                        {
+                                        	yyterminate();
+                                        }
+                                    }
+<INDENTSTATE>.                      {
+										yyless(0);
+										yylloc->columns(-1);
+                                        int current_indent = current_line_indent;
+                                        int previous_indent = indent.size() > 0 ? indent.top() : 0;
 
-[A-Za-z_][A-Za-z0-9_]* {
-    yylval->stringVal = new std::string(yytext, yyleng);
-    std::string s = *yylval->stringVal;
-    return token_for(s);
-}
+                                        if (current_indent > previous_indent) {
+                                        	indent.push(current_line_indent);
+	                                        return(token::INDENT);
+                                        }
 
-\[\] 	{
-	yylval->integerVal = 1;
-	return token::RANK;
-}
+                                        if (current_indent < previous_indent) {
+                                        	indent.pop();
+	                                        return (token::DEDENT);
+                                        }
 
- /* gobble up white-spaces */
-[ \t\r]+ {
-    yylloc->step();
-}
+                                        BEGIN(INITIAL);
+                                    }
+<BLOCK>[ ]+ 						{
+										current_line_indent+=yyleng;
+									    yylloc->step();
+									    m_block_content.append(std::string(yytext, yyleng));	
+									}
+<BLOCK>[\t\r]+ 						{
+									    yylloc->step();
+									    m_block_content.append(std::string(yytext, yyleng));	
+									}
+<BLOCK>\n 							{
+										current_line_indent = 0;
+									    yylloc->lines(yyleng); 
+									    yylloc->step();
+									    m_block_content.append(std::string(yytext, yyleng));	
+									}
+<BLOCK><<EOF>>       				{
+                                        unput(0);
+                                        return token::BLOCKCONTENT;
+                                    }
+<BLOCK>. 							{
+										/*
+										If a dedent was detected we consider this blockcontent complete
+										push back the last char and return the content token.
+										*/
+                                        int current_indent = current_line_indent;
+                                        int previous_indent = indent.size() > 0 ? indent.top() : 0;
+                                        
+                                        if (current_indent < previous_indent) 
+                                        {
+                                        	/*
+											You can use yyless(x) to subtract one or more characters from yytext and push those 
+											characters back onto the input stream. Counterintuitively, the argument to yyless is
+											the number of characters from yytext that you wish to keep, and the remainder will
+											be pushed back onto the input stream. yyleng keeps track of the current length of
+											yytext, so the command: 
+											*/
+	                                        yyless(0);
+											yylloc->columns(-1);
+                                        	// BEGIN(INITIAL); this get done by the parser
+                                        	yylval->stringVal = new std::string(m_block_content);
+                                        	return token::BLOCKCONTENT;
+                                        }
 
- /* gobble up end-of-lines */
-\n {
-    yylloc->lines(yyleng); yylloc->step();
-    //ignore
-    //return token::EOL;
-}
-
- /* pass all other characters up to bison */
-. {
-    return static_cast<token_type>(*yytext);
-}
-
-<BLOCK>[ \t\r]+ {
-    yylloc->step();
-    m_block_content.append(std::string(yytext, yyleng));	
-}
-
-<BLOCK>\n {
-    yylloc->lines(yyleng); yylloc->step();
-    m_block_content.append(std::string(yytext, yyleng));	
-}
-
-<BLOCK>"end" {
-
-/*
-You can use yyless(x) to subtract one or more characters from yytext and push those 
-characters back onto the input stream. Counterintuitively, the argument to yyless is
-the number of characters from yytext that you wish to keep, and the remainder will
-be pushed back onto the input stream. yyleng keeps track of the current length of
-yytext, so the command: 
-*/
-	yyless(yyleng-3);
-	yylval->stringVal = new std::string(m_block_content);
-    return mlang_parser::token::BLOCKCONTENT;
-}
-
-<BLOCK>. {
-	m_block_content.append(std::string(yytext, yyleng));	
-}
-
-
+                                       	m_block_content.append(std::string(yytext, yyleng));
+									}
 
  /*** END EXAMPLE - Change the example lexer rules above ***/
 
@@ -160,8 +229,11 @@ Scanner::Scanner(std::istream* in,
 		 std::ostream* out)
     : MLangFlexLexer(in, out)
 {
+	this->current_line_indent = 0;
  	this->keywords = std::map<std::string, mlang_parser::token_type>();
+ 	this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("def", mlang_parser::token::DEF));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("return", mlang_parser::token::TOK_RETURN));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("sizeof", mlang_parser::token::SIZEOF));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("end", mlang_parser::token::BLOCK_END));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("if", mlang_parser::token::IF));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("else", mlang_parser::token::ELSE));
@@ -169,7 +241,7 @@ Scanner::Scanner(std::istream* in,
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("namespace", mlang_parser::token::NAMESPACE));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("class", mlang_parser::token::CLASS));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("struct", mlang_parser::token::STRUCT));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("import", mlang_parser::token::IMPORT));
+    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("include", mlang_parser::token::INCLUDE));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("ir", mlang_parser::token::IR));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("asm", mlang_parser::token::ASM));
     this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("new", mlang_parser::token::NEW));

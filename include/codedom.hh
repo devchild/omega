@@ -8,7 +8,7 @@
 #ifndef CODEDOM_HH
 #define	CODEDOM_HH
 
-#include <codedom/code_assign_expression.hh>
+#include "codedom/code_assign_expression.hh"
 #include "codedom/code_array_create_expression.hh"
 #include "codedom/code_compile_unit.hh"
 #include "codedom/code_expression.hh"
@@ -40,10 +40,13 @@
 #include "codedom/code_scope.hh"
 #include "codedom/code_object_create_expression.hh"
 #include "codedom/code_ir_block_statement.hh"
-#include "codedom/code_file_import.hh"
+#include "codedom/code_file_include.hh"
 #include "codedom/code_array_indexer_expression.hh"
 #include "codedom/code_field_reference_expression.hh"
 #include "codedom/code_assembly_call_expression.hh"
+#include "codedom/code_size_of_expression.hh"
+#include "codedom/code_attribute_argument.hh"
+#include "codedom/code_attribute_declaration.hh"
 
 #endif	/* CODEDOM_HH */
 

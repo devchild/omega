@@ -14,6 +14,7 @@
 class MLangCodeCompiler;
 class MLangCodeParser;
 class MLangCodeGenerator;
+class MLangSemanticAnalysis;
 
 class MLangDomProvider {
 public:
@@ -26,6 +27,8 @@ public:
     MLangCodeParser* CreateParser();
     
     MLangCodeGenerator* CreateGenerator();
+
+    MLangSemanticAnalysis* CreateSemanticAnalysis();
 private:
 };
 
