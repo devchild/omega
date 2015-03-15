@@ -30,7 +30,7 @@ namespace mlang {
     }
     
     void
-    CodeCastExpression::accept(CodeObjectVisitor* visitor) {
+    CodeCastExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

@@ -14,7 +14,7 @@ namespace mlang {
     }
 
     void
-    CodeIterationStatement::accept(CodeObjectVisitor* visitor) {
+    CodeIterationStatement::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
 

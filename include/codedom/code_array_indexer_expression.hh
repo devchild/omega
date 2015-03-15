@@ -12,14 +12,14 @@
 
 namespace mlang {
     class CodeScope;
-    class CodeObjectVisitor;
+    class ICodeObjectVisitor;
 
     class CodeArrayIndexerExpression : public CodeExpression {
     public:
         using CodeObject::scope;
         CodeArrayIndexerExpression();
         ~CodeArrayIndexerExpression();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
 
         virtual bool type_of(CodeObjectKind kind);
         void scope(CodeScope* scope) override;

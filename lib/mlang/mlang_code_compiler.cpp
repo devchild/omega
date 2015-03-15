@@ -138,10 +138,165 @@ static int generateobj(llvm::tool_output_file* Out, llvm::Module * module) {
 	return 0;
 }
 
+void
+MLangCodeCompiler::IncludeEmbeddedTypes(mlang::CodeCompileUnit* compile_unit) {
+	//
+	// create embedded types
+	//
+	CodeTypeDeclaration * _int1 = new CodeTypeDeclaration();
+	_int1->name("Int1");
+	_int1->is_struct(true);
+	_int1->is_embedded(true);
+	compile_unit->types()->push_back(_int1);
+	_int1->parent(compile_unit);
+
+	CodeTypeDeclaration * _bool = new CodeTypeDeclaration();
+	_bool->name("Bool");
+	_bool->is_struct(true);
+	_bool->is_embedded(true);
+	compile_unit->types()->push_back(_bool);
+	_bool->parent(compile_unit);
+
+	CodeTypeDeclaration * _decimal = new CodeTypeDeclaration();
+	_decimal->name("Decimal");
+	_decimal->is_struct(true);
+	_decimal->is_embedded(true);
+	compile_unit->types()->push_back(_decimal);
+	_decimal->parent(compile_unit);
+
+	CodeTypeDeclaration * _sbyte = new CodeTypeDeclaration();
+	_sbyte->name("SByte");
+	_sbyte->is_struct(true);
+	_sbyte->is_embedded(true);
+	compile_unit->types()->push_back(_sbyte);
+	_sbyte->parent(compile_unit);
+
+	CodeTypeDeclaration * _byte = new CodeTypeDeclaration();
+	_byte->name("Byte");
+	_byte->is_struct(true);
+	_byte->is_embedded(true);
+	compile_unit->types()->push_back(_byte);
+	_byte->parent(compile_unit);
+
+	CodeTypeDeclaration * _short = new CodeTypeDeclaration();
+	_short->name("Int16");
+	_short->is_struct(true);
+	_short->is_embedded(true);
+	compile_unit->types()->push_back(_short);
+	_short->parent(compile_unit);
+
+	CodeTypeDeclaration * _ushort = new CodeTypeDeclaration();
+	_ushort->name("UInt16");
+	_ushort->is_struct(true);
+	_ushort->is_embedded(true);
+	compile_unit->types()->push_back(_ushort);
+	_ushort->parent(compile_unit);
+
+	CodeTypeDeclaration * _int32 = new CodeTypeDeclaration();
+	_int32->name("Int32");
+	_int32->is_struct(true);
+	_int32->is_embedded(true);
+	compile_unit->types()->push_back(_int32);
+	_int32->parent(compile_unit);
+
+	CodeTypeDeclaration * _uint32 = new CodeTypeDeclaration();
+	_uint32->name("UInt32");
+	_uint32->is_struct(true);
+	_uint32->is_embedded(true);
+	compile_unit->types()->push_back(_uint32);
+	_uint32->parent(compile_unit);
+
+	CodeTypeDeclaration * _long = new CodeTypeDeclaration();
+	_long->name("Int64");
+	_long->is_struct(true);
+	_long->is_embedded(true);
+	compile_unit->types()->push_back(_long);
+	_long->parent(compile_unit);
+
+	CodeTypeDeclaration * _ulong = new CodeTypeDeclaration();
+	_ulong->name("UInt64");
+	_ulong->is_struct(true);
+	_ulong->is_embedded(true);
+	compile_unit->types()->push_back(_ulong);
+	_ulong->parent(compile_unit);
+
+	CodeTypeDeclaration * _char = new CodeTypeDeclaration();
+	_char->name("Char");
+	_char->is_struct(true);
+	_char->is_embedded(true);
+	compile_unit->types()->push_back(_char);
+	_char->parent(compile_unit);
+
+	CodeTypeDeclaration * _float = new CodeTypeDeclaration();
+	_float->name("Single");
+	_float->is_struct(true);
+	_float->is_embedded(true);
+	compile_unit->types()->push_back(_float);
+	_float->parent(compile_unit);
+
+	CodeTypeDeclaration * _double = new CodeTypeDeclaration();
+	_double->name("Double");
+	_double->is_struct(true);
+	_double->is_embedded(true);
+	compile_unit->types()->push_back(_double);
+	_double->parent(compile_unit);
+
+	CodeTypeDeclaration * _object = new CodeTypeDeclaration();
+	_object->name("Object");
+	_object->is_struct(true);
+	_object->is_embedded(true);
+	compile_unit->types()->push_back(_object);
+	_object->parent(compile_unit);
+
+	CodeTypeDeclaration * _intptr = new CodeTypeDeclaration();
+	_intptr->name("IntPtr");
+	_intptr->is_struct(true);
+	_intptr->is_embedded(true);
+	compile_unit->types()->push_back(_intptr);
+	_intptr->parent(compile_unit);
+
+	CodeTypeDeclaration * _type = new CodeTypeDeclaration();
+	_type->name("Type");
+	_type->is_class(true);
+	_type->is_embedded(true);
+	compile_unit->types()->push_back(_type);
+	_type->parent(compile_unit);
+
+	CodeTypeDeclaration * _void = new CodeTypeDeclaration();
+	_void->name("Void");
+	_void->is_struct(true);
+	_void->is_embedded(true);
+	compile_unit->types()->push_back(_void);
+	_void->parent(compile_unit);
+
+	CodeTypeDeclaration * array = new CodeTypeDeclaration();
+	array->name("Array");
+	array->is_class(true);
+	array->is_embedded(true);
+	compile_unit->types()->push_back(array);
+	array->parent(compile_unit);
+
+	CodeTypeDeclaration * operator_attribute = new CodeTypeDeclaration();
+	operator_attribute->name("Operator");
+	operator_attribute->is_class(true);
+	operator_attribute->is_embedded(true);
+	compile_unit->types()->push_back(operator_attribute);
+	operator_attribute->parent(compile_unit);
+
+	CodeTypeDeclaration * cast_operator_attribute = new CodeTypeDeclaration();
+	cast_operator_attribute->name("CastOperator");
+	cast_operator_attribute->is_class(true);
+	cast_operator_attribute->is_embedded(true);
+	compile_unit->types()->push_back(cast_operator_attribute);
+	cast_operator_attribute->parent(compile_unit);
+}
+
 CompilerResults*
 MLangCodeCompiler::FromDomBatch(CompilerParameters options,
 		mlang::CodeCompileUnit* compile_unit) {
 	auto ret = new CompilerResults();
+
+	IncludeEmbeddedTypes(compile_unit);
 
 	MLangSemanticAnalysis* semantics = this->m_provider.CreateSemanticAnalysis();
 	semantics->analyse(compile_unit);
@@ -165,6 +320,7 @@ MLangCodeCompiler::FromDomBatch(CompilerParameters options,
 		 */
 
 		if (options.dump_ir()) {
+			// run them across all functions
 			module->dump();
 		}
 		/*

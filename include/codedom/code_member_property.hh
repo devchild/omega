@@ -19,7 +19,7 @@ namespace mlang {
         using CodeObject::scope;
         CodeMemberProperty();
         ~CodeMemberProperty();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);
 

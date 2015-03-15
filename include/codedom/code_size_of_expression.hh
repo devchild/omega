@@ -15,14 +15,14 @@
 namespace mlang {
     class CodeScope;
     class CodeExpression;
-    class CodeObjectVisitor;
+    class ICodeObjectVisitor;
 
     class CodeSizeOfExpression : public CodeExpression {
     public:
         using CodeObject::scope;
         CodeSizeOfExpression();
         ~CodeSizeOfExpression();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
 
         void type(CodeTypeReference* value);
         CodeTypeReference* type();

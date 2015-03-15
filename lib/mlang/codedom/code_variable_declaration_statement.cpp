@@ -42,7 +42,7 @@ namespace mlang {
     }
 
     void
-    CodeVariableDeclarationStatement::accept(CodeObjectVisitor* visitor) {
+    CodeVariableDeclarationStatement::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
 

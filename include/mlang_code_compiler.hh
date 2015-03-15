@@ -24,6 +24,7 @@ public:
     
     MLangDomProvider &provider();
 private:
+    void IncludeEmbeddedTypes(mlang::CodeCompileUnit* compile_unit);
     MLangDomProvider &m_provider;
 };
 

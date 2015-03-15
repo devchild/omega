@@ -21,7 +21,7 @@ namespace mlang {
 
         CodeAssignExpression();
         ~CodeAssignExpression();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         void left(CodeExpression* value);
         CodeExpression* left();

@@ -15,7 +15,7 @@
 namespace mlang {
 	class Location;
     class CodeScope;
-    class CodeObjectVisitor;
+    class ICodeObjectVisitor;
     class CodeCompileUnit;    
     class CodeTypeDeclaration;
     class CodeMemberMethod;
@@ -23,6 +23,13 @@ namespace mlang {
     
 	class UserDataKind {
 	public:
+    	static const std::string MLANG_INFERRED_TYPE_REFERENCE;
+    	static const std::string MLANG_RESOLVED_TYPE_DECLARATION;
+    	static const std::string MLANG_RESOLVED_MEMBER_METHOD_LIST;
+    	static const std::string MLANG_RESOLVED_MEMBER_METHOD;
+    	static const std::string MLANG_RESOLVED_MEMBER_FIELD;
+    	static const std::string MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT;
+    	static const std::string MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION;
 		static const std::string LLVM_TYPE;
 		static const std::string LLVM_L_VALUE;
 		static const std::string LLVM_R_VALUE;
@@ -78,14 +85,19 @@ namespace mlang {
         virtual std::string id();
         virtual void scope(CodeScope* scope);
         virtual bool type_of(CodeObjectKind type);
-        virtual void accept(CodeObjectVisitor* visitor) = 0;
+        virtual void accept(ICodeObjectVisitor* visitor) = 0;
         virtual CodeCompileUnit* code_compile_unit();
         CodeTypeDeclaration* resolve_type(std::string type_name);
-        CodeTypeDeclaration* resolve_type(CodeTypeReference* type_reference);
+        // CodeTypeDeclaration* resolve_type(CodeTypeReference* type_reference);
         std::list<CodeObject*>* resolve_variable(std::string variable_name);
         CodeMemberMethod* resolve_method(std::string method_name, std::list<CodeTypeDeclaration*>* parameter_types);
         CodeMemberMethod* resolve_method(std::string method_name, CodeTypeDeclaration* return_type, std::list<CodeTypeDeclaration*>* parameter_types);
-        std::map<std::string, void*>& user_data();
+
+
+        void* user_data(std::string key);
+        void user_data(std::string key, void* value);
+
+
         virtual Location* location();
         virtual void location(Location* value);
     private:
@@ -94,7 +106,7 @@ namespace mlang {
         CodeScope* m_scope;
         std::string m_id;
         Location* m_location;
-        std::map<std::string, void*>* m_user_data;
+        std::map<std::string, void*> m_user_data;
     };
 }
 

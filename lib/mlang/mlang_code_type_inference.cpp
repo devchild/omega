@@ -12,16 +12,16 @@ CodeTypeReference*
 MLangCodeTypeInference::result() {
 	return this->m_result;
 }
-void MLangCodeTypeInference::visit(CodeBinaryOperatorExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeBinaryOperatorExpression* object) {
 	std::list<CodeTypeDeclaration*> params;
 
 	MLangCodeTypeInference inf_left;
 	object->left()->accept(&inf_left);
-	params.push_back(object->resolve_type(inf_left.result()));
+	params.push_back((CodeTypeDeclaration*) inf_left.result()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION));
 
 	MLangCodeTypeInference inf_right;
 	object->right()->accept(&inf_right);
-	params.push_back(object->resolve_type(inf_right.result()));
+	params.push_back((CodeTypeDeclaration*) inf_right.result()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION));
 
 	std::string method_name = "";
 	switch (object->operator_()) {
@@ -117,20 +117,20 @@ void MLangCodeTypeInference::visit(CodeBinaryOperatorExpression* object) {
 		break;
 	}
 }
-void MLangCodeTypeInference::visit(CodeCompileUnit* object) {
+void MLangCodeTypeInference::on_visit(CodeCompileUnit* object) {
 }
-void MLangCodeTypeInference::visit(CodeConditionStatement* object) {
+void MLangCodeTypeInference::on_visit(CodeConditionStatement* object) {
 }
-void MLangCodeTypeInference::visit(CodeExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeExpression* object) {
 }
-void MLangCodeTypeInference::visit(CodeExpressionStatement* object) {
+void MLangCodeTypeInference::on_visit(CodeExpressionStatement* object) {
 }
-void MLangCodeTypeInference::visit(CodeIterationStatement* object) {
+void MLangCodeTypeInference::on_visit(CodeIterationStatement* object) {
 }
-void MLangCodeTypeInference::visit(CodeMemberField* object) {
+void MLangCodeTypeInference::on_visit(CodeMemberField* object) {
 	this->m_result = object->type();
 }
-void MLangCodeTypeInference::visit(CodeMemberMethod* object) {
+void MLangCodeTypeInference::on_visit(CodeMemberMethod* object) {
 	this->m_result = object->return_type();
 	if (this->m_result == nullptr) {
 		for (auto x : *object->statements()) {
@@ -144,36 +144,37 @@ void MLangCodeTypeInference::visit(CodeMemberMethod* object) {
 		}
 	}
 }
-void MLangCodeTypeInference::visit(CodeMemberProperty* object) {
+void MLangCodeTypeInference::on_visit(CodeMemberProperty* object) {
 }
-void MLangCodeTypeInference::visit(CodeMethodInvokeExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeMethodInvokeExpression* object) {
 	std::list<CodeTypeDeclaration*> param_types;
 
 	if (object->method()->target_object() != nullptr) {
 		MLangCodeTypeInference param_inf;
 		object->method()->target_object()->accept(&param_inf);
-		param_types.push_back(object->resolve_type(param_inf.result()));
+		param_types.push_back(
+				(CodeTypeDeclaration*) param_inf.result()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION));
 	}
 
 	for (auto p : *object->parameters()) {
 		MLangCodeTypeInference param_inf;
 		p->accept(&param_inf);
-		param_types.push_back(object->resolve_type(param_inf.result()));
+		param_types.push_back(
+				(CodeTypeDeclaration*) param_inf.result()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION));
 	}
 
-	auto method = object->resolve_method(object->method()->method_name(),
-			&param_types);
+	auto method = (CodeMemberMethod*)object->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_METHOD); //object->resolve_method(object->method()->method_name(), &param_types);
 	this->m_result = method->return_type();
 }
-void MLangCodeTypeInference::visit(CodeFileInclude* object) {
+void MLangCodeTypeInference::on_visit(CodeFileInclude* object) {
 }
-void MLangCodeTypeInference::visit(CodeArrayCreateExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeArrayCreateExpression* object) {
 	this->m_result = object->create_type();
 }
-void MLangCodeTypeInference::visit(CodeFieldReferenceExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeFieldReferenceExpression* object) {
 	MLangCodeTypeInference exp_inf;
 	object->target_object()->accept(&exp_inf);
-	auto target_object_type = object->resolve_type(exp_inf.result());
+	auto target_object_type = (CodeTypeDeclaration*) exp_inf.result()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
 
 	for (auto x : *target_object_type->members()) {
 		if (x->name() == object->field_name()) {
@@ -183,41 +184,41 @@ void MLangCodeTypeInference::visit(CodeFieldReferenceExpression* object) {
 		}
 	}
 }
-void MLangCodeTypeInference::visit(CodeArrayIndexerExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeArrayIndexerExpression* object) {
 	MLangCodeTypeInference exp_inf;
 	object->target_object()->accept(&exp_inf);
 	this->m_result = exp_inf.result()->array_element_type();
 }
-void MLangCodeTypeInference::visit(CodeMethodReferenceExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeMethodReferenceExpression* object) {
 }
-void MLangCodeTypeInference::visit(CodeMethodReturnStatement* object) {
+void MLangCodeTypeInference::on_visit(CodeMethodReturnStatement* object) {
 	MLangCodeTypeInference exp_inf;
 	object->expression()->accept(&exp_inf);
 	this->m_result = exp_inf.result();
 }
-void MLangCodeTypeInference::visit(CodeNamespace* object) {
+void MLangCodeTypeInference::on_visit(CodeNamespace* object) {
 }
-void MLangCodeTypeInference::visit(CodeObject* object) {
+void MLangCodeTypeInference::on_visit(CodeObject* object) {
 }
-void MLangCodeTypeInference::visit(CodeParameterDeclarationExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeParameterDeclarationExpression* object) {
 	this->m_result = object->type();
 }
-void MLangCodeTypeInference::visit(CodePrimitiveExpression* object) {
+void MLangCodeTypeInference::on_visit(CodePrimitiveExpression* object) {
 	this->m_result = object->type();
 }
-void MLangCodeTypeInference::visit(CodeStatement* object) {
+void MLangCodeTypeInference::on_visit(CodeStatement* object) {
 }
-void MLangCodeTypeInference::visit(CodeTypeDeclaration* object) {
+void MLangCodeTypeInference::on_visit(CodeTypeDeclaration* object) {
 }
-void MLangCodeTypeInference::visit(CodeTypeMember* object) {
+void MLangCodeTypeInference::on_visit(CodeTypeMember* object) {
 }
-void MLangCodeTypeInference::visit(CodeTypeReference* object) {
+void MLangCodeTypeInference::on_visit(CodeTypeReference* object) {
 	this->m_result = object;
 }
-void MLangCodeTypeInference::visit(CodeVariableDeclarationStatement* object) {
+void MLangCodeTypeInference::on_visit(CodeVariableDeclarationStatement* object) {
 	this->m_result = object->type();
 }
-void MLangCodeTypeInference::visit(CodeVariableReferenceExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeVariableReferenceExpression* object) {
 	auto res = object->resolve_variable(object->variable_name());
 
 	MLangCodeTypeInference exp_inf;
@@ -225,39 +226,39 @@ void MLangCodeTypeInference::visit(CodeVariableReferenceExpression* object) {
 	this->m_result = exp_inf.result();
 }
 
-void MLangCodeTypeInference::visit(CodeAssignExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeAssignExpression* object) {
 	MLangCodeTypeInference exp_inf;
 	object->left()->accept(&exp_inf);
 	this->m_result = exp_inf.result();
 }
-void MLangCodeTypeInference::visit(CodeCastExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeCastExpression* object) {
 	this->m_result = object->target_type();
 }
-void MLangCodeTypeInference::visit(CodeObjectCreateExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeObjectCreateExpression* object) {
 	this->m_result = object->create_type();
 }
-void MLangCodeTypeInference::visit(CodeIrBlockStatement* object) {
+void MLangCodeTypeInference::on_visit(CodeIrBlockStatement* object) {
 	auto res = new CodeTypeReference();
 	res->base_type("Void");
 	this->m_result = res;
 }
 
-void MLangCodeTypeInference::visit(CodeSizeOfExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeSizeOfExpression* object) {
 	auto res = new CodeTypeReference();
 	res->base_type("UInt64");
 	this->m_result = res;
 }
 
-void MLangCodeTypeInference::visit(CodeAssemblyCallExpression* object) {
+void MLangCodeTypeInference::on_visit(CodeAssemblyCallExpression* object) {
 	auto res = new CodeTypeReference();
 	res->base_type("Void");
 	this->m_result = res;
 }
 
-void MLangCodeTypeInference::visit(CodeAttributeDeclaration* object) {
+void MLangCodeTypeInference::on_visit(CodeAttributeDeclaration* object) {
 
 }
 
-void MLangCodeTypeInference::visit(CodeAttributeArgument* object) {
+void MLangCodeTypeInference::on_visit(CodeAttributeArgument* object) {
 
 }

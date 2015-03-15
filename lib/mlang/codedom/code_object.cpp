@@ -1,9 +1,18 @@
+#include <string>
+
 #include <codedom.hh>
 #include <uuid/uuid.h>
 #include <llvm/IR/Type.h>
 #include <llvm/IR/DerivedTypes.h>
 
 namespace mlang {
+	const std::string UserDataKind::MLANG_INFERRED_TYPE_REFERENCE = "MLANG_INFERRED_TYPE_REFERENCE";
+	const std::string UserDataKind::MLANG_RESOLVED_MEMBER_METHOD = "MLANG_RESOLVED_MEMBER_METHOD";
+	const std::string UserDataKind::MLANG_RESOLVED_MEMBER_METHOD_LIST = "MLANG_RESOLVED_MEMBER_METHOD_LIST";
+	const std::string UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION = "MLANG_RESOLVED_TYPE_DECLARATION";
+	const std::string UserDataKind::MLANG_RESOLVED_MEMBER_FIELD = "MLANG_RESOLVED_MEMBER_FIELD";
+	const std::string UserDataKind::MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT = "MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT";
+	const std::string UserDataKind::MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION = "MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION";
 	const std::string UserDataKind::LLVM_TYPE = "llvm_type";
 	const std::string UserDataKind::LLVM_L_VALUE = "llvm_l_value";
 	const std::string UserDataKind::LLVM_R_VALUE = "llvm_r_value";
@@ -19,16 +28,22 @@ namespace mlang {
         char *str = new char[50];
         uuid_unparse(id, str);
         this->m_id = std::string(str);
-        this->m_user_data = new std::map<std::string, void*>();
     }
 
     CodeObject::~CodeObject() {
 
     }
 
-    std::map<std::string, void*>&
-    CodeObject::user_data() {
-        return *this->m_user_data;
+    void* CodeObject::user_data(std::string key) {
+    	auto res = this->m_user_data.find(key);
+    	if (res != this->m_user_data.end())
+    		return res->second;
+    	else
+    		return nullptr;
+    }
+
+    void CodeObject::user_data(std::string key, void* value) {
+    	this->m_user_data[key] = value;
     }
 
     CodeObject*
@@ -66,6 +81,7 @@ namespace mlang {
     	this->m_location = value;
     }
 
+    /*
 	CodeTypeDeclaration*
 	CodeObject::resolve_type(CodeTypeReference* type_reference) {
 		if (type_reference->array_element_type() != nullptr)
@@ -91,36 +107,22 @@ namespace mlang {
 			return resolve_type(type_reference->base_type());
 		}
 	}
+	*/
 
 
     CodeTypeDeclaration*
     CodeObject::resolve_type(std::string type_name) {
-        CodeTypeDeclarationResolver * resolver = new CodeTypeDeclarationResolver(this->scope(), type_name, "system");
-        auto ret = resolver->resolve();
-        if (ret->size() == 1 && ret->back()->type_of(CodeObjectKind::CodeTypeDeclaration))
-            return static_cast<CodeTypeDeclaration*> (ret->back());
-        else
-            return nullptr;
+    	return (CodeTypeDeclaration*)this->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
     }
 
     CodeMemberMethod*
 	CodeObject::resolve_method(std::string method_name, std::list<CodeTypeDeclaration*>* parameter_types) {
-    	CodeMemberMethodResolver * resolver = new CodeMemberMethodResolver(this->scope(), method_name, parameter_types);
-        auto ret = resolver->resolve();
-        if (ret->size() == 1 && ret->back()->type_of(CodeObjectKind::CodeMemberMethod))
-            return static_cast<CodeMemberMethod*> (ret->back());
-        else
-            return nullptr;
+    	return (CodeMemberMethod*)this->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_METHOD);
     }
 
     CodeMemberMethod*
     CodeObject::resolve_method(std::string method_name, CodeTypeDeclaration* return_type, std::list<CodeTypeDeclaration*>* parameter_types) {
-        	CodeMemberMethodResolver * resolver = new CodeMemberMethodResolver(this->scope(), return_type, method_name, parameter_types);
-            auto ret = resolver->resolve();
-            if (ret->size() == 1 && ret->back()->type_of(CodeObjectKind::CodeMemberMethod))
-                return static_cast<CodeMemberMethod*> (ret->back());
-            else
-                return nullptr;
+    	return (CodeMemberMethod*)this->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_METHOD);
      }
 
     std::list<CodeObject*>*

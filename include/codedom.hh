@@ -8,6 +8,7 @@
 #ifndef CODEDOM_HH
 #define	CODEDOM_HH
 
+#include "codedom/code_object_visitor.hh"
 #include "codedom/code_assign_expression.hh"
 #include "codedom/code_array_create_expression.hh"
 #include "codedom/code_compile_unit.hh"
@@ -18,7 +19,6 @@
 #include "codedom/code_namespace.hh"
 #include "codedom/code_object.hh"
 #include "codedom/code_object_collections.hh"
-#include "codedom/code_object_visitor.hh"
 #include "codedom/code_type_declaration.hh"
 #include "codedom/code_type_member.hh"
 #include "codedom/code_type_reference.hh"

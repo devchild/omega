@@ -40,7 +40,7 @@ CodeObjectCreateExpression::type_of(CodeObjectKind kind) {
 }
 
 void
-CodeObjectCreateExpression::accept(CodeObjectVisitor* visitor) {
+CodeObjectCreateExpression::accept(ICodeObjectVisitor* visitor) {
     visitor->visit(this);
 }
 

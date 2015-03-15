@@ -32,7 +32,7 @@ namespace mlang {
     }
     
     void
-    CodeNamespace::accept(CodeObjectVisitor* visitor) {
+    CodeNamespace::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

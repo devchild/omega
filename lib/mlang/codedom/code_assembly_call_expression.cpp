@@ -19,7 +19,7 @@ namespace mlang {
 	}
 
 	void
-	CodeAssemblyCallExpression::accept(CodeObjectVisitor* visitor) {
+	CodeAssemblyCallExpression::accept(ICodeObjectVisitor* visitor) {
 		visitor->visit(this);
 	}
 

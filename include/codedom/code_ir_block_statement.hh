@@ -12,14 +12,14 @@ namespace mlang {
     class CodeScope;
     class CodeExpression;
     class CodeStatement;
-    class CodeObjectVisitor;
+    class ICodeObjectVisitor;
     
     class CodeIrBlockStatement : public CodeStatement {
     public:
         using CodeObject::scope;
         CodeIrBlockStatement();
         ~CodeIrBlockStatement();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
 
         void content(std::string value);

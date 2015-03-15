@@ -21,7 +21,7 @@ namespace mlang {
         using CodeObject::scope;
         CodeIterationStatement();
         ~CodeIterationStatement();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         CodeStatement* increment_statement();
         CodeStatement* init_statement();

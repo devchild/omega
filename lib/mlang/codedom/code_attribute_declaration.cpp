@@ -10,7 +10,7 @@ namespace mlang {
     }
 
     void
-	CodeAttributeDeclaration::accept(CodeObjectVisitor* visitor) {
+	CodeAttributeDeclaration::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
 

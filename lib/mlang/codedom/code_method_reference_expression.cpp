@@ -35,7 +35,7 @@ namespace mlang {
         this->m_target_object = value;
     }
 
-    void CodeMethodReferenceExpression::accept(CodeObjectVisitor* visitor) {
+    void CodeMethodReferenceExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

@@ -47,7 +47,7 @@ namespace mlang {
         	return CodeObject::id();
     }
 
-	void CodeMemberMethod::accept(CodeObjectVisitor* visitor) {
+	void CodeMemberMethod::accept(ICodeObjectVisitor* visitor) {
 		visitor->visit(this);
 	}
 

@@ -34,7 +34,7 @@ namespace mlang {
     }
 
     void
-	CodeFieldReferenceExpression::accept(CodeObjectVisitor* visitor) {
+	CodeFieldReferenceExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
 

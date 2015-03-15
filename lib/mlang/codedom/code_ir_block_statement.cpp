@@ -12,7 +12,7 @@ namespace mlang {
 	}
 
 	void
-	CodeIrBlockStatement::accept(CodeObjectVisitor* visitor) {
+	CodeIrBlockStatement::accept(ICodeObjectVisitor* visitor) {
 		visitor->visit(this);
 	}
 

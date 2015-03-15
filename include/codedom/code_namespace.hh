@@ -26,7 +26,7 @@ namespace mlang {
         void name(std::string value);
         CodeTypeDeclarationCollection* types();
         CodeMemberMethodCollection* methods();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);
     private:

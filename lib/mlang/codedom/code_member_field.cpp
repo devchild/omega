@@ -9,7 +9,7 @@ namespace mlang {
     }
     
     void
-    CodeMemberField::accept(CodeObjectVisitor* visitor) {
+    CodeMemberField::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

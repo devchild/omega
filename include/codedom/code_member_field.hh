@@ -21,7 +21,7 @@ namespace mlang {
         using CodeObject::resolve_type;
 
         CodeMemberField();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         void init_expression(CodeExpression* value);
         CodeExpression* init_expression();

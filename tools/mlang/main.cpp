@@ -45,9 +45,9 @@ int main(int argc, char ** argv) {
 				auto result = compiler->FromDomBatch(parameters, compile_unit);
 				for (auto x : result->errors()) {
 					if (x->has_location())
-						std::cerr << x->location()->to_string() << x->message() << std::endl;
+						std::cerr << x->location()->to_string() << ": error: " << x->message() << std::endl;
 					else
-						std::cerr << x->message() << std::endl;
+						std::cerr << ": error: " << x->message() << std::endl;
 				}
 			}
 			else

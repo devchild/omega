@@ -40,7 +40,7 @@ namespace mlang {
     }
     
     void
-	CodeConditionStatement::accept(CodeObjectVisitor* visitor) {
+	CodeConditionStatement::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
 

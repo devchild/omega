@@ -13,7 +13,7 @@ namespace mlang {
     	this->m_size_expression = nullptr;
     }
 
-    void CodeArrayCreateExpression::accept(CodeObjectVisitor* visitor) {
+    void CodeArrayCreateExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

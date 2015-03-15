@@ -21,7 +21,7 @@ namespace mlang {
         ~CodeStatement();
         virtual void scope(CodeScope* scope);
         virtual bool type_of(CodeObjectKind kind);
-        virtual void accept(CodeObjectVisitor* visitor) = 0;
+        virtual void accept(ICodeObjectVisitor* visitor) = 0;
     };
 }
 

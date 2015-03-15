@@ -28,7 +28,7 @@ public:
 	CodeTypeReference* create_type();
 
 	bool type_of(CodeObjectKind kind);
-	void accept(CodeObjectVisitor* visitor);
+	void accept(ICodeObjectVisitor* visitor);
 	void scope(CodeScope* scope);
 private:
 	CodeExpressionCollection * m_parameters;

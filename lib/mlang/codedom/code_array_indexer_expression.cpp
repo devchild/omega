@@ -13,7 +13,7 @@ namespace mlang {
     	this->m_target_object = nullptr;
     }
 
-    void CodeArrayIndexerExpression::accept(CodeObjectVisitor* visitor) {
+    void CodeArrayIndexerExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

@@ -13,7 +13,7 @@
 namespace mlang 
 {
     class CodeObject;
-    class CodeObjectVisitor;
+    class ICodeObjectVisitor;
     enum class CodeObjectKind;
     class CodeScope;
     
@@ -34,7 +34,7 @@ namespace mlang
         int array_rank();
         void array_rank(int value);
 
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);
     private:

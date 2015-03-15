@@ -26,7 +26,7 @@ namespace mlang {
         this->m_expression = value;
     }
     
-    void CodeExpressionStatement::accept(CodeObjectVisitor* visitor) {
+    void CodeExpressionStatement::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

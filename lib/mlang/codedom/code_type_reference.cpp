@@ -21,7 +21,7 @@ namespace mlang {
     }
     
     void
-    CodeTypeReference::accept(CodeObjectVisitor* visitor) {
+    CodeTypeReference::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

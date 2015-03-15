@@ -43,7 +43,7 @@ namespace mlang {
     }
     
     void
-    CodeBinaryOperatorExpression::accept(CodeObjectVisitor* visitor) {
+    CodeBinaryOperatorExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

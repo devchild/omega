@@ -33,7 +33,7 @@ namespace mlang {
     }
     
     void
-    CodeParameterDeclarationExpression::accept(CodeObjectVisitor* visitor) {
+    CodeParameterDeclarationExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

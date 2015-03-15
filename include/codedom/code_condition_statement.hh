@@ -21,7 +21,7 @@ namespace mlang {
         using CodeObject::scope;
         CodeConditionStatement();
         ~CodeConditionStatement();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
 
         CodeStatementCollection* true_statements();
         CodeStatementCollection* false_statements();

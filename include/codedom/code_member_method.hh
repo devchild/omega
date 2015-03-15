@@ -39,7 +39,7 @@ namespace mlang {
         void attributes(MemberAttributes value);
         MemberAttributes attributes();
 
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);
         virtual std::string id();

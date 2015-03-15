@@ -17,61 +17,33 @@
 
 namespace mlang {
 
-    class CodeObjectResolver : public CodeObjectVisitor {
+    class ICodeObjectResolver {
+    protected:
+        // allow construction for child classes only
+    	ICodeObjectResolver();
     public:
-        using CodeObjectVisitor::visit;
-                
-        CodeObjectResolver();
-        virtual ~CodeObjectResolver();
+        virtual ~ICodeObjectResolver();
+
+        // forbid copying
+        ICodeObjectResolver(ICodeObjectResolver const &) = delete;
+        ICodeObjectResolver & operator=(ICodeObjectResolver const &) = delete;
         virtual std::list<CodeObject*>* resolve() = 0;
-        virtual void visit(CodeBinaryOperatorExpression* object);
-        virtual void visit(CodeCompileUnit* object);
-        virtual void visit(CodeConditionStatement* object);
-        virtual void visit(CodeExpression* object);
-        virtual void visit(CodeExpressionStatement* object);
-        virtual void visit(CodeIterationStatement* object);
-        virtual void visit(CodeMemberField* object);
-        virtual void visit(CodeMemberMethod* object);
-        virtual void visit(CodeMemberProperty* object);
-        virtual void visit(CodeMethodInvokeExpression* object);
-        virtual void visit(CodeMethodReferenceExpression* object);
-        virtual void visit(CodeMethodReturnStatement* object);
-        virtual void visit(CodeNamespace* object);
-        virtual void visit(CodeObject* object);
-        virtual void visit(CodeParameterDeclarationExpression* object);
-        virtual void visit(CodePrimitiveExpression* object);
-        virtual void visit(CodeStatement* object);
-        virtual void visit(CodeTypeDeclaration* object);
-        virtual void visit(CodeTypeMember* object);
-        virtual void visit(CodeTypeReference* object);
-        virtual void visit(CodeVariableDeclarationStatement* object);
-        virtual void visit(CodeVariableReferenceExpression* object);
-        virtual void visit(CodeAssignExpression* object);
-        virtual void visit(CodeCastExpression* object);
-        virtual void visit(CodeObjectCreateExpression* object);
-        virtual void visit(CodeIrBlockStatement* object);
-        virtual void visit(CodeFileInclude* object);
-        virtual void visit(CodeArrayCreateExpression* object);
-        virtual void visit(CodeArrayIndexerExpression* object);
-        virtual void visit(CodeFieldReferenceExpression* object);
-        virtual void visit(CodeAssemblyCallExpression* object);
-        virtual void visit(CodeSizeOfExpression* object);
-        virtual void visit(CodeAttributeArgument* object);
-        virtual void visit(CodeAttributeDeclaration* object);
     };
     
-    class VariableFieldOrParameterResolver : public CodeObjectResolver
+    class VariableFieldOrParameterResolver : public CodeObjectVisitorBase, public ICodeObjectResolver
     {
     public:
-        using CodeObjectResolver::visit;
-        
         VariableFieldOrParameterResolver(CodeScope* scope, std::string name);
         ~VariableFieldOrParameterResolver();
         virtual std::list<CodeObject*>* resolve();
-        virtual void visit(CodeParameterDeclarationExpression* object);
-        virtual void visit(CodeVariableDeclarationStatement* object);
-        virtual void visit(CodeMemberField* object);
+
     private:
+    	using CodeObjectVisitorBase::on_visit;
+
+        virtual void on_visit(CodeParameterDeclarationExpression* object);
+        virtual void on_visit(CodeVariableDeclarationStatement* object);
+        virtual void on_visit(CodeMemberField* object);
+
         std::string m_name;
         CodeScope* m_scope;
         std::list<CodeObject*> * m_result;
@@ -79,34 +51,37 @@ namespace mlang {
         uint token_index;
     };
     
-    class CodeTypeDeclarationResolver : public CodeObjectResolver
+    class CodeTypeDeclarationResolver : public CodeObjectVisitorBase, public ICodeObjectResolver
     {
     public:
-        using CodeObjectResolver::visit;
-        
         CodeTypeDeclarationResolver(CodeScope* scope, std::string name, std::string namespace_name);
         ~CodeTypeDeclarationResolver();
         virtual std::list<CodeObject*>* resolve();
-        virtual void visit(CodeTypeDeclaration* object);
-        virtual void visit(CodeNamespace* object);
-        virtual void visit(CodeCompileUnit* object);
+
     private:
+    	using CodeObjectVisitorBase::on_visit;
+
+        virtual void on_visit(CodeTypeDeclaration* object);
+        virtual void on_visit(CodeNamespace* object);
+        virtual void on_visit(CodeCompileUnit* object);
         std::string m_name;
         CodeScope* m_scope;
         std::list<CodeObject*> * m_result;
         std::string m_namespace_name;
     };
 
-    class CodeMemberMethodResolver : public CodeObjectResolver
+    class CodeMemberMethodResolver : public CodeObjectVisitorBase, public ICodeObjectResolver
     {
     public:
-    	using CodeObjectResolver::visit;
     	CodeMemberMethodResolver(CodeScope* scope, std::string name, CodeTypeDeclarationCollection* parameter_types);
     	CodeMemberMethodResolver(CodeScope* scope, CodeTypeDeclaration* return_type, std::string name, CodeTypeDeclarationCollection* parameter_types);
     	~CodeMemberMethodResolver();
     	virtual std::list<CodeObject*>* resolve();
-    	virtual void visit(CodeMemberMethod* object);
+
     private:
+    	using CodeObjectVisitorBase::on_visit;
+
+    	virtual void on_visit(CodeMemberMethod* object);
     	CodeTypeDeclaration* m_return_type;
     	std::string m_name;
     	CodeScope* m_scope;

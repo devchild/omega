@@ -28,7 +28,7 @@ namespace mlang {
     void 
     CompilerError::location(Location *location) {
         this->m_location = location;
-        this->m_has_location = true;
+        this->m_has_location = this->m_location != nullptr;
     }
 
     Location*

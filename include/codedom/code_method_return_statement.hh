@@ -20,7 +20,7 @@ namespace mlang {
         ~CodeMethodReturnStatement();
         CodeExpression* expression();
         void expression(CodeExpression* value);
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);
         

@@ -30,7 +30,7 @@ namespace mlang {
         std::string name();
         void name(std::string name);
         
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         CodeMemberMethod * parent_method();
         virtual bool type_of(CodeObjectKind kind);

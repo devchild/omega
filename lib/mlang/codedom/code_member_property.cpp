@@ -8,7 +8,7 @@ CodeMemberProperty::CodeMemberProperty() :
 CodeMemberProperty::~CodeMemberProperty() {
 
 }
-void CodeMemberProperty::accept(CodeObjectVisitor* visitor) {
+void CodeMemberProperty::accept(ICodeObjectVisitor* visitor) {
 	visitor->visit(this);
 }
 bool CodeMemberProperty::type_of(CodeObjectKind kind) {

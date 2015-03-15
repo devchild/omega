@@ -25,123 +25,10 @@ namespace mlang {
         return elems;
     }
     
-    CodeObjectResolver::CodeObjectResolver() {
+    ICodeObjectResolver::ICodeObjectResolver() {
     }
 
-    CodeObjectResolver::~CodeObjectResolver() {
-    }
-
-    void CodeObjectResolver::visit(CodeBinaryOperatorExpression* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeCompileUnit* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeConditionStatement* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeExpression* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeExpressionStatement* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeIterationStatement* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeMemberField* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeMemberMethod* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeMemberProperty* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeMethodInvokeExpression* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeMethodReferenceExpression* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeMethodReturnStatement* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeNamespace* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeObject* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeParameterDeclarationExpression* object) {
-    }
-
-    void CodeObjectResolver::visit(CodePrimitiveExpression* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeStatement* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeTypeDeclaration* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeTypeMember* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeTypeReference* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeVariableDeclarationStatement* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeVariableReferenceExpression* object) {
-    }
-
-    void CodeObjectResolver::visit(CodeAssignExpression* object) {
-    }
-    
-    void CodeObjectResolver::visit(CodeCastExpression* object) {
-    
-    }
-
-    void CodeObjectResolver::visit(CodeObjectCreateExpression* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeIrBlockStatement* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeFileInclude* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeArrayCreateExpression* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeArrayIndexerExpression* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeFieldReferenceExpression* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeAssemblyCallExpression* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeSizeOfExpression* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeAttributeArgument* object){
-
-    }
-
-    void CodeObjectResolver::visit(CodeAttributeDeclaration* object){
-
+    ICodeObjectResolver::~ICodeObjectResolver() {
     }
 
 
@@ -185,7 +72,7 @@ namespace mlang {
     }
     
     void
-    VariableFieldOrParameterResolver::visit(CodeMemberField* object) { 
+    VariableFieldOrParameterResolver::on_visit(CodeMemberField* object) {
         if (this->token_index >= this->m_tokens.size())
             return;
                 
@@ -204,7 +91,7 @@ namespace mlang {
     }
 
     void
-    VariableFieldOrParameterResolver::visit(CodeParameterDeclarationExpression* object) {
+    VariableFieldOrParameterResolver::on_visit(CodeParameterDeclarationExpression* object) {
         if (this->token_index >= this->m_tokens.size())
             return;
                 
@@ -212,16 +99,18 @@ namespace mlang {
             this->token_index++;
             
             this->m_result->push_back(object);
+            /*
             auto type = object->resolve_type(object->type());
             for (auto x : *type->members()) 
             {
                 x->accept(this);
             }
+            */
         }
     }
 
     void
-    VariableFieldOrParameterResolver::visit(CodeVariableDeclarationStatement* object) {
+    VariableFieldOrParameterResolver::on_visit(CodeVariableDeclarationStatement* object) {
         if (this->token_index >= this->m_tokens.size())
             return;
                 
@@ -229,7 +118,8 @@ namespace mlang {
             this->token_index++;
             
             this->m_result->push_back(object);
-            auto type = object->resolve_type(object->type());
+
+            auto type = (CodeTypeDeclaration*) object->type()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(object->type());
             for (auto x : *type->members()) 
             {
                 x->accept(this);
@@ -260,14 +150,18 @@ namespace mlang {
     }
 
     void
-    CodeTypeDeclarationResolver::visit(CodeCompileUnit* object) {
+    CodeTypeDeclarationResolver::on_visit(CodeCompileUnit* object) {
         for (auto x : *object->namespaces()) {
             x->accept(this);
+        }
+
+        for (auto x : *object->types()) {
+        	x->accept(this);
         }
     }
 
     void
-    CodeTypeDeclarationResolver::visit(CodeNamespace* object) {
+    CodeTypeDeclarationResolver::on_visit(CodeNamespace* object) {
         if (object->name() == this->m_namespace_name || object->name() == "") {
             for (auto x : *object->types()) {
                 x->accept(this);
@@ -276,7 +170,7 @@ namespace mlang {
     }
 
     void
-    CodeTypeDeclarationResolver::visit(CodeTypeDeclaration* object) {
+    CodeTypeDeclarationResolver::on_visit(CodeTypeDeclaration* object) {
         if (object->name() == this->m_name) {
             this->m_result->push_back(object);
         }
@@ -315,12 +209,12 @@ namespace mlang {
     }
 
     void
-    CodeMemberMethodResolver::visit(CodeMemberMethod* object) {
+    CodeMemberMethodResolver::on_visit(CodeMemberMethod* object) {
     	if(object->name() == this->m_name)
     	{
     		if (this->m_return_type != nullptr)
     		{
-    			auto resolved_return_type = object->resolve_type(object->return_type());
+    			auto resolved_return_type = (CodeTypeDeclaration*) object->return_type()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(object->return_type());
     			if (resolved_return_type != this->m_return_type)
     				return;
     		}
@@ -343,7 +237,7 @@ namespace mlang {
     				auto it_type = *it_types;
 
 
-    				auto resolved_type = it_object_parameter->resolve_type(it_object_parameter->type());
+    				auto resolved_type = (CodeTypeDeclaration*) it_object_parameter->type()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //it_object_parameter->resolve_type(it_object_parameter->type());
     				ok &= ((resolved_type == it_type) || (resolved_type != nullptr && it_type != nullptr && resolved_type->name() == it_type->name()));
     				it_object_parameters++;
     				it_types++;

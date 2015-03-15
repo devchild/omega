@@ -15,14 +15,14 @@
 namespace mlang {
     class CodeScope;
     class CodeExpression;
-    class CodeObjectVisitor;
+    class ICodeObjectVisitor;
     
     class CodeAssemblyCallExpression : public CodeExpression {
     public:
         using CodeObject::scope;
         CodeAssemblyCallExpression();
         ~CodeAssemblyCallExpression();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
 
         void content(std::string value);

@@ -28,7 +28,7 @@ namespace mlang {
         CodeExpression* target_object();
         void target_object(CodeExpression* target_object);
 
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         void scope(CodeScope* scope) override;
 

@@ -19,7 +19,7 @@ void CodePrimitiveExpression::value(void* value) {
 	this->m_value = value;
 }
 
-void CodePrimitiveExpression::accept(CodeObjectVisitor* visitor) {
+void CodePrimitiveExpression::accept(ICodeObjectVisitor* visitor) {
 	visitor->visit(this);
 }
 

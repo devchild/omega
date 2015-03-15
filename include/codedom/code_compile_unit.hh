@@ -20,7 +20,7 @@ namespace mlang {
         using CodeObject::scope;
         CodeCompileUnit();
         CodeNamespaceCollection* namespaces();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         CodeMemberMethodCollection* methods();
         CodeTypeDeclarationCollection* types();

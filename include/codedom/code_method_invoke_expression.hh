@@ -22,7 +22,7 @@ namespace mlang {
 
         CodeMethodInvokeExpression();
         virtual ~CodeMethodInvokeExpression();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         CodeExpressionCollection* parameters();
         CodeMethodReferenceExpression* method();

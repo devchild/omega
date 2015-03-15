@@ -13,6 +13,8 @@ mlang_driver::mlang_driver() :
 	m_streamname = "";
 	m_root = nullptr;
 	m_success = false;
+	m_scanner = nullptr;
+	m_parser = nullptr;
 }
 
 mlang_driver::~mlang_driver() {

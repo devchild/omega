@@ -22,7 +22,7 @@ namespace mlang {
         void name(std::string value);
         
         CodeTypeMemberCollection* members();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         bool is_struct();
         void is_struct(bool value);
@@ -30,12 +30,16 @@ namespace mlang {
         bool is_class();
         void is_class(bool value);
         
+        bool is_embedded();
+        void is_embedded(bool value);
+
         virtual bool type_of(CodeObjectKind kind);
         
         virtual void scope(CodeScope* scope);
     private:
         bool m_is_struct;
         bool m_is_class;
+        bool m_is_embedded;
         std::string m_name;
         CodeTypeMemberCollection* m_members;
     };

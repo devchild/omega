@@ -23,7 +23,7 @@ namespace mlang {
     }
     
     void
-    CodeVariableReferenceExpression::accept(CodeObjectVisitor* visitor) {
+    CodeVariableReferenceExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

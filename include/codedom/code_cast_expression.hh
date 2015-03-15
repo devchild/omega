@@ -12,14 +12,14 @@ namespace mlang {
     class CodeExpression;
     class CodeTypeReference;
     class CodeScope;
-    class CodeObjectVisitor;
+    class ICodeObjectVisitor;
         
     class CodeCastExpression : public CodeExpression {
     public:
         using CodeObject::scope;
         CodeCastExpression();
         ~CodeCastExpression();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);

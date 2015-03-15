@@ -23,7 +23,7 @@ namespace mlang {
         
         std::string variable_name();
         void variable_name(std::string name);
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         virtual bool type_of(CodeObjectKind kind);
         void scope(CodeScope* scope) override;
 

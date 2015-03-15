@@ -22,7 +22,7 @@ namespace mlang {
     }
 
     void
-	CodeFileInclude::accept(CodeObjectVisitor* visitor) {
+	CodeFileInclude::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
        

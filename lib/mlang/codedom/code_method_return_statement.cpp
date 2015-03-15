@@ -22,7 +22,7 @@ namespace mlang {
     }
     
     void
-    CodeMethodReturnStatement::accept(CodeObjectVisitor* visitor) {
+    CodeMethodReturnStatement::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

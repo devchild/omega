@@ -21,7 +21,7 @@ namespace mlang {
         using CodeObject::scope;
         CodeExpressionStatement();
         ~CodeExpressionStatement();
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         
         CodeExpression* expression();
         void expression(CodeExpression* value);

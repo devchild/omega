@@ -21,7 +21,7 @@ namespace mlang {
     }
     
     void
-	CodeSizeOfExpression::accept(CodeObjectVisitor* visitor) {
+	CodeSizeOfExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

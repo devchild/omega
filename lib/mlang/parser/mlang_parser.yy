@@ -404,7 +404,7 @@ assembly_call_expression:
 																if (!child_nd->type_of(mlang::CodeObjectKind::CodePrimitiveExpression))
 																	yyerror(&yylloc, yyparser, driver, "string literal expected");
 																auto stringliteral = static_cast<mlang::CodePrimitiveExpression*>(child_nd);
-																if (stringliteral->type()->base_type() != "Char[]")
+																if (stringliteral->type()->base_type() != "Array")
 																	yyerror(&yylloc,yyparser, driver, "string literal expected");
 																		
 																nd->content(stringliteral->value_as_string());
@@ -414,7 +414,7 @@ assembly_call_expression:
 																if (!child_nd->type_of(mlang::CodeObjectKind::CodePrimitiveExpression))
 																	yyerror(&yylloc,yyparser, driver, "string literal expected");
 																auto stringliteral = static_cast<mlang::CodePrimitiveExpression*>(child_nd);
-																if (stringliteral->type()->base_type() != "Char[]")
+																if (stringliteral->type()->base_type() != "Array")
 																	yyerror(&yylloc,yyparser, driver, "string literal expected");
 																		
 																nd->constraints(stringliteral->value_as_string());
@@ -467,21 +467,25 @@ statement_expression:
 	method_invoke_expression 				{
 												auto nd = new mlang::CodeExpressionStatement();
 												nd->expression(static_cast<mlang::CodeExpression*>($1));
+												nd->expression()->parent(nd);
 												$$ = nd;
 											}
 	| object_create_expression				{
 												auto nd = new mlang::CodeExpressionStatement();
 												nd->expression(static_cast<mlang::CodeExpression*>($1));
+												nd->expression()->parent(nd);
 												$$ = nd;
 											}
 	| array_create_expression				{
 												auto nd = new mlang::CodeExpressionStatement();
 												nd->expression(static_cast<mlang::CodeExpression*>($1));
+												nd->expression()->parent(nd);
 												$$ = nd;
 											}
 	| assign_expression						{
 												auto nd = new mlang::CodeExpressionStatement();
 												nd->expression(static_cast<mlang::CodeExpression*>($1));
+												nd->expression()->parent(nd);
 												$$ = nd;
 											}
 	;
@@ -552,6 +556,7 @@ variable_declaration_statement:
 												nd->type(static_cast<mlang::CodeTypeReference*>($1));
 												nd->name(*$2);
 												nd->init_expression(static_cast<mlang::CodeExpression*>($4));
+												nd->init_expression()->parent(nd);
 												$$ = nd;
 											}
 	;
@@ -571,6 +576,7 @@ method_return_statement:
 												if ($2 != nullptr)
 												{
 													nd->expression(static_cast<mlang::CodeExpression*>($2));
+													nd->expression()->parent(nd);
 												}
 												$$ = nd;
 											}		
@@ -618,6 +624,13 @@ assign_expression:
 												$$ = nd;
 											}
 	| field_reference_expression '=' expression
+							 				{	
+												auto nd = new mlang::CodeAssignExpression();
+												nd->left(static_cast<mlang::CodeExpression*>($1));
+												nd->right(static_cast<mlang::CodeExpression*>($3));
+												$$ = nd;
+											}
+	| array_indexer_expression '=' expression
 							 				{	
 												auto nd = new mlang::CodeAssignExpression();
 												nd->left(static_cast<mlang::CodeExpression*>($1));
@@ -711,25 +724,34 @@ multiplicative_expression:
   	| multiplicative_expression '*' unary_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::Multiply);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	| multiplicative_expression '/' unary_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::Divide);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	| multiplicative_expression '%' unary_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::Modulus);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;
@@ -739,17 +761,23 @@ additive_expression:
   	| additive_expression '+' multiplicative_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::Add);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	| additive_expression '-' multiplicative_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::Subtract);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;
@@ -759,17 +787,23 @@ shift_expression:
   	| shift_expression OP_SHIFT_LEFT additive_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::ShiftLeft);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	| shift_expression OP_SHIFT_RIGHT additive_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::ShiftRight);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;
@@ -779,33 +813,45 @@ relational_expression:
   	| relational_expression '<' shift_expression
   											{	
   												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
   												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
   												nd->operator_(mlang::CodeBinaryOperatorType::LessThan);
   												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
   												$$ = nd;	
   											}
   	| relational_expression '>' shift_expression
   											{	
   												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
   												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
   												nd->operator_(mlang::CodeBinaryOperatorType::GreaterThan);
   												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
   												$$ = nd;	
   											}
   	| relational_expression OP_LESS_THAN_OR_EQUAL shift_expression
   											{	
   												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
   												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
   												nd->operator_(mlang::CodeBinaryOperatorType::LessThanOrEqual);
   												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
   												$$ = nd;	
   											}
   	| relational_expression OP_GREATER_THAN_OR_EQUAL shift_expression
   											{	
   												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
   												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
   												nd->operator_(mlang::CodeBinaryOperatorType::GreaterThanOrEqual);
   												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
   												$$ = nd;	
   											}
   	;
@@ -815,17 +861,23 @@ equality_expression:
   	| equality_expression OP_EQUALS relational_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::IdentityEquality);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	| equality_expression OP_NOT_EQUALS relational_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::IdentityInEquality);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;
@@ -835,9 +887,12 @@ and_expression:
   	| and_expression '&' equality_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::BitwiseAnd);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;
@@ -847,9 +902,12 @@ exclusive_or_expression:
   	| exclusive_or_expression '^' and_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::Add);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;	
@@ -859,9 +917,12 @@ inclusive_or_expression:
   	| inclusive_or_expression '|' exclusive_or_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::BitwiseOr);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;
@@ -871,9 +932,13 @@ conditional_and_expression:
   	| conditional_and_expression OP_ANDAND inclusive_or_expression
   	  										{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												
+   												nd->left()->parent(nd);
    												nd->operator_(mlang::CodeBinaryOperatorType::BooleanAnd);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;
@@ -883,9 +948,13 @@ binary_operator_expression:
   	| binary_operator_expression OP_OROR conditional_and_expression
   											{
    												auto nd = new mlang::CodeBinaryOperatorExpression();
+   												nd->location(driver.get_location(@2));
    												nd->left(static_cast<mlang::CodeExpression*>($1));
+   												nd->left()->parent(nd);
+   												
    												nd->operator_(mlang::CodeBinaryOperatorType::BooleanOr);
    												nd->right(static_cast<mlang::CodeExpression*>($3));
+   												nd->right()->parent(nd);
    												$$ = nd;
    											}
   	;
@@ -923,7 +992,7 @@ primitive_expression:
 												
 												auto array_element_type = new mlang::CodeTypeReference();
 												array_element_type->base_type("Char");
-												tp->base_type("Char[]");
+												tp->base_type("Array");
 												tp->array_rank(1);
 												tp->array_element_type(array_element_type);
 												
@@ -942,7 +1011,7 @@ array_create_expression:
 												auto create_type = new mlang::CodeTypeReference();
 												create_type->array_element_type(static_cast<mlang::CodeTypeReference*>($2));
 												create_type->array_rank(1);
-												create_type->base_type(create_type->array_element_type()->base_type() + "[]");
+												create_type->base_type("Array");
 												
 												nd->create_type(create_type);
 												nd->size_expression(static_cast<mlang::CodeExpression*>($4));
@@ -993,7 +1062,7 @@ array_type_reference:
 												auto array_element_type = static_cast<mlang::CodeTypeReference*>($1);
 												nd->array_element_type(array_element_type);
 												nd->array_rank($2);
-												nd->base_type(array_element_type->base_type() + "[]");
+												nd->base_type("Array");
 												$$ = nd;
 											}
 	;
@@ -1002,6 +1071,7 @@ variable_reference_expression:
 	IDENTIFIER
 											{	
 												auto nd = new mlang::CodeVariableReferenceExpression();
+												nd->location(driver.get_location(@1));
 												nd->variable_name(*$1);
 												$$ = nd;
 											}
@@ -1083,6 +1153,7 @@ method:
 member_field:
 	type_reference IDENTIFIER				{	
 												auto nd = new mlang::CodeMemberField();
+												nd->location(driver.get_location(@2));
 												nd->type(static_cast<mlang::CodeTypeReference*>($1));
 												nd->name(*$2);
 												$$ = nd;
@@ -1090,6 +1161,7 @@ member_field:
 	| type_reference IDENTIFIER '=' expression
 											{	
 												auto nd = new mlang::CodeMemberField();
+												nd->location(driver.get_location(@2));
 												nd->type(static_cast<mlang::CodeTypeReference*>($1));
 												nd->name(*$2);
 												nd->init_expression(static_cast<mlang::CodeExpression*>($4));
@@ -1101,6 +1173,7 @@ method_invoke_expression:
 	method_reference_expression '(' expression_list_opt ')'
 											{	
 												auto nd = new mlang::CodeMethodInvokeExpression();
+												nd->location(driver.get_location(@1));
 												
 												mlang::CodeMethodReferenceExpression* method_reference_expression = nullptr;
 												if ($1->type_of(mlang::CodeObjectKind::CodeMethodReferenceExpression))
@@ -1108,6 +1181,7 @@ method_invoke_expression:
 													method_reference_expression = static_cast<mlang::CodeMethodReferenceExpression*>($1);
 												}
 												nd->method(method_reference_expression);
+												method_reference_expression->parent(nd);
 												
 												if ($3 != nullptr)
 												{
@@ -1125,12 +1199,14 @@ method_reference_expression:
 	IDENTIFIER								{	
 												auto nd = new mlang::CodeMethodReferenceExpression();
 												nd->method_name(*$1);
+												nd->location(driver.get_location(@1));
 												$$ = nd;
 											}
 	| primary_expression '.' IDENTIFIER		{	
 												auto nd = new mlang::CodeMethodReferenceExpression();
 												nd->method_name(*$3);
 												nd->target_object(static_cast<mlang::CodeExpression*>($1));
+												nd->location(driver.get_location(@1));
 												$$ = nd;
 											}
 	;
@@ -1266,7 +1342,22 @@ attribute_name:
 
 attribute_arguments: 
 	'(' expression_list ')'					{
-												$$ = $2;
+												
+												if ($2 != nullptr)
+												{
+													auto ret = new mlang::CodeObjectCollection();
+													for(auto x:*$2)
+													{
+														mlang::CodeAttributeArgument* item = new mlang::CodeAttributeArgument();
+														item->value(static_cast<mlang::CodeExpression*>(x));
+														ret->push_back(item);
+													}
+													$$ = ret;
+												}
+												else
+												{
+													$$ = nullptr;
+												}
 											}
   	;
 	

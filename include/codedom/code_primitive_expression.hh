@@ -25,7 +25,7 @@ namespace mlang {
         void* value();
         void value(void* value);
         virtual bool type_of(CodeObjectKind kind);
-        virtual void accept(CodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor);
         virtual void scope(CodeScope* scope);
         
         CodeTypeReference * type();

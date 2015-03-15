@@ -23,7 +23,7 @@ namespace mlang {
     }
     
     void
-    CodeTypeMember::accept(CodeObjectVisitor* visitor) {
+    CodeTypeMember::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

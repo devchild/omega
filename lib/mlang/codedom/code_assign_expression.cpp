@@ -13,7 +13,7 @@ namespace mlang {
     }
     
     void
-    CodeAssignExpression::accept(CodeObjectVisitor* visitor) {
+    CodeAssignExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
         

@@ -25,7 +25,7 @@ namespace mlang {
         this->m_method = value;
     }
 
-    void CodeMethodInvokeExpression::accept(CodeObjectVisitor* visitor) {
+    void CodeMethodInvokeExpression::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     

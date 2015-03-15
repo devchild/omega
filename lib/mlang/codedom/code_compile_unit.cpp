@@ -26,7 +26,7 @@ namespace mlang {
     }
 
     void
-    CodeCompileUnit::accept(CodeObjectVisitor* visitor) {
+    CodeCompileUnit::accept(ICodeObjectVisitor* visitor) {
         visitor->visit(this);
     }
     
