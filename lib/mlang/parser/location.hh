@@ -31,18 +31,18 @@
 // version 2.2 of Bison.
 
 /**
- ** \file /home/mario/Projects/mlang.src/lib/mlang/parser/location.hh
+ ** \file /Users/mario/Projects/mlang.src/lib/mlang/parser/location.hh
  ** Define the yy::location class.
  */
 
-#ifndef YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_LOCATION_HH_INCLUDED
-# define YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_LOCATION_HH_INCLUDED
+#ifndef YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_LOCATION_HH_INCLUDED
+# define YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_LOCATION_HH_INCLUDED
 
 # include "position.hh"
 
 
 namespace yy {
-#line 46 "/home/mario/Projects/mlang.src/lib/mlang/parser/location.hh" // location.cc:296
+#line 46 "/Users/mario/Projects/mlang.src/lib/mlang/parser/location.hh" // location.cc:337
   /// Abstract a location.
   class location
   {
@@ -164,5 +164,5 @@ namespace yy {
 
 
 } // yy
-#line 168 "/home/mario/Projects/mlang.src/lib/mlang/parser/location.hh" // location.cc:296
-#endif // !YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_LOCATION_HH_INCLUDED
+#line 168 "/Users/mario/Projects/mlang.src/lib/mlang/parser/location.hh" // location.cc:337
+#endif // !YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_LOCATION_HH_INCLUDED

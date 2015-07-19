@@ -7,8 +7,10 @@
 
 #include <string>
 #include <vector>
-#include <string>
+
 #include <iostream>
+#include <cstring>
+#include <string>
 
 #include <llvm/IR/IRBuilder.h>
 #include <llvm/IR/LLVMContext.h>
@@ -20,10 +22,10 @@
 
 #include <llvm/PassManager.h>
 #include <llvm/IR/CallingConv.h>
-#include <llvm/Analysis/Verifier.h>
+#include <llvm/IR/Verifier.h>
 #include <llvm/ExecutionEngine/ExecutionEngine.h>
 #include <llvm/LinkAllPasses.h>
-#include <llvm/ExecutionEngine/JIT.h>
+#include <llvm/ExecutionEngine/MCJIT.h>
 #include <llvm/Support/TargetSelect.h>
 #include <llvm/ADT/Triple.h>
 #include <llvm/Support/Host.h>
@@ -339,8 +341,7 @@ MLangCodeCompiler::FromDomBatch(CompilerParameters options,
 
 		std::string err;
 		std::string out_file_name = "a.o";
-		llvm::tool_output_file outp(out_file_name.c_str(), err,
-				llvm::sys::fs::F_Binary);
+		llvm::tool_output_file outp(out_file_name.c_str(), llvm::sys::fs::F_None);
 		generateobj(&outp, module);
 
 		// if you want the .o file to stay on disk then uncomment following line

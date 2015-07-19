@@ -13,8 +13,8 @@
 #include "compiler_error.hh"
 #include "mlang_code_generator.hh"
 #include "mlang_code_type_inference.hh"
-#include <llvm/Assembly/Parser.h>
-#include <llvm/Linker.h>
+#include <llvm/AsmParser/Parser.h>
+#include <llvm/Linker/Linker.h>
 #include <llvm/Support/SourceMgr.h>
 #include <llvm/IR/InlineAsm.h>
 
@@ -1165,9 +1165,8 @@ void MLangCodeStatementGenerator::on_visit(CodeIrBlockStatement* object) {
 
 	auto s = stream.str().c_str();
 	llvm::SMDiagnostic err;
-	auto m = llvm::ParseAssemblyString(s, m_module, err,
-			m_context);
-
+	auto m = llvm::parseAssemblyString(s, err, m_context);
+        
 	std::string errstr = err.getMessage();
 	if (errstr != "")
 		std::cout << "can't parse inline LLVM IR:\n"
@@ -1177,9 +1176,9 @@ void MLangCodeStatementGenerator::on_visit(CodeIrBlockStatement* object) {
 				<< stream.str().c_str();
 
 	std::string errstr2 = "";
-	if (m_module != m)
+	if (m_module->getModuleIdentifier() != m->getModuleIdentifier())
 	{
-		llvm::Linker(m_module).linkInModule(m, &errstr2);
+		llvm::Linker(m_module).linkInModule(m.get());
 	}
 
 	llvm::Function* fun = m_module->getFunction("_" + object->id());

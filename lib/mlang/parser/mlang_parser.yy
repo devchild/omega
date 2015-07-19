@@ -12,7 +12,7 @@ class mlang_driver;
 // The parsing context.
 %parse-param { mlang_driver& driver }
 %locations
-%initial-action
+%initial-action 
 {
   // Initialize the initial location.
   @$.begin.filename = @$.end.filename = driver.streamname();

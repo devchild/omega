@@ -31,12 +31,12 @@
 // version 2.2 of Bison.
 
 /**
- ** \file /home/mario/Projects/mlang.src/lib/mlang/parser/position.hh
+ ** \file /Users/mario/Projects/mlang.src/lib/mlang/parser/position.hh
  ** Define the yy::position class.
  */
 
-#ifndef YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_POSITION_HH_INCLUDED
-# define YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_POSITION_HH_INCLUDED
+#ifndef YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_POSITION_HH_INCLUDED
+# define YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_POSITION_HH_INCLUDED
 
 # include <algorithm> // std::max
 # include <iostream>
@@ -52,7 +52,7 @@
 
 
 namespace yy {
-#line 56 "/home/mario/Projects/mlang.src/lib/mlang/parser/position.hh" // location.cc:296
+#line 56 "/Users/mario/Projects/mlang.src/lib/mlang/parser/position.hh" // location.cc:337
   /// Abstract a position.
   class position
   {
@@ -165,5 +165,5 @@ namespace yy {
 
 
 } // yy
-#line 169 "/home/mario/Projects/mlang.src/lib/mlang/parser/position.hh" // location.cc:296
-#endif // !YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_POSITION_HH_INCLUDED
+#line 169 "/Users/mario/Projects/mlang.src/lib/mlang/parser/position.hh" // location.cc:337
+#endif // !YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_POSITION_HH_INCLUDED

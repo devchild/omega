@@ -48,7 +48,7 @@ namespace mlang {
         CodeScope* m_scope;
         std::list<CodeObject*> * m_result;
         std::vector<std::string> m_tokens;
-        uint token_index;
+        int token_index;
     };
     
     class CodeTypeDeclarationResolver : public CodeObjectVisitorBase, public ICodeObjectResolver

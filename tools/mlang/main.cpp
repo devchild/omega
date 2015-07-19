@@ -20,8 +20,10 @@ int main(int argc, char ** argv) {
 	cmd.add(optimized);
 	cmd.add(dump);
 	cmd.parse(argc, argv);
-
+        
+        // dit is een test
 	vector<string> v = file_names.getValue();
+        
 	if (v.size() > 0) {
 		for (int i = 0; static_cast<unsigned int>(i) < v.size(); i++) {
 			std::string file_name = v[i];

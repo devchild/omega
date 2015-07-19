@@ -32,10 +32,10 @@
 
 // C++ GLR parser skeleton written by Akim Demaille.
 
-#ifndef YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_MLANG_PARSER_HH_INCLUDED
-# define YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_MLANG_PARSER_HH_INCLUDED
+#ifndef YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_MLANG_PARSER_HH_INCLUDED
+# define YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_MLANG_PARSER_HH_INCLUDED
 // //                    "%code requires" blocks.
-#line 5 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.cc:329
+#line 5 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.cc:339
 
 # include <string>
 # include <vector>
@@ -43,7 +43,7 @@
 
 class mlang_driver;
 
-#line 47 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:329
+#line 47 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:339
 
 
 #include <stdexcept>
@@ -58,7 +58,7 @@ class mlang_driver;
 
 
 namespace yy {
-#line 62 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:329
+#line 62 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:339
 
 
   /// A Bison parser.
@@ -69,7 +69,7 @@ namespace yy {
     /// Symbol semantic values.
     union semantic_type
     {
-    #line 24 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.cc:329
+    #line 24 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.cc:339
 
   int          	integerVal;
   float			doubleVal;
@@ -77,7 +77,7 @@ namespace yy {
   mlang::CodeObject* node;
   mlang::CodeObjectCollection* node_collection;
 
-#line 81 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:329
+#line 81 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:339
     };
 #else
     typedef YYSTYPE semantic_type;
@@ -301,7 +301,7 @@ namespace yy {
 
 
 } // yy
-#line 305 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:329
+#line 305 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.hh" // glr.cc:339
 
 
-#endif // !YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_MLANG_PARSER_HH_INCLUDED
+#endif // !YY_YY_USERS_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_MLANG_PARSER_HH_INCLUDED

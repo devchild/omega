@@ -51,7 +51,7 @@
 
 /* First part of user declarations.  */
 
-#line 55 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:240
+#line 55 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:240
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -83,7 +83,7 @@ static YYLTYPE yyloc_default
 ;
 
 /* Copy the second part of user declarations.  */
-#line 87 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:263
+#line 87 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:263
 /* YYLLOC_DEFAULT -- Set CURRENT to span from RHS[1] to RHS[N].
    If N is 0, then set CURRENT to the empty location which ends
    the previous symbol: RHS[0] (always defined).  */
@@ -105,9 +105,9 @@ static YYLTYPE yyloc_default
 
 #define YYRHSLOC(Rhs, K) ((Rhs)[K].yystate.yyloc)
 static void yyerror (const yy::mlang_parser::location_type *yylocationp, yy::mlang_parser& yyparser, mlang_driver& driver, const char* msg);
-#line 109 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:263
+#line 109 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:263
 // Unqualified %code blocks.
-#line 31 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:264
+#line 31 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:264
 
 # include "mlang_driver.hh"
 
@@ -118,7 +118,7 @@ static void yyerror (const yy::mlang_parser::location_type *yylocationp, yy::mla
 #define yylex driver.scanner()->lex
 
 
-#line 122 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:264
+#line 122 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:264
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1241,7 +1241,7 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
   switch (yyn)
     {
         case 2:
-#line 94 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 94 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 									if (driver.root() == nullptr)
 									{
@@ -1250,11 +1250,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 									}
 									driver.success(false);
 								}
-#line 1254 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1254 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 3:
-#line 104 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 104 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 									if ((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection) != nullptr)
 									{
@@ -1292,99 +1292,99 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 									((*yyvalp).node) = driver.root();
 									driver.success(true);
 								}
-#line 1296 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1296 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 4:
-#line 144 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 144 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = nullptr;	}
-#line 1302 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1302 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 5:
-#line 145 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 145 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection);		}
-#line 1308 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1308 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 6:
-#line 150 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 150 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 									auto nd = new mlang::CodeObjectCollection();
 									nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 									((*yyvalp).node_collection) = nd;
 								}
-#line 1318 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1318 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 7:
-#line 156 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 156 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 									auto nd = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection);
 									nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 									((*yyvalp).node_collection) = nd;
 								}
-#line 1328 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1328 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 8:
-#line 165 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 165 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeFileInclude();
 												nd->file_name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal));
 												((*yyvalp).node) = nd;
 											}
-#line 1338 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1338 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 9:
-#line 173 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 173 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = nullptr; }
-#line 1344 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1344 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 10:
-#line 174 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 174 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection); }
-#line 1350 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1350 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 11:
-#line 178 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 178 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												((*yyvalp).node_collection) = new mlang::CodeObjectCollection();
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node) != nullptr)
 													((*yyvalp).node_collection)->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 											}
-#line 1360 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1360 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 12:
-#line 184 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 184 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection);
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node) != nullptr)
 													((*yyvalp).node_collection)->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 											}
-#line 1370 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1370 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 13:
-#line 192 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 192 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node); }
-#line 1376 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1376 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 14:
-#line 193 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 193 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node); 
 											}
-#line 1384 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1384 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 15:
-#line 196 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 196 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto method = static_cast<mlang::CodeMemberMethod*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection) != nullptr)
@@ -1396,11 +1396,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = method;
 											}
-#line 1400 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1400 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 16:
-#line 211 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 211 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeNamespace();
 												nd->name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.stringVal));
@@ -1424,59 +1424,59 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												
 												((*yyvalp).node) = nd;
 											}
-#line 1428 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1428 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 17:
-#line 237 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 237 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												((*yyvalp).node_collection) = new mlang::CodeObjectCollection();
 												((*yyvalp).node_collection)->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));	
 											}
-#line 1437 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1437 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 18:
-#line 242 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 242 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection);
 												((*yyvalp).node_collection)->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 											}
-#line 1446 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1446 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 19:
-#line 249 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 249 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1452 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1452 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 20:
-#line 250 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 250 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1458 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1458 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 21:
-#line 251 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 251 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1464 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1464 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 22:
-#line 255 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 255 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1470 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1470 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 23:
-#line 256 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 256 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1476 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1476 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 24:
-#line 261 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 261 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeTypeDeclaration();
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-4)].yystate.yyloc)));
@@ -1496,11 +1496,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = nd;
 											}
-#line 1500 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1500 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 25:
-#line 284 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 284 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeTypeDeclaration();
 												nd->is_struct(true);
@@ -1518,31 +1518,31 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = nd;
 											}
-#line 1522 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1522 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 26:
-#line 304 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 304 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeObjectCollection();	
 												nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												((*yyvalp).node_collection) = nd;
 											}
-#line 1532 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1532 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 27:
-#line 310 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 310 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection);	
 												nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												((*yyvalp).node_collection) = nd;
 											}
-#line 1542 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1542 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 28:
-#line 319 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 319 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto method = static_cast<mlang::CodeMemberMethod*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection) != nullptr)
@@ -1554,11 +1554,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = method;
 											}
-#line 1558 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1558 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 29:
-#line 330 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 330 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												// this generates 1 conflict
 												auto field = static_cast<mlang::CodeMemberMethod*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
@@ -1571,21 +1571,21 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = field;
 											}
-#line 1575 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1575 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 30:
-#line 345 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 345 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeObjectCollection();	
 												nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												((*yyvalp).node_collection) = nd;
 											}
-#line 1585 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1585 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 31:
-#line 350 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 350 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection);	
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node) != nullptr)
@@ -1594,83 +1594,83 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node_collection) = nd;
 											}
-#line 1598 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1598 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 32:
-#line 361 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 361 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1604 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1604 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 33:
-#line 362 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 362 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1610 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1610 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 34:
-#line 363 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 363 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1616 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1616 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 35:
-#line 364 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 364 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1622 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1622 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 36:
-#line 365 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 365 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1628 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1628 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 37:
-#line 366 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 366 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												// this one causes 6 shift/reduce conflicts.
 												// adding an extra term could help eg. ';'
 												((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	
 											}
-#line 1638 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1638 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 38:
-#line 371 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 371 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = nullptr; }
-#line 1644 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1644 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 39:
-#line 375 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 375 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												driver.scanner()->begin_block();	
 											}
-#line 1652 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1652 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 40:
-#line 378 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 378 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												driver.scanner()->end_block();
 											}
-#line 1660 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1660 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 41:
-#line 381 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 381 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeIrBlockStatement();
 												nd->content(*(((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.stringVal));
 												((*yyvalp).node) = nd;
 											}
-#line 1670 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1670 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 42:
-#line 390 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 390 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeAssemblyCallExpression();
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.node) != nullptr)
@@ -1716,11 +1716,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												
 												((*yyvalp).node) = nd;
 											}
-#line 1720 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1720 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 43:
-#line 439 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 439 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeIterationStatement();
 												nd->test_expression(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-5)].yystate.yysemantics.yysval.node)));
@@ -1739,63 +1739,63 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												
 												((*yyvalp).node) = nd;
 											}
-#line 1743 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1743 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 44:
-#line 461 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 461 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);
 											}
-#line 1751 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1751 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 45:
-#line 467 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 467 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeExpressionStatement();
 												nd->expression(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												nd->expression()->parent(nd);
 												((*yyvalp).node) = nd;
 											}
-#line 1762 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1762 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 46:
-#line 473 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 473 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeExpressionStatement();
 												nd->expression(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												nd->expression()->parent(nd);
 												((*yyvalp).node) = nd;
 											}
-#line 1773 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1773 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 47:
-#line 479 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 479 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeExpressionStatement();
 												nd->expression(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												nd->expression()->parent(nd);
 												((*yyvalp).node) = nd;
 											}
-#line 1784 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1784 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 48:
-#line 485 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 485 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeExpressionStatement();
 												nd->expression(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												nd->expression()->parent(nd);
 												((*yyvalp).node) = nd;
 											}
-#line 1795 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1795 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 49:
-#line 495 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 495 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeConditionStatement();
 												nd->condition(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-5)].yystate.yysemantics.yysval.node)));
@@ -1814,11 +1814,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												
 												((*yyvalp).node) = nd;
 											}
-#line 1818 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1818 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 50:
-#line 514 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 514 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeConditionStatement();
 												nd->condition(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-10)].yystate.yysemantics.yysval.node)));
@@ -1848,11 +1848,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												
 												((*yyvalp).node) = nd;
 											}
-#line 1852 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1852 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 51:
-#line 546 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 546 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeVariableDeclarationStatement();
 												nd->type(static_cast<mlang::CodeTypeReference*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node)));
@@ -1860,11 +1860,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->init_expression(nullptr);
 												((*yyvalp).node) = nd;
 											}
-#line 1864 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1864 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 52:
-#line 554 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 554 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeVariableDeclarationStatement();
 												nd->type(static_cast<mlang::CodeTypeReference*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.node)));
@@ -1873,25 +1873,25 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->init_expression()->parent(nd);
 												((*yyvalp).node) = nd;
 											}
-#line 1877 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1877 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 53:
-#line 565 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 565 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = nullptr;	}
-#line 1883 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1883 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 54:
-#line 566 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 566 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);
 											}
-#line 1891 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1891 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 55:
-#line 573 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 573 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												// this generates 7 conflicts
 												auto nd = new mlang::CodeMethodReturnStatement();
@@ -1902,117 +1902,117 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = nd;
 											}
-#line 1906 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1906 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 56:
-#line 586 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 586 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeParameterDeclarationExpression();
 												nd->type(static_cast<mlang::CodeTypeReference*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node)));
 												nd->name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal));
 												((*yyvalp).node) = nd;
 											}
-#line 1917 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1917 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 57:
-#line 595 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 595 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeObjectCollection();	
 												nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												((*yyvalp).node_collection) = nd;
 											}
-#line 1927 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1927 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 58:
-#line 601 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 601 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = (((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node_collection);	
 												nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												((*yyvalp).node_collection) = nd;
 											}
-#line 1937 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1937 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 59:
-#line 609 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 609 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = nullptr;}
-#line 1943 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1943 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 60:
-#line 610 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 610 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection);	}
-#line 1949 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1949 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 61:
-#line 614 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 614 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1955 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1955 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 62:
-#line 615 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 615 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 1961 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1961 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 63:
-#line 620 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 620 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeAssignExpression();
 												nd->left(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node)));
 												nd->right(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node) = nd;
 											}
-#line 1972 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1972 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 64:
-#line 627 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 627 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeAssignExpression();
 												nd->left(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node)));
 												nd->right(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node) = nd;
 											}
-#line 1983 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1983 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 65:
-#line 634 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 634 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeAssignExpression();
 												nd->left(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node)));
 												nd->right(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node) = nd;
 											}
-#line 1994 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 1994 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 66:
-#line 643 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 643 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2000 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2000 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 67:
-#line 647 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 647 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2006 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2006 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 68:
-#line 648 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 648 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2012 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2012 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 69:
-#line 649 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 649 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeBinaryOperatorExpression();
 												auto m_left = new mlang::CodePrimitiveExpression();
@@ -2022,104 +2022,104 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->right(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node) = nd;
 											}
-#line 2026 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2026 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 70:
-#line 658 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 658 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2032 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2032 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 71:
-#line 659 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 659 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2038 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2038 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 72:
-#line 660 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 660 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2044 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2044 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 73:
-#line 664 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 664 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2050 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2050 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 74:
-#line 665 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 665 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2056 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2056 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 75:
-#line 666 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 666 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2062 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2062 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 76:
-#line 667 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 667 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2068 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2068 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 77:
-#line 668 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 668 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2074 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2074 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 78:
-#line 669 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 669 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2080 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2080 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 79:
-#line 670 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 670 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2086 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2086 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 80:
-#line 671 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 671 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2092 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2092 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 81:
-#line 672 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 672 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2098 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2098 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 82:
-#line 676 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 676 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeSizeOfExpression();
 												nd->type(static_cast<mlang::CodeTypeReference*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node) = nd;
 											}
-#line 2108 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2108 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 83:
-#line 685 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 685 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeFieldReferenceExpression();
 												nd->target_object(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node)));
 												nd->field_name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal));
 												((*yyvalp).node) = nd;
 											}
-#line 2119 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2119 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 84:
-#line 695 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 695 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeArrayIndexerExpression();
 												nd->target_object(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.node)));
@@ -2135,28 +2135,28 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												
 												((*yyvalp).node) = nd;
 											}
-#line 2139 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2139 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 85:
-#line 714 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 714 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												 auto nd = new mlang::CodeCastExpression();
 												 nd->target_type(static_cast<mlang::CodeTypeReference*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node)));
 												 nd->expression(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												 ((*yyvalp).node) = nd;
 											}
-#line 2150 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2150 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 86:
-#line 723 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 723 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2156 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2156 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 87:
-#line 725 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 725 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2167,11 +2167,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2171 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2171 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 88:
-#line 736 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 736 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2182,11 +2182,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2186 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2186 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 89:
-#line 747 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 747 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2197,17 +2197,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2201 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2201 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 90:
-#line 760 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 760 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2207 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2207 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 91:
-#line 762 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 762 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2218,11 +2218,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2222 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2222 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 92:
-#line 773 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 773 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2233,17 +2233,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2237 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2237 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 93:
-#line 786 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 786 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2243 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2243 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 94:
-#line 788 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 788 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2254,11 +2254,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2258 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2258 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 95:
-#line 799 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 799 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2269,17 +2269,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2273 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2273 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 96:
-#line 812 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 812 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2279 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2279 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 97:
-#line 814 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 814 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
   												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2290,11 +2290,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
   												((*yyvalp).node) = nd;	
   											}
-#line 2294 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2294 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 98:
-#line 825 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 825 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
   												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2305,11 +2305,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
   												((*yyvalp).node) = nd;	
   											}
-#line 2309 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2309 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 99:
-#line 836 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 836 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
   												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2320,11 +2320,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
   												((*yyvalp).node) = nd;	
   											}
-#line 2324 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2324 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 100:
-#line 847 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 847 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
   												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2335,17 +2335,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
   												((*yyvalp).node) = nd;	
   											}
-#line 2339 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2339 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 101:
-#line 860 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 860 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2345 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2345 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 102:
-#line 862 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 862 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2356,11 +2356,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2360 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2360 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 103:
-#line 873 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 873 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2371,17 +2371,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2375 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2375 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 104:
-#line 886 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 886 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2381 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2381 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 105:
-#line 888 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 888 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2392,17 +2392,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2396 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2396 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 106:
-#line 901 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 901 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2402 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2402 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 107:
-#line 903 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 903 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2413,17 +2413,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2417 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2417 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 108:
-#line 916 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 916 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2423 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2423 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 109:
-#line 918 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 918 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2434,17 +2434,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2438 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2438 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 110:
-#line 931 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 931 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2444 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2444 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 111:
-#line 933 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 933 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2456,17 +2456,17 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2460 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2460 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 112:
-#line 947 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 947 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2466 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2466 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 113:
-#line 949 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 949 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
    												auto nd = new mlang::CodeBinaryOperatorExpression();
    												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc)));
@@ -2478,25 +2478,25 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
    												nd->right()->parent(nd);
    												((*yyvalp).node) = nd;
    											}
-#line 2482 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2482 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 114:
-#line 963 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 963 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2488 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2488 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 115:
-#line 965 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 965 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
   												((*yyvalp).node) = nullptr;
   											}
-#line 2496 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2496 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 116:
-#line 971 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 971 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodePrimitiveExpression();
 												auto tp = new mlang::CodeTypeReference();
@@ -2506,11 +2506,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->value((void*)(uint64_t*)(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.integerVal));
 												((*yyvalp).node) = nd;
 											}
-#line 2510 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2510 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 117:
-#line 980 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 980 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodePrimitiveExpression();
 												auto tp = new mlang::CodeTypeReference();
@@ -2520,11 +2520,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->value(const_cast<float*>(&(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.doubleVal)));
 												((*yyvalp).node) = nd;
 											}
-#line 2524 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2524 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 118:
-#line 989 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 989 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodePrimitiveExpression();
 												auto tp = new mlang::CodeTypeReference();
@@ -2540,11 +2540,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->type(tp);
 												((*yyvalp).node) = nd;
 											}
-#line 2544 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2544 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 119:
-#line 1008 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1008 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeArrayCreateExpression();
 												
@@ -2557,11 +2557,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->size_expression(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node) = nd;
 											}
-#line 2561 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2561 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 120:
-#line 1024 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1024 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeObjectCreateExpression();
 												
@@ -2579,34 +2579,34 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												
 												((*yyvalp).node) = nd;
 											}
-#line 2583 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2583 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 121:
-#line 1044 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1044 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2589 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2589 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 122:
-#line 1045 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1045 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node);	}
-#line 2595 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2595 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 123:
-#line 1049 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1049 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeTypeReference();
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yyloc)));
 												nd->base_type(*(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal));
 												((*yyvalp).node) = nd;
 											}
-#line 2606 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2606 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 124:
-#line 1059 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1059 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeTypeReference();
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yyloc), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yyloc)));
@@ -2616,22 +2616,22 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->base_type("Array");
 												((*yyvalp).node) = nd;
 											}
-#line 2620 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2620 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 125:
-#line 1072 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1072 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeVariableReferenceExpression();
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yyloc)));
 												nd->variable_name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal));
 												((*yyvalp).node) = nd;
 											}
-#line 2631 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2631 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 126:
-#line 1082 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1082 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeMemberMethod();
 												nd->return_type(static_cast<mlang::CodeTypeReference*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-4)].yystate.yysemantics.yysval.node)));
@@ -2647,11 +2647,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->attributes(mlang::MemberAttributes::External);
 												((*yyvalp).node) = nd;
 											}
-#line 2651 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2651 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 127:
-#line 1098 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1098 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeMemberMethod();
 												nd->return_type(static_cast<mlang::CodeTypeReference*>((((yyGLRStackItem const *)yyvsp)[YYFILL (-8)].yystate.yysemantics.yysval.node)));
@@ -2678,11 +2678,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = nd;
 											}
-#line 2682 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2682 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 128:
-#line 1125 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1125 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeMemberMethod();
 												nd->return_type(nullptr);
@@ -2709,11 +2709,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = nd;
 											}
-#line 2713 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2713 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 129:
-#line 1154 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1154 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeMemberField();
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yyloc)));
@@ -2721,11 +2721,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal));
 												((*yyvalp).node) = nd;
 											}
-#line 2725 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2725 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 130:
-#line 1162 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1162 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeMemberField();
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yyloc)));
@@ -2734,11 +2734,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->init_expression(static_cast<mlang::CodeExpression*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node) = nd;
 											}
-#line 2738 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2738 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 131:
-#line 1174 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1174 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeMethodInvokeExpression();
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yyloc)));
@@ -2761,22 +2761,22 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = nd;
 											}
-#line 2765 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2765 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 132:
-#line 1199 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1199 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeMethodReferenceExpression();
 												nd->method_name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal));
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yyloc)));
 												((*yyvalp).node) = nd;
 											}
-#line 2776 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2776 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 133:
-#line 1205 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1205 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeMethodReferenceExpression();
 												nd->method_name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal));
@@ -2784,61 +2784,61 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												nd->location(driver.get_location((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yyloc)));
 												((*yyvalp).node) = nd;
 											}
-#line 2788 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2788 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 134:
-#line 1244 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1244 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = nullptr;	}
-#line 2794 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2794 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 135:
-#line 1245 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1245 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection);		}
-#line 2800 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2800 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 136:
-#line 1249 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1249 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = new mlang::CodeObjectCollection();
 												nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												((*yyvalp).node_collection) = nd;
 											}
-#line 2810 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2810 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 137:
-#line 1254 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1254 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	
 												auto nd = (((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node_collection);	
 												nd->push_back((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node));
 												((*yyvalp).node_collection) = nd;
 											}
-#line 2820 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2820 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 138:
-#line 1262 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1262 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = nullptr;	}
-#line 2826 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2826 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 139:
-#line 1263 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1263 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection);		}
-#line 2832 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2832 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 140:
-#line 1267 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1267 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection);		}
-#line 2838 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2838 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 141:
-#line 1271 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1271 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeObjectCollection();
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection) != nullptr)
@@ -2850,11 +2850,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node_collection) = nd;
 											}
-#line 2854 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2854 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 142:
-#line 1283 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1283 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection);
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection) != nullptr)
@@ -2866,38 +2866,38 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node_collection) = nd;
 											}
-#line 2870 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2870 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 143:
-#line 1298 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1298 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection);
 											}
-#line 2878 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2878 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 144:
-#line 1304 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1304 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeObjectCollection();
 												nd->push_back(static_cast<mlang::CodeAttributeDeclaration*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node_collection) = nd;
 											}
-#line 2888 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2888 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 145:
-#line 1309 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1309 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												(((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node_collection)->push_back(static_cast<mlang::CodeAttributeDeclaration*>((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node)));
 												((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.node_collection);
 											}
-#line 2897 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2897 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 146:
-#line 1316 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1316 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												auto nd = new mlang::CodeAttributeDeclaration();
 												nd->name(*(((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.stringVal));
@@ -2910,33 +2910,33 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 												}
 												((*yyvalp).node) = nd;
 											}
-#line 2914 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2914 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 147:
-#line 1331 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1331 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {	((*yyvalp).node_collection) = nullptr;	}
-#line 2920 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2920 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 148:
-#line 1332 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1332 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												((*yyvalp).node_collection) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.node_collection);
 											}
-#line 2928 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2928 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 149:
-#line 1338 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1338 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												((*yyvalp).stringVal) = (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.stringVal);
 											}
-#line 2936 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2936 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
   case 150:
-#line 1344 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
+#line 1344 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:816
     {
 												
 												if ((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.node_collection) != nullptr)
@@ -2955,11 +2955,11 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
 													((*yyvalp).node_collection) = nullptr;
 												}
 											}
-#line 2959 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2959 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
     break;
 
 
-#line 2963 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
+#line 2963 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:816
       default: break;
     }
 
@@ -3008,9 +3008,9 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
   switch (yytype)
     {
           case 35: // "identifier"
-#line 88 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:846
+#line 88 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:846
       { delete ((*yyvaluep).stringVal); }
-#line 3014 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:846
+#line 3014 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:846
         break;
 
 
@@ -4445,13 +4445,13 @@ yyparse (yy::mlang_parser& yyparser, mlang_driver& driver)
 
   /* User initialization code.  */
   yylloc.initialize ();
-#line 16 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2270
+#line 16 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2274
 {
   // Initialize the initial location.
   yylloc.begin.filename = yylloc.end.filename = driver.streamname();
 }
 
-#line 4455 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2270
+#line 4455 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2274
 
   if (! yyinitGLRStack (yystackp, YYINITDEPTH))
     goto yyexhaustedlab;
@@ -4752,7 +4752,7 @@ yypdumpstack (yyGLRStack* yystackp)
 
 
 
-#line 1364 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2584
+#line 1364 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2584
 
 
 void
@@ -4761,7 +4761,7 @@ yy::mlang_parser::error (const yy::mlang_parser::location_type& l,
 {
   driver.error (l, m);
 }
-#line 4765 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
+#line 4765 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
 
 /*------------------.
 | Report an error.  |
@@ -4778,7 +4778,7 @@ yyerror (const yy::mlang_parser::location_type *yylocationp, yy::mlang_parser& y
 
 
 namespace yy {
-#line 4782 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
+#line 4782 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
   /// Build a parser object.
   mlang_parser::mlang_parser (mlang_driver& driver_yyarg)
     :
@@ -4817,21 +4817,21 @@ namespace yy {
     switch (yytype)
     {
           case 32: // "[]"
-#line 89 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2584
+#line 89 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2584
       { yyoutput << ((*yyvaluep).integerVal); }
-#line 4823 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
+#line 4823 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
         break;
 
     case 35: // "identifier"
-#line 87 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2584
+#line 87 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2584
       { yyoutput << *((*yyvaluep).stringVal); }
-#line 4829 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
+#line 4829 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
         break;
 
     case 36: // "integer"
-#line 89 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2584
+#line 89 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.yy" // glr.c:2584
       { yyoutput << ((*yyvaluep).integerVal); }
-#line 4835 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
+#line 4835 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
         break;
 
 
@@ -4882,4 +4882,4 @@ namespace yy {
 #endif
 
 } // yy
-#line 4886 "/home/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
+#line 4886 "/Users/mario/Projects/mlang.src/lib/mlang/parser/mlang_parser.cpp" // glr.c:2584
