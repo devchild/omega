@@ -24,7 +24,7 @@ public:
     bool sucess();
     std::vector<mlang::p_CompilerError>& errors();
     mlang::CodeCompileUnit* parse(std::istream* in);
-    mlang::CodeCompileUnit* parse(const std::string &filename);
+    mlang::CodeCompileUnit* parse(const std::string &filename, mlang::CodeCompileUnit* compile_unit);
     const MLangDomProvider& provider();
 private:
     std::vector<mlang::p_CompilerError> m_errors;

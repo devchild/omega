@@ -30,6 +30,19 @@ namespace mlang {
         visitor->visit(this);
     }
     
+    void
+    CodeCompileUnit::merge(CodeCompileUnit* unit) {
+        for(auto x:*unit->namespaces()) {
+        }
+
+        for(auto x:*unit->types()) {
+        }
+
+        for(auto x:*unit->methods()) {
+            
+        }
+    }
+    
     bool 
     CodeCompileUnit::type_of(CodeObjectKind kind) {
         return kind == CodeObjectKind::CodeCompileUnit || CodeObject::type_of(kind);

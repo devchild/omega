@@ -1245,8 +1245,8 @@ yyuserAction (yyRuleNum yyn, size_t yyrhslen, yyGLRStackItem* yyvsp,
     {	
 									if (driver.root() == nullptr)
 									{
-										auto nd = new mlang::CodeCompileUnit();
-										driver.root(nd);
+										//auto nd = new mlang::CodeCompileUnit();
+										//driver.root(nd);
 									}
 									driver.success(false);
 								}

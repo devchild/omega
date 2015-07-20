@@ -42,17 +42,26 @@ bool MLangCodeParser::sucess() {
 }
 
 mlang::CodeCompileUnit*
-MLangCodeParser::parse(const std::string &filename) {
+MLangCodeParser::parse(const std::string &filename, mlang::CodeCompileUnit* compile_unit) {
 	this->m_sucess = false;
 	mlang_driver p;
+        
+        p.root(compile_unit);
 	p.trace_parsing = false;
 
 	this->m_sucess = p.parse_file(filename);
 
 	if (this->m_sucess)
 	{
-		mlang::CodeScope* global_scope = new mlang::CodeScope(nullptr);
-		p.root()->scope(global_scope);
+            if (p.root()->scope() == nullptr)
+            {
+                std::cout << "setting root scope" << std::endl;
+                p.root()->scope( new mlang::CodeScope(nullptr) );
+                
+            }
+            else {
+            std::cout << "root scope already set" << std::endl;
+            }
 	}
 
 	for(auto e: p.errors())
@@ -67,8 +76,9 @@ MLangCodeParser::parse(std::istream* in) {
 	mlang_driver p;
 	this->m_sucess = p.parse_stream(*in, ":memory:");
 
-	mlang::CodeScope* global_scope = new mlang::CodeScope(nullptr);
-	p.root()->scope(global_scope);
+	//mlang::CodeScope* global_scope = nullptr;
+        if (p.root()->scope() == nullptr)
+            p.root()->scope( new mlang::CodeScope(nullptr) );
 
 	for(auto e: p.errors())
 		this->m_errors.push_back(e);

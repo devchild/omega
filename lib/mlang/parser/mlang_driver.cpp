@@ -21,7 +21,8 @@ mlang_driver::~mlang_driver() {
 }
 
 bool mlang_driver::parse_stream(std::istream& in, const std::string& sname) {
-	this->m_root = nullptr;
+	// why was this set to nill?
+        // this->m_root = nullptr;
 	m_streamname = sname;
 
 	yy::Scanner scanner(&in, &std::cout);

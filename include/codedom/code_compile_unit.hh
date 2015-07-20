@@ -27,7 +27,7 @@ namespace mlang {
 
         virtual bool type_of(CodeObjectKind kind);
         virtual void scope(CodeScope* scope);
-        
+        void merge(mlang::CodeCompileUnit* unit);    
     private:
         CodeNamespaceCollection* m_namespaces;
         CodeMemberMethodCollection* m_methods;
