@@ -8,6 +8,7 @@
 #ifndef FILESYSTEM_HH
 #define	FILESYSTEM_HH
 
+#include <iostream>
 #include <string>
 #include <list>
 
@@ -64,6 +65,8 @@ public:
 				i++;
 			}
 		}
+        if (i == 0)
+            return ".";
 		return ret;
 	}
 
@@ -75,13 +78,12 @@ public:
 	}
 
 	static inline bool file_exists(const std::string& path) {
-		bool ret = false;
-		std::ifstream f(path.c_str());
-		if (f.good()) {
-			f.close();
-			ret = true;
-		}
-		return ret;
+        if (FILE *file = fopen(path.c_str(), "r")) {
+            fclose(file);
+            return true;
+        } else {
+            return false;
+        }
 	}
 
 private:

@@ -8,6 +8,7 @@
 #include <argvparser.hh>
 #include <dirent.h>
 #include <utils.hh>
+#include <file_system.hh>
 
 using namespace std;
 using namespace CommandLineProcessing;
@@ -40,20 +41,28 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
         parameters->output_file_name(cmd.optionValue("out"));
     }
 
+    // should we create a library or an executable
     if (cmd.foundOption("target")) {
         cmd.optionValue("target");
     }
 
+    // what files should we use as input
     for (int i = 0; i < cmd.arguments(); i++) {
+        // todo: parse out '/' or '\' to find out if we need to search inside some directory.
+        
         string argument = cmd.argument(i);
-        char* c_argument = const_cast<char*>(argument.c_str());
+        
+        auto searchDir = SourceFile::get_directory(argument);
+        auto searchPart = SourceFile::get_file_name(argument);
+        
+        char* c_argument = const_cast<char*>(searchPart.c_str());
         if (argument.find("*") || argument.find("?"))
         {
             DIR* dir;
             dirent* pdir;
-            dir = opendir("."); // open current directory
+            dir = opendir(searchDir.c_str()); // open current directory
 
-            while (pdir = readdir(dir)) {
+            while ((pdir = readdir(dir))) {
                 if (GeneralTextCompare(pdir->d_name, c_argument))
                 {
                     parameters->append_input_file(pdir->d_name);
@@ -98,8 +107,6 @@ int main(int argc, char ** argv) {
             }
         }
     }
-    
-
 
     if (total_errors == 0 && parser_success) {
         CompilerParameters parameters;
