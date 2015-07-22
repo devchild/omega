@@ -2,8 +2,8 @@
 #define mlang_DRIVER_HH
 # include <string>
 # include <map>
-# include "mlang_parser.hh"
-# include "mlang_scanner.hh"
+# include <mlang_parser.hh>
+# include <mlang_scanner.hh>
 # include <codedom.hh>
 # include <compiler_error.hh>
 
