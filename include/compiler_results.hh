@@ -9,6 +9,7 @@
 #define	COMPILERRESULTS_HH
 
 #include <vector>
+#include <string>
 #include "compiler_error.hh"
 
 using namespace std;
@@ -19,9 +20,11 @@ public:
     CompilerResults(const CompilerResults& orig);
     virtual ~CompilerResults();
     vector<mlang::p_CompilerError>& errors();
+    vector<std::string>& output();
     
 private:
     vector<mlang::p_CompilerError> m_errors;
+    vector<std::string> m_output;
     // CompiledAssembly -> ?
     // Errors   -> ErrorCollectiong
     // NativeCompilerReturnValue -> int

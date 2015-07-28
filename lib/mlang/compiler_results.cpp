@@ -20,3 +20,8 @@ vector<mlang::p_CompilerError>& CompilerResults::errors() {
     return this->m_errors;
 }
 
+vector<std::string>& CompilerResults::output() {
+    return this->m_output;
+}
+
+

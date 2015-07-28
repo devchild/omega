@@ -20,7 +20,7 @@ public:
     MLangCodeCompiler(MLangDomProvider& p);
     MLangCodeCompiler(const MLangCodeCompiler& orig);
     virtual ~MLangCodeCompiler();
-    CompilerResults* FromDomBatch(CompilerParameters options, mlang::CodeCompileUnit* compile_unit);
+    CompilerResults* FromDomBatch(CompilerParameters& parameters, mlang::CodeCompileUnit* compile_unit);
     
     MLangDomProvider &provider();
 private:

@@ -67,7 +67,3 @@ string CompilerParameters::output_file_name() {
 list<string>* CompilerParameters::input_files() {
     return this->m_input_files;
 }
-
-void CompilerParameters::append_input_file(std::string file_name) {
-    this->m_input_files->push_back(file_name);
-}

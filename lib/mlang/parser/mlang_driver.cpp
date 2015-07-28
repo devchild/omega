@@ -36,8 +36,10 @@ bool mlang_driver::parse_stream(std::istream& in, const std::string& sname) {
 
 bool mlang_driver::parse_file(const std::string &filename) {
 	std::ifstream in(filename.c_str());
-	if (!in.good())
+	if (!in.good()){
+        std::cout << filename << " does not exist." << std::endl;
 		return false;
+    }
 	return parse_stream(in, filename);
 }
 

@@ -43,16 +43,22 @@ bool MLangCodeParser::sucess() {
 
 mlang::CodeCompileUnit*
 MLangCodeParser::parse(const std::string &filename, mlang::CodeCompileUnit* compile_unit) {
+    std::cout << ">> parse" << std::endl;
+
 	this->m_sucess = false;
 	mlang_driver p;
         
-        p.root(compile_unit);
-	p.trace_parsing = false;
+    p.root(compile_unit);
+	p.trace_parsing = true;
+
+    std::cout << " - parse 1" << std::endl;
 
 	this->m_sucess = p.parse_file(filename);
 
 	if (this->m_sucess)
 	{
+        std::cout << " - parse 2" << std::endl;
+
             if (p.root()->scope() == nullptr)
             {
                 std::cout << "setting root scope" << std::endl;
@@ -64,8 +70,13 @@ MLangCodeParser::parse(const std::string &filename, mlang::CodeCompileUnit* comp
             }
 	}
 
-	for(auto e: p.errors())
+	for(auto e: p.errors()) {
 		this->m_errors.push_back(e);
+        std::cout << " - parse 3" << e->message() << std::endl;
+
+    }
+
+    std::cout << "<< parse" << std::endl;
 
 	return p.root();
 }

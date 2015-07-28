@@ -94,8 +94,8 @@ class mlang_driver;
 compile_unit:					{	
 									if (driver.root() == nullptr)
 									{
-										//auto nd = new mlang::CodeCompileUnit();
-										//driver.root(nd);
+										auto nd = new mlang::CodeCompileUnit();
+										driver.root(nd);
 									}
 									driver.success(false);
 								}

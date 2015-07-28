@@ -40,6 +40,7 @@
 #include "mlang_dom_provider.hh"
 #include "mlang_code_generator.hh"
 #include "mlang_semantic_analysis.hh"
+#include "linker.hh"
 
 using namespace mlang;
 
@@ -116,24 +117,24 @@ void runLLVMOptimizations1(llvm::Module* module) {
 //    }
 }
 
-static int generateobj(llvm::tool_output_file* Out, llvm::Module * module) {
+static int generateobj(llvm::raw_fd_ostream &out, llvm::Module * module) {
 	llvm::PassManager PM;
-	llvm::TargetOptions Options;
+    llvm::TargetOptions Options;
 	std::string Err;
-	llvm::Triple TheTriple(module->getTargetTriple());
+
+    llvm::Triple TheTriple(module->getTargetTriple());
 	if (TheTriple.getTriple().empty())
 		TheTriple.setTriple(llvm::sys::getDefaultTargetTriple());
-	const llvm::Target* TheTarget = llvm::TargetRegistry::lookupTarget(
-			TheTriple.getTriple(), Err);
+
+
+    const llvm::Target* TheTarget = llvm::TargetRegistry::lookupTarget(TheTriple.getTriple(), Err);
 	std::string MCPU, FeaturesStr;
-	llvm::TargetMachine * machineTarget = TheTarget->createTargetMachine(
-			TheTriple.getTriple(), MCPU, FeaturesStr, Options);
-// Figure out where we are going to send the output...
-	llvm::formatted_raw_ostream FOS(Out->os());
-	if (machineTarget->addPassesToEmitFile(PM, FOS,
-			llvm::TargetMachine::CGFT_ObjectFile, true)) {
-		std::cerr << " target does not support generation of this"
-				<< " file type!\n";
+	llvm::TargetMachine * machineTarget = TheTarget->createTargetMachine(TheTriple.getTriple(), MCPU, FeaturesStr, Options);
+
+    // Figure out where we are going to send the output...
+	llvm::formatted_raw_ostream FOS(out);
+	if (machineTarget->addPassesToEmitFile(PM, FOS, llvm::TargetMachine::CGFT_ObjectFile,true)) {
+		std::cerr << " target does not support generation of this file type!\n";
 		return 1;
 	}
 	PM.run(*module);
@@ -294,7 +295,7 @@ MLangCodeCompiler::IncludeEmbeddedTypes(mlang::CodeCompileUnit* compile_unit) {
 }
 
 CompilerResults*
-MLangCodeCompiler::FromDomBatch(CompilerParameters options,
+MLangCodeCompiler::FromDomBatch(CompilerParameters& parameters,
 		mlang::CodeCompileUnit* compile_unit) {
 	auto ret = new CompilerResults();
 
@@ -310,9 +311,9 @@ MLangCodeCompiler::FromDomBatch(CompilerParameters options,
 		MLangCodeGenerator* code_gen = this->m_provider.CreateGenerator();
 		auto module = code_gen->GenerateCodeFromCompileUnit(compile_unit);
 
-		if (options.optimize()) {
+		//if (parameters.optimize()) {
 			runLLVMOptimizations1(module);
-		}
+		//}
 
 		/*
 		 std::string err;
@@ -321,10 +322,10 @@ MLangCodeCompiler::FromDomBatch(CompilerParameters options,
 		 myfile.close();
 		 */
 
-		if (options.dump_ir()) {
+		//if (parameters.dump_ir()) {
 			// run them across all functions
 			module->dump();
-		}
+		//}
 		/*
 		 redi::ipstream llc(
 		 "/home/mario/Projects/llvm.obj/Debug/bin/llc a.bc -filetype=obj");
@@ -339,23 +340,16 @@ MLangCodeCompiler::FromDomBatch(CompilerParameters options,
 		llvm::InitializeAllAsmPrinters();
 		llvm::InitializeAllAsmParsers();
 
-		std::string err;
-		std::string out_file_name = "a.o";
-		llvm::tool_output_file outp(out_file_name.c_str(), llvm::sys::fs::F_None);
-		generateobj(&outp, module);
-
+		std::error_code err;
+        std::string out_file_name = "a.o";
+		//llvm::tool_output_file outp(out_file_name.c_str(), llvm::sys::fs::F_None);
+	
+        llvm::raw_fd_ostream outp(out_file_name.c_str(), err, llvm::sys::fs::F_None);
+	    generateobj(outp, module);
 		// if you want the .o file to stay on disk then uncomment following line
-		// outp.keep();
+		//outp.keep();
 
-		redi::ipstream ld(
-				"ld --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o a.out /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crt1.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crti.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/crtbegin.o -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2 -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../.. -L/lib -L/usr/lib a.o -lm -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/crtend.o /usr/bin/../lib64/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../lib64/crtn.o");
-
-		//redi::ipstream ld("ld -m elf_x86_64 a.o -o a.out");
-
-		std::string ld_out;
-		while (ld >> ld_out) {
-			std::cout << ld_out << std::endl;
-		}
+        ret->output().push_back(out_file_name);
 	}
 
 	return ret;

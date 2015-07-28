@@ -10,6 +10,11 @@
 #include <utils.hh>
 #include <file_system.hh>
 
+#include <linker.hh>
+
+#include <llvm/Support/FileSystem.h>
+#include <llvm/Support/Path.h>
+
 using namespace std;
 using namespace CommandLineProcessing;
 
@@ -18,7 +23,6 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
     ArgvParser cmd;
     // init
     cmd.setIntroductoryDescription("MLang Compiler.");
-
     //define error codes
     cmd.addErrorCode(0, "Success");
     cmd.addErrorCode(1, "Error");
@@ -51,7 +55,6 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
         // todo: parse out '/' or '\' to find out if we need to search inside some directory.
         
         string argument = cmd.argument(i);
-        
         auto searchDir = SourceFile::get_directory(argument);
         auto searchPart = SourceFile::get_file_name(argument);
         
@@ -65,7 +68,7 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
             while ((pdir = readdir(dir))) {
                 if (GeneralTextCompare(pdir->d_name, c_argument))
                 {
-                    parameters->append_input_file(pdir->d_name);
+                    parameters->input_files()->push_back(searchDir + "/"  +  pdir->d_name);
                     cout << pdir->d_name << endl;
                 }
             }
@@ -73,12 +76,14 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
         }
         else
         {
-            parameters->append_input_file(cmd.argument(i));
+            parameters->input_files()->push_back(cmd.argument(i));
         }
     }
 }
 
 int main(int argc, char ** argv) {
+    std::cout << ">> main " << std::endl;
+
     CompilerParameters parameters;
     parse_command_line(argc, argv, &parameters);
 
@@ -93,15 +98,20 @@ int main(int argc, char ** argv) {
     bool parser_success = true;
 
     for (string file_name : *parameters.input_files()) {
+        std::cout << " - main 1 " << std::endl;
+
         auto parser = provider.CreateParser();
         parser->parse(file_name, compile_unit);
 
         auto errors = parser->errors();
         total_errors = errors.size();
-        parser_success |= parser->sucess();
+        parser_success &= parser->sucess();
 
         if (errors.size() > 0) {
+            std::cout << " - main 2 " << std::endl;
+
             for (auto e : errors) {
+                std::cout << "errr" << std::endl;
                 std::cerr << e->location()->to_string() << ": error: "
                         << e->message() << std::endl;
             }
@@ -109,17 +119,13 @@ int main(int argc, char ** argv) {
     }
 
     if (total_errors == 0 && parser_success) {
+        std::cout << " - main 3 " << std::endl;
+
         CompilerParameters parameters;
         // parameters.optimize(optimized.getValue());
         // parameters.dump_ir(dump.getValue());
         auto compiler = provider.CreateCompiler();
         auto result = compiler->FromDomBatch(parameters, compile_unit);
-        
-            for (auto p: *compile_unit->methods())
-        cout << p->name() << endl;
-    
-    for (auto p: *compile_unit->types())
-        cout << p->name() << endl;
         
         for (auto x : result->errors()) {
             if (x->has_location())
@@ -127,7 +133,17 @@ int main(int argc, char ** argv) {
             else
                 std::cerr << ": error: " << x->message() << std::endl;
         }
+
+        if (result->errors().size() == 0) {
+            std::cout << "no errors" << std::endl;
+            Linker l;
+            if (l.createExecutable( result->output(), "test") != 0) {
+                std::cout << "create executable failed" << std::endl;
+            }
+        }
     } else {
+        std::cout << " - main 999 " << std::endl;
+
         exit(EXIT_FAILURE);
     }
 

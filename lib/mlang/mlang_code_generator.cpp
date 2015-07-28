@@ -17,6 +17,7 @@
 #include <llvm/Linker/Linker.h>
 #include <llvm/Support/SourceMgr.h>
 #include <llvm/IR/InlineAsm.h>
+#include <llvm/Support/Host.h>
 
 class GenerationPass: public CodeObjectVisitorBase {
 private:
@@ -346,7 +347,7 @@ llvm::Module* MLangCodeGenerator::GenerateCodeFromCompileUnit(
 	llvm::Module * module = new llvm::Module("in_memory_module", m_context);
 	module->setDataLayout(
 			"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-n8:16:32:64-S128");
-	module->setTargetTriple("x86_64-unknown-linux-gnu");
+	module->setTargetTriple(llvm::sys::getDefaultTargetTriple());
 
 	std::vector<p_CompilerError> err;
 	LLVMTypeGenerationPass type_generator(module, err);

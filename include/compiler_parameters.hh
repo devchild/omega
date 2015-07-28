@@ -31,7 +31,6 @@ public:
     void output_file_name(string file_name);
     string output_file_name();
     
-    void append_input_file(std::string file_name);
     list<string>* input_files();
     
 private:
