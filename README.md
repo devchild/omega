@@ -1,10 +1,10 @@
 #The yoda-project.
-In lack of a final name for this language I call this the yoda-project.
-If you have a proposition for a cool name for this language, please let me know.
+In lack of a final (better) name for this language I name this the yoda-project.
+If you have a proposition for a cool new name for this language, please let me know.
 
-The programming language I am designing is a mixture of python and c#.
-The compiler is written in c++ and uses llvm for the low level code generation.
-The parser is generated using bison and flex.
+The programming language that is being designed here is a mixture of python and c#.
+The compiler itself is written in c++ and uses llvm for the low level code generation.
+The parser bits are generated using bison and flex.
 
 The goal of this project, is the get a better understanding on the internals of a compiler without making this a life's work.
 
@@ -33,7 +33,7 @@ cd llvm-X.X.X.obj
 Then generate the makefiles for building llvm.
 If you are planning to install llvm on your system after compiling you can omit the -DCMAKE_INSTALL_PREFIX option.
 ```
-cmake -DCMAKE_INSTALL_PREFIX=PATH_TO_WHERE_YOU_WANT_TO_INSTALL_LLVM ../llvm-X.X.X.src/
+cmake -DCMAKE_INSTALL_PREFIX={PATH_TO_WHERE_YOU_WANT_TO_INSTALL_LLVM} ../llvm-X.X.X.src/
 ```
 Start builing llvm (this can take a while, if you have multiple cores or processors you might want to pass the optional "-j" switch eg. make -j6)
 ```
@@ -54,10 +54,31 @@ move into the the new folder.
 ```
 cd yoda.obj
 ```
-First we will need to 
+First we will need to generate the makefile for this project on your system.
+For this cmake needs to know where it can find the installed version of llvm.
+Replace PATH_TO_WHERE_YOU_WANT_TO_INSTALL_LLVM with where you the llvm bin files are located 
 ```
-ccmake ../yoda.src
+cmake -DLLVM_DIR={PATH_TO_WHERE_YOU_WANT_TO_INSTALL_LLVM}/share/llvm/cmake/ ../yoda.src/
 ```
+And finaly build the project.
+```
+make
+```
+
+This is it. 
+You should now have a binary version of the yoda compiler.
+Currently the compiler itself is called mlang and is located in ./tools/mlang/
+
+Compiling files can be done by executing following command.
+```
+./mlang --out=helloworld inputfile.ml
+```
+
+Compiling multiple files into a single executable can be done by executing following command.
+```
+./mlang --out=helloworld *.ml
+```
+
 
 
 
