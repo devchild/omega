@@ -9,3 +9,56 @@ The parser is generated using bison and flex.
 The goal of this project, is the get a better understanding on the internals of a compiler without making this a life's work.
 
 Initialy I was building this on a linux system, but these days I find myself programming more on mac, so currently I am not realy looking to support many platforms. I am sure this won't compile on a windows machine, it might compile on a linux, but nothing is guaranteed.
+
+
+#How to compile this project.
+##1. Compile llvm.
+This project uses llvm as a library but it depends on some cmake files that come with the llvm source package.
+
+First of all you will need to download the llvm source from http://llvm.org/releases/download.html.
+I am currently using llvm 3.6.2 for this project, but I think newer versions should work as well.
+Just download the LLVM source code and extract it using following command. 
+(Just replace the X.X.X with the version you ended up downloading) 
+```
+tar -xf llvm-X.X.X.src.tar.xz
+```
+Then create a directory for building llvm.
+```
+mkdir llvm-X.X.X.obj
+```
+Move into the newly created directory.
+```
+cd llvm-X.X.X.obj
+```
+Then generate the makefiles for building llvm.
+If you are planning to install llvm on your system after compiling you can omit the -DCMAKE_INSTALL_PREFIX option.
+```
+cmake -DCMAKE_INSTALL_PREFIX=PATH_TO_WHERE_YOU_WANT_TO_INSTALL_LLVM ../llvm-X.X.X.src/
+```
+Start builing llvm (this can take a while, if you have multiple cores or processors you might want to pass the optional "-j" switch eg. make -j6)
+```
+make
+```
+If everything compiled correctly you can finaly install llvm on your system.
+```
+make install
+```
+
+##2. Compile the yoda project.
+If you have cloned or downloaded a version of this project you should be fine.
+First let us create a folder for building this project.
+```
+mkdir yoda.obj
+```
+move into the the new folder.
+```
+cd yoda.obj
+```
+First we will need to 
+```
+ccmake ../yoda.src
+```
+
+
+
+
