@@ -605,17 +605,23 @@ private:
 
 	inline CodeVariableDeclarationStatement*
 	resolve_variable(CodeVariableReferenceExpression* object) {
+        // std::cout << "resolving: " << object->variable_name() << std::endl;
+
 		if (object->user_data(
 				UserDataKind::MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT)
 				== nullptr) {
 			CodeVariableDeclarationStatement* res = nullptr;
-
 			CodeScope* scope = object->scope();
+            //if (scope == nullptr)
+            //    std::cout << "object->scope() -> nullptr" << std::endl;
+
 			while (scope != nullptr) {
-				for (auto member : *scope->members()) {
+				for (auto member : *scope->members()) { 
+                     
 					if (member->type_of(
 							CodeObjectKind::CodeVariableDeclarationStatement)) {
 						auto decl = (CodeVariableDeclarationStatement*) member;
+
 						if (decl->name() == object->variable_name()) {
 							res = decl;
 							object->user_data(
@@ -699,8 +705,13 @@ private:
 						UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION)) {
 			CodeTypeDeclaration* res = nullptr;
 
+            std::cout << "resolving type for: " << object->base_type() << std::endl;
+
 			if (nullptr != object->array_element_type())
-				resolve_type(object->array_element_type());
+            {
+                resolve_type(object->array_element_type());
+                //std::cout << "resolving type for: " << object->base_type << std::endl;
+            }
 
 			for (auto prefix : included_namespace_prefixes) {
 				std::string search_string = prefix + object->base_type();
@@ -718,6 +729,11 @@ private:
 				object->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION,
 						tmp);
 			}
+            else
+            {
+
+                std::cout << "could not find declaration for: " << object->base_type() << std::endl;
+            }
 			return res;
 		} else {
 			void* tmp = object->user_data(

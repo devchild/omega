@@ -1,4 +1,7 @@
 #include <codedom.hh>
+#include <iostream>
+
+using namespace std;
 
 namespace mlang {
     
@@ -48,6 +51,7 @@ namespace mlang {
         }
 
         for(auto x:*this->methods()) {
+            cout << "setting method scope" << endl;
         	x->scope(current_scope);
         }
         current_scope = current_scope->end_scope();

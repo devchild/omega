@@ -19,6 +19,74 @@
 #include <llvm/IR/InlineAsm.h>
 #include <llvm/Support/Host.h>
 
+
+
+class LLVMUserData {
+    public:
+        static void set_l_value(CodeObject* obj, llvm::Value* value) {
+            obj->user_data(UserDataKind::LLVM_L_VALUE, value);    
+        }
+
+        static void set_r_value(CodeObject* obj, llvm::Value* value) {
+            obj->user_data(UserDataKind::LLVM_R_VALUE, value);    
+        }
+
+        static llvm::Value* get_r_value(CodeObject* obj) {
+            if (obj->user_data(UserDataKind::LLVM_R_VALUE))
+                return (llvm::Value*) obj->user_data(UserDataKind::LLVM_R_VALUE);
+            return nullptr;
+        }
+
+        static llvm::Value* get_l_value(CodeObject* obj) {
+            if (obj->user_data(UserDataKind::LLVM_L_VALUE))
+                return (llvm::Value*) obj->user_data(UserDataKind::LLVM_L_VALUE);
+            return nullptr;
+        }
+
+        static void set_llvm_type(CodeObject* obj, llvm::Type* value) {
+            obj->user_data(UserDataKind::LLVM_TYPE, value);    
+        }
+
+        static llvm::Type* get_llvm_type(CodeObject* obj) {
+            if (obj->user_data(UserDataKind::LLVM_TYPE))
+                return (llvm::Type*) obj->user_data(UserDataKind::LLVM_TYPE);
+
+            if (obj->type_of(CodeObjectKind::CodeTypeReference))
+            {
+                auto ret = code_type_reference_get_llvm_type((CodeTypeReference*)obj);
+                if (ret == nullptr)
+                    LLVMUserData::set_llvm_type(obj, ret);
+                return ret;
+            }
+
+            return nullptr;
+        }
+
+    private: static llvm::Type* code_type_reference_get_llvm_type(CodeTypeReference* code_type_reference) {
+		    llvm::Type* ret = nullptr;
+		    CodeTypeDeclaration* code_type_declaration = (CodeTypeDeclaration*)code_type_reference->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
+            if (code_type_declaration->is_embedded() && code_type_declaration->name() == "Array")
+		    {
+			    if (code_type_reference->array_element_type() != nullptr)
+			    {
+			        llvm::Type* element_type = LLVMUserData::get_llvm_type(code_type_reference->array_element_type());
+    			    ret = llvm::PointerType::get(element_type, 0);
+	    		}
+		    }
+  		    else if (code_type_declaration->is_class())
+	   	    {
+                // this will probably have to move to get_llvm_type
+		  	    ret = llvm::PointerType::get(ret, 0);
+            }
+            else 
+            {
+                return LLVMUserData::get_llvm_type(code_type_declaration);
+            }
+
+            return ret;
+	    }
+};
+
 class GenerationPass: public CodeObjectVisitorBase {
 private:
 	std::vector<p_CompilerError>& m_errors;
@@ -98,114 +166,59 @@ public:
 		if (object->is_embedded()) {
 			switch (str2int(object->name().c_str())) {
 			case str2int("Int1"):
-				//compile_unit->resolve_type("Int1")->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt1Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt1Ty(ctx));
+                LLVMUserData::set_llvm_type(object, llvm::Type::getInt1Ty(ctx));
 				break;
 			case str2int("Bool"):
-				//	auto _bool = compile_unit->resolve_type("Bool");
-				//  _bool->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt8Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt8Ty(ctx));
-				break;
 			case str2int("Char"):
-				// auto _char = compile_unit->resolve_type("Char");
-				// _char->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt8Ty(m_context)); // single byte char
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt8Ty(ctx));
-				break;
 			case str2int("SByte"):
-				//	auto _sbyte = compile_unit->resolve_type("SByte");
-				// _sbyte->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt8Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt8Ty(ctx));
-				break;
 			case str2int("Byte"):
-				//	auto _byte = compile_unit->resolve_type("Byte");
-				// _byte->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt8Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt8Ty(ctx));
+                LLVMUserData::set_llvm_type(object, llvm::Type::getInt8Ty(ctx));
 				break;
 			case str2int("Int16"):
-				// 	auto _short = compile_unit->resolve_type("Int16");
-				// _short->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt16Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt16Ty(ctx));
+                LLVMUserData::set_llvm_type(object, llvm::Type::getInt16Ty(ctx));
 				break;
 			case str2int("UInt16"):
-				// 	auto _ushort = compile_unit->resolve_type("UInt16");
-				// _ushort->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt16Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt16Ty(ctx));
+                LLVMUserData::set_llvm_type(object, llvm::Type::getInt16Ty(ctx));
 				break;
 			case str2int("Int32"):
-				// 	auto _int32 = compile_unit->resolve_type("Int32");
-				// _int32->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt32Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt32Ty(ctx));
+				LLVMUserData::set_llvm_type(object, llvm::Type::getInt32Ty(ctx));
 				break;
 			case str2int("UInt32"):
-				// auto _uint32 = compile_unit->resolve_type("UInt32");
-				// _uint32->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt32Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt32Ty(ctx));
+				LLVMUserData::set_llvm_type(object, llvm::Type::getInt32Ty(ctx));
 				break;
-			case str2int("Int64"):
-				// auto _long = compile_unit->resolve_type("Int64");
-				// _long->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt64Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt64Ty(ctx));
+			case str2int("Int64"):				
+                LLVMUserData::set_llvm_type(object, llvm::Type::getInt64Ty(ctx));
 				break;
 			case str2int("UInt64"):
-				// 	auto _ulong = compile_unit->resolve_type("UInt64");
-				// _ulong->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt64Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt64Ty(ctx));
+				LLVMUserData::set_llvm_type(object, llvm::Type::getInt64Ty(ctx));
 				break;
 			case str2int("Single"):
-				// 	auto _float = compile_unit->resolve_type("Single");
-				// _float->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getFloatTy(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getFloatTy(ctx));
+				LLVMUserData::set_llvm_type(object, llvm::Type::getFloatTy(ctx));
 				break;
 			case str2int("Double"):
-				// 	auto _double = compile_unit->resolve_type("Double");
-				// _double->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getDoubleTy(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getDoubleTy(ctx));
+				LLVMUserData::set_llvm_type(object, llvm::Type::getDoubleTy(ctx));
 				break;
 			case str2int("Decimal"):
-				// auto _decimal = compile_unit->resolve_type("Decimal");
-				// _decimal->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getFP128Ty(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getFP128Ty(ctx));
+                LLVMUserData::set_llvm_type(object, llvm::Type::getFP128Ty(ctx));
 				break;
 			case str2int("IntPtr"):
-				// auto _intptr = compile_unit->resolve_type("IntPtr");
-				// _intptr->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getInt64PtrTy(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getInt64PtrTy(ctx));
+                LLVMUserData::set_llvm_type(object, llvm::Type::getInt64PtrTy(ctx));
 				break;
 			case str2int("Void"):
-				// 	auto _void = compile_unit->resolve_type("Void");
-				// _void->user_data(UserDataKind::LLVM_TYPE, llvm::Type::getVoidTy(m_context));
-				object->user_data(UserDataKind::LLVM_TYPE,
-						llvm::Type::getVoidTy(ctx));
+                LLVMUserData::set_llvm_type(object, llvm::Type::getVoidTy(ctx));
 				break;
 			case str2int("Array"):
-				object->user_data(UserDataKind::LLVM_TYPE, nullptr);
+                LLVMUserData::set_llvm_type(object, nullptr);
 				break;
 			}
 		} else if (object->is_struct()) {
 			std::string struct_name = object->name();
 			llvm::StructType * struct_type = llvm::StructType::create(ctx, struct_name);
-
-			object->user_data(UserDataKind::LLVM_TYPE, struct_type);
-
+			LLVMUserData::set_llvm_type(object, struct_type);
 		} else if (object->is_class()) {
 			std::string class_name = object->name();
 			llvm::StructType * class_type = llvm::StructType::create(ctx, class_name);
-			object->user_data(UserDataKind::LLVM_TYPE, class_type);
+            LLVMUserData::set_llvm_type(object, class_type);
 		}
 	}
 };
@@ -217,42 +230,6 @@ private:
 protected:
 	using CodeObjectVisitorBase::on_visit;
 public:
-
-	llvm::Type*
-	get_llvm_type(CodeTypeReference* code_type_reference) {
-		llvm::Type* ret = nullptr;
-		CodeTypeDeclaration* code_type_declaration = (CodeTypeDeclaration*)code_type_reference->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
-
-		// the type should be in LLVM_TYPE only for the type ARRAY this is not the case, unless it has been resolved before.
-		if (code_type_declaration->user_data(UserDataKind::LLVM_TYPE) == nullptr)
-		{
-			if (code_type_declaration->is_embedded() && code_type_declaration->name() == "Array")
-			{
-				if (code_type_reference->array_element_type() != nullptr)
-				{
-					llvm::Type* element_type = get_llvm_type(code_type_reference->array_element_type());
-					ret = llvm::PointerType::get(element_type, 0);
-				}
-
-				code_type_declaration->user_data(UserDataKind::LLVM_TYPE, ret);
-			}
-			else if (code_type_declaration->is_class())
-			{
-				ret = llvm::PointerType::get(ret, 0);
-			}
-			else
-			{
-				// throw some exception, because only Array can be an unknown type at this point.
-			}
-		}
-		else
-		{
-			ret = (llvm::Type*)code_type_declaration->user_data(UserDataKind::LLVM_TYPE);
-		}
-
-		return ret;
-	}
-
 	LLVMMethodPrototypeGenerationPass(llvm::Module * module,
 			std::vector<p_CompilerError>& errors) :
 			GenerationPass(errors) {
@@ -294,12 +271,12 @@ public:
 	}
 
 	inline void on_visit(CodeMemberMethod* object) {
-		llvm::Type* result_type = get_llvm_type(object->return_type()); //  static_cast<llvm::Type*>(t->user_data(UserDataKind::LLVM_TYPE));
+		llvm::Type* result_type =  LLVMUserData::get_llvm_type(object->return_type()); //  static_cast<llvm::Type*>(t->user_data(UserDataKind::LLVM_TYPE));
 
 		std::vector<llvm::Type*> param_types;
 		if (object->parameters()->size() > 0) {
 			for (auto p : *object->parameters()) {
-				auto llvm_type = get_llvm_type(p->type());
+				auto llvm_type =  LLVMUserData::get_llvm_type(p->type());
 				param_types.push_back(llvm_type);
 			}
 		}
@@ -384,6 +361,7 @@ llvm::Module* MLangCodeGenerator::GenerateCodeFromCompileUnit(
 	return module;
 }
 
+/*
 llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		llvm::BasicBlock* block) {
 	MLangCodeTypeInference inf;
@@ -394,12 +372,14 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 			UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //obj->resolve_type(obj_type);
 
 	llvm::Value* ret = value;
-	if (obj->type_of(CodeObjectKind::CodeVariableReferenceExpression)
+	if (obj_type_decl->is_class() && 
+            (obj->type_of(CodeObjectKind::CodeVariableReferenceExpression)
 			|| obj->type_of(CodeObjectKind::CodeArrayIndexerExpression)
-			|| obj->type_of(CodeObjectKind::CodeFieldReferenceExpression))
+			|| obj->type_of(CodeObjectKind::CodeFieldReferenceExpression)))
 		ret = new llvm::LoadInst(value, "", block);
 	return ret;
 }
+*/
 
 llvm::Function* MLangCodeGenerator::CreateFunction(llvm::Module * module,
 		mlang::CodeMemberMethod* method) {
@@ -462,53 +442,17 @@ llvm::Function* MLangCodeGenerator::CreateFunction(llvm::Module * module,
 	return function;
 }
 
-llvm::Type*
-MLangCodeGenerator::get_llvm_type(CodeTypeReference* code_type_reference) {
-	llvm::Type* ret = nullptr;
-		CodeTypeDeclaration* code_type_declaration = (CodeTypeDeclaration*)code_type_reference->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
-
-		if (code_type_declaration->user_data(UserDataKind::LLVM_TYPE) == nullptr)
-		{
-			// the type should be in LLVM_TYPE only for the type ARRAY this is not the case, unless it has been resolved before.
-			if (code_type_declaration->is_embedded() && code_type_declaration->name() == "Array")
-			{
-				if (code_type_reference->array_element_type() != nullptr)
-				{
-					llvm::Type* element_type = get_llvm_type(code_type_reference->array_element_type());
-					ret = llvm::PointerType::get(element_type, 0);
-				}
-
-				code_type_declaration->user_data(UserDataKind::LLVM_TYPE, ret);
-			}
-			else
-			{
-				// throw some exception, because only Array can be an unknown type at this point.
-			}
-		}
-		else
-		{
-			ret = (llvm::Type*)code_type_declaration->user_data(UserDataKind::LLVM_TYPE);
-		}
-
-		if (code_type_declaration->is_class())
-		{
-			ret = llvm::PointerType::get((llvm::Type*)code_type_declaration->user_data(UserDataKind::LLVM_TYPE), 0);
-		}
-
-		return ret;
-}
-
 llvm::FunctionType* MLangCodeGenerator::GetFunctionType(
 		CodeTypeReference* code_type_reference,
 		CodeParameterDeclarationExpressionCollection* params,
 		bool is_var_args) {
 
-	llvm::Type* result_type = get_llvm_type(code_type_reference);
+	llvm::Type* result_type = LLVMUserData::get_llvm_type(code_type_reference);
 
 	std::vector<llvm::Type*> param_types;
 	if (params->size() > 0) {
 		for (auto p : *params) {
-			auto llvm_type = get_llvm_type(p->type());
+			auto llvm_type =  LLVMUserData::get_llvm_type(p->type());
 			param_types.push_back(llvm_type);
 		}
 	}
@@ -516,42 +460,6 @@ llvm::FunctionType* MLangCodeGenerator::GetFunctionType(
 	llvm::FunctionType * ret = llvm::FunctionType::get(result_type, param_types,
 			is_var_args);
 	return ret;
-}
-
-llvm::Type*
-MLangCodeStatementGenerator::get_llvm_type(CodeTypeReference* code_type_reference) {
-	llvm::Type* ret = nullptr;
-			CodeTypeDeclaration* code_type_declaration = (CodeTypeDeclaration*)code_type_reference->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
-
-			if (code_type_declaration->user_data(UserDataKind::LLVM_TYPE) == nullptr)
-			{
-				// the type should be in LLVM_TYPE only for the type ARRAY this is not the case, unless it has been resolved before.
-				if (code_type_declaration->is_embedded() && code_type_declaration->name() == "Array")
-				{
-					if (code_type_reference->array_element_type() != nullptr)
-					{
-						llvm::Type* element_type = get_llvm_type(code_type_reference->array_element_type());
-						ret = llvm::PointerType::get(element_type, 0);
-					}
-
-					code_type_declaration->user_data(UserDataKind::LLVM_TYPE, ret);
-				}
-				else
-				{
-					// throw some exception, because only Array can be an unknown type at this point.
-				}
-			}
-			else
-			{
-				ret = (llvm::Type*)code_type_declaration->user_data(UserDataKind::LLVM_TYPE);
-			}
-
-			if (code_type_declaration->is_class())
-			{
-				ret = llvm::PointerType::get(ret, 0);
-			}
-
-			return ret;
 }
 
 MLangCodeStatementGenerator::MLangCodeStatementGenerator(
@@ -600,8 +508,7 @@ void MLangCodeStatementGenerator::on_visit(CodeBinaryOperatorExpression* object)
 				this->m_block);
 		expression_left->accept(expression_gen_left);
 		expression_left_value = expression_gen_left->result();
-		expression_left_value = load_if_needed(expression_left,
-				expression_left_value, this->m_block);
+		expression_left_value =  LLVMUserData::get_r_value( expression_left );   //load_if_needed(expression_left,	expression_left_value, this->m_block);
 		method_args.push_back(expression_left_value);
 	}
 
@@ -610,8 +517,7 @@ void MLangCodeStatementGenerator::on_visit(CodeBinaryOperatorExpression* object)
 				this->m_block);
 		expression_right->accept(expression_gen_right);
 		expression_right_value = expression_gen_right->result();
-		expression_right_value = load_if_needed(expression_right,
-				expression_right_value, this->m_block);
+		expression_right_value = LLVMUserData::get_r_value( expression_right ); // load_if_needed(expression_right, expression_right_value, this->m_block);
 		method_args.push_back(expression_right_value);
 	}
 
@@ -670,7 +576,13 @@ void MLangCodeStatementGenerator::on_visit(CodeMethodReturnStatement* object) {
 		auto expression_gen = new MLangCodeStatementGenerator(this->m_block);
 		expression->accept(expression_gen);
 		auto return_val = expression_gen->result();
-		return_val = load_if_needed(expression, return_val, this->m_block);
+		return_val = LLVMUserData::get_r_value( expression );// load_if_needed(expression, return_val, this->m_block);
+        if (return_val == nullptr)
+        {
+            llvm::Value* r_value = new llvm::LoadInst(LLVMUserData::get_l_value( expression ), "", this->m_block);
+            LLVMUserData::set_r_value(expression, r_value);
+            return_val = r_value;
+        }
 
 		m_result = llvm::ReturnInst::Create(this->m_block->getContext(),
 				return_val, m_block);
@@ -691,7 +603,7 @@ void MLangCodeStatementGenerator::on_visit(CodeObject* object) {
 
 void MLangCodeStatementGenerator::on_visit(
 		CodeParameterDeclarationExpression* object) {
-	auto llvm_type = get_llvm_type(object->type());
+	auto llvm_type = LLVMUserData::get_llvm_type(object->type());
 	auto name = object->name();
 	llvm::AllocaInst *alloc = new llvm::AllocaInst(llvm_type, name.c_str(), this->m_block);
 	object->user_data(UserDataKind::LLVM_L_VALUE, alloc);
@@ -707,7 +619,7 @@ void MLangCodeStatementGenerator::on_visit(CodePrimitiveExpression* object) {
 	//auto type_reference = object->type();
 
 	CodeTypeDeclaration * td = (CodeTypeDeclaration*) object->type()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
-	llvm::Type * type = get_llvm_type(object->type());
+	llvm::Type * type = LLVMUserData::get_llvm_type(object->type());
 			//static_cast<llvm::Type*>(td->user_data(
 			//UserDataKind::LLVM_TYPE)); //td->llvm_type();
 
@@ -715,6 +627,8 @@ void MLangCodeStatementGenerator::on_visit(CodePrimitiveExpression* object) {
 		uint64_t v = (uint64_t) (uint64_t*) object->value();
 		m_result = llvm::ConstantInt::get(
 				llvm::Type::getInt32Ty(m_block->getContext()), v, true);
+
+        LLVMUserData::set_r_value(object, m_result);
 	}
 
 	if (td->is_embedded() && object->type()->base_type() == "Array"
@@ -739,6 +653,8 @@ void MLangCodeStatementGenerator::on_visit(CodePrimitiveExpression* object) {
 		llvm::Constant *var_ref = llvm::ConstantExpr::getGetElementPtr(str_var,
 				indices);
 		m_result = var_ref;
+              
+        LLVMUserData::set_r_value(object, m_result);
 	}
 
 	// std::cout << "<< CodePrimitiveExpression" << std::endl;
@@ -761,7 +677,7 @@ void MLangCodeStatementGenerator::on_visit(CodeTypeDeclaration* object) {
 		for (auto field_decl : *object->members()) {
 			CodeMemberField * field = static_cast<CodeMemberField*>(field_decl);
 			if (field != nullptr) {
-				llvm::Type * field_type = get_llvm_type(field->type());
+				llvm::Type * field_type =  LLVMUserData::get_llvm_type(field->type());
 				struct_type_fields.push_back(field_type);
 			}
 		}
@@ -777,7 +693,7 @@ void MLangCodeStatementGenerator::on_visit(CodeTypeDeclaration* object) {
 		for (auto field_decl : *object->members()) {
 			CodeMemberField * field = static_cast<CodeMemberField*>(field_decl);
 			if (field != nullptr) {
-				llvm::Type * field_type = get_llvm_type(field->type());
+				llvm::Type * field_type =  LLVMUserData::get_llvm_type(field->type());
 				class_type_fields.push_back(field_type);
 			}
 		}
@@ -799,12 +715,15 @@ void MLangCodeStatementGenerator::on_visit(CodeTypeReference* object) {
 void MLangCodeStatementGenerator::on_visit(
 		CodeVariableDeclarationStatement* object) {
 	// find out the llvm type for a single instance of the type
-	auto llvm_type = get_llvm_type(object->type()); // static_cast<llvm::Type*>(type_declaration->user_data(UserDataKind::LLVM_TYPE)); //resolved->llvm_type();
+	auto llvm_type =  LLVMUserData::get_llvm_type(object->type()); // static_cast<llvm::Type*>(type_declaration->user_data(UserDataKind::LLVM_TYPE)); //resolved->llvm_type();
 
 	// if its a array_type_reference we should declare a pointer
 	auto name = object->name();
 	llvm::AllocaInst *alloc = new llvm::AllocaInst(llvm_type, name.c_str(), this->m_block);
-	object->user_data(UserDataKind::LLVM_L_VALUE, alloc);
+    LLVMUserData::set_l_value(object, alloc);
+    std::cout << "l_value set for : " << object->name() << std::endl;
+
+	//object->user_data(UserDataKind::LLVM_L_VALUE, alloc);
 	this->m_result = alloc;
 
 	if (object->init_expression() != nullptr) {
@@ -812,11 +731,11 @@ void MLangCodeStatementGenerator::on_visit(
 				this->m_block);
 		object->init_expression()->accept(expr);
 		auto expr_res = expr->result();
-		expr_res = load_if_needed(object->init_expression(), expr_res,
-				this->m_block);
+        
+		expr_res = LLVMUserData::get_r_value(object->init_expression());
 
 		if (expr_res != nullptr) {
-			new llvm::StoreInst(expr_res, alloc, false, this->m_block);
+            new llvm::StoreInst(expr_res, alloc, false, this->m_block);
 		}
 	}
 }
@@ -825,13 +744,13 @@ void MLangCodeStatementGenerator::on_visit(
 		CodeVariableReferenceExpression* object) {
 	CodeObject* resolved_variable_reference = nullptr;
 
-	if (nullptr != object->user_data(UserDataKind::MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT))
+	if (object->user_data(UserDataKind::MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT))
 		resolved_variable_reference = (CodeObject*)object->user_data(UserDataKind::MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT);
 
-	if (nullptr != object->user_data(UserDataKind::MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION))
+	if (object->user_data(UserDataKind::MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION))
 		resolved_variable_reference = (CodeObject*)object->user_data(UserDataKind::MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION);
 
-	if (nullptr != object->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_FIELD))
+	if (object->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_FIELD))
 		resolved_variable_reference = (CodeObject*)object->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_FIELD);
 
 	if (resolved_variable_reference == nullptr)
@@ -839,13 +758,17 @@ void MLangCodeStatementGenerator::on_visit(
 
 	if (resolved_variable_reference->type_of(CodeObjectKind::CodeVariableDeclarationStatement))
 	{
-		llvm::Value * value = static_cast<llvm::Value*>(resolved_variable_reference->user_data(UserDataKind::LLVM_L_VALUE));
+		llvm::Value * value = LLVMUserData::get_l_value(resolved_variable_reference);
+        if (value == nullptr)
+            std::cout << "variable " << object->variable_name() << " not found" << std::endl;
+        LLVMUserData::set_l_value(object, value);
 		this->m_result = value;
 	}
 
 	if (resolved_variable_reference->type_of(CodeObjectKind::CodeParameterDeclarationExpression))
 	{
-		llvm::Value * value = static_cast<llvm::Value*>(resolved_variable_reference->user_data(UserDataKind::LLVM_L_VALUE));
+		llvm::Value * value = LLVMUserData::get_l_value(resolved_variable_reference);
+        LLVMUserData::set_l_value(object, value);
 		this->m_result = value;
 	}
 }
@@ -888,8 +811,7 @@ void MLangCodeStatementGenerator::on_visit(CodeCastExpression* object) {
 	auto expression_value = tp_gen->result();
 
 	// prepare a list of parameters i need to pass to the target method
-	expression_value = load_if_needed(object->expression(), expression_value,
-			this->m_block);
+	expression_value = LLVMUserData::get_r_value(object->expression());
 
 	if (resolved_method != nullptr) {
 		method_args.push_back(expression_value);
@@ -909,7 +831,7 @@ void MLangCodeStatementGenerator::on_visit(CodeObjectCreateExpression* object) {
 	auto resolved = (CodeTypeDeclaration*) object->create_type()->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(object->create_type());
 
 	if (resolved->is_class()) {
-		auto create_type = (llvm::PointerType*)get_llvm_type(object->create_type());
+		auto create_type = (llvm::PointerType*) LLVMUserData::get_llvm_type(object->create_type());
 		auto element_type = (llvm::Type*)resolved->user_data(UserDataKind::LLVM_TYPE);
 
 		auto module = this->m_block->getParent()->getParent();
@@ -978,7 +900,7 @@ void MLangCodeStatementGenerator::on_visit(CodeArrayIndexerExpression* object) {
 	object->target_object()->accept(target_object_gen);
 	llvm::Value* ptr_29 = target_object_gen->result();
 
-	ptr_29 = load_if_needed(object->target_object(), ptr_29, this->m_block);
+	ptr_29 = LLVMUserData::get_r_value(object->target_object());
 	// -> need a loadinst
 
 	std::vector<llvm::Value*> indices;
@@ -987,7 +909,7 @@ void MLangCodeStatementGenerator::on_visit(CodeArrayIndexerExpression* object) {
 				new MLangCodeStatementGenerator(this->m_block);
 		x->accept(index_gen);
 		llvm::Value* index = index_gen->result();
-		index = load_if_needed(x, index, this->m_block);
+		index = LLVMUserData::get_r_value(x);
 		indices.push_back(index);
 	}
 
@@ -1021,8 +943,7 @@ void MLangCodeStatementGenerator::on_visit(CodeArrayCreateExpression* object) {
 	object->size_expression()->accept(size_gen);
 	llvm::Value* size_expression = size_gen->result();
 
-	size_expression = load_if_needed(object->size_expression(), size_expression,
-			this->m_block);
+	size_expression = LLVMUserData::get_r_value( object->size_expression() );
 	auto alloca = new llvm::AllocaInst(llvm_type, size_expression, "",
 			this->m_block);
 	this->m_result = alloca;
@@ -1090,7 +1011,7 @@ void MLangCodeStatementGenerator::on_visit(CodeAssemblyCallExpression* object) {
 				this->m_block);
 		p_arg->accept(p_gen);
 		auto res = p_gen->result();
-		res = load_if_needed(p_arg, res, this->m_block);
+		res = LLVMUserData::get_r_value( p_arg );
 		args.push_back(res);
 	}
 
@@ -1291,7 +1212,7 @@ void MLangCodeStatementGenerator::on_visit(CodeAssignExpression* object) {
 			this->m_block);
 	object->right()->accept(right_gen);
 	llvm::Value* right = right_gen->result();
-	right = load_if_needed(object->right(), right, this->m_block);
+	right = LLVMUserData::get_r_value(object->right());
 
 	auto st = new llvm::StoreInst(right, left, false, this->m_block);
 	this->m_result = left;
@@ -1306,7 +1227,7 @@ void MLangCodeStatementGenerator::on_visit(CodeExpressionStatement* object) {
 	object->expression()->accept(gen);
 	m_result = gen->result();
 
-	m_result = load_if_needed(object->expression(), m_result, this->m_block); // new llvm::LoadInst(m_result, "", this->m_block);
+	m_result = LLVMUserData::get_r_value( object->expression() ); // new llvm::LoadInst(m_result, "", this->m_block);
 }
 
 void MLangCodeStatementGenerator::on_visit(CodeMethodInvokeExpression* object) {
@@ -1321,7 +1242,13 @@ void MLangCodeStatementGenerator::on_visit(CodeMethodInvokeExpression* object) {
 		MLangCodeStatementGenerator * p_gen = new MLangCodeStatementGenerator(this->m_block);
 		object->method()->target_object()->accept(p_gen);
 		auto res = p_gen->result();
-		res = load_if_needed(object->method()->target_object(), res,this->m_block);
+		res = LLVMUserData::get_r_value( object->method()->target_object() );
+               
+        if (res == nullptr)
+        {
+            res = new llvm::LoadInst( LLVMUserData::get_l_value( object->method()->target_object() ), "", this->m_block );
+            LLVMUserData::set_r_value( object->method()->target_object(), res );
+        }
 		args.push_back(res);
 	}
 
@@ -1329,7 +1256,14 @@ void MLangCodeStatementGenerator::on_visit(CodeMethodInvokeExpression* object) {
 		MLangCodeStatementGenerator * p_gen = new MLangCodeStatementGenerator(this->m_block);
 		p_arg->accept(p_gen);
 		auto res = p_gen->result();
-		res = load_if_needed(p_arg, res, this->m_block);
+		res = LLVMUserData::get_r_value( p_arg );
+
+        if (res == nullptr)
+        {
+            res = new llvm::LoadInst( LLVMUserData::get_l_value( p_arg ), "", this->m_block );
+            LLVMUserData::set_r_value( p_arg, res );
+        }
+
 		args.push_back(res);
 	}
 

@@ -97,8 +97,9 @@ int main(int argc, char ** argv) {
     int total_errors = 0;
     bool parser_success = true;
 
+
     for (string file_name : *parameters.input_files()) {
-        std::cout << " - main 1 " << std::endl;
+        std::cout << "parsing: " << file_name << std::endl;
 
         auto parser = provider.CreateParser();
         parser->parse(file_name, compile_unit);
@@ -119,7 +120,11 @@ int main(int argc, char ** argv) {
     }
 
     if (total_errors == 0 && parser_success) {
-        std::cout << " - main 3 " << std::endl;
+        std::cout << "Identify scopes" << std::endl;
+        // I think this part should be moved into to parser part, I don't know.
+        mlang::CodeScope* global_scope = new mlang::CodeScope(nullptr);
+        compile_unit->scope(global_scope);
+        // --
 
         CompilerParameters parameters;
         // parameters.optimize(optimized.getValue());
