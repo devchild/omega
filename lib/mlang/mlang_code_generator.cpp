@@ -509,6 +509,14 @@ void MLangCodeStatementGenerator::on_visit(CodeBinaryOperatorExpression* object)
 		expression_left->accept(expression_gen_left);
 		expression_left_value = expression_gen_left->result();
 		expression_left_value =  LLVMUserData::get_r_value( expression_left );   //load_if_needed(expression_left,	expression_left_value, this->m_block);
+
+        if (expression_left_value == nullptr)
+        {
+            auto load = new llvm::LoadInst( LLVMUserData::get_l_value( expression_left ), "", this->m_block);
+            LLVMUserData::set_r_value( expression_left, load);
+            expression_left_value = load;
+        }
+
 		method_args.push_back(expression_left_value);
 	}
 
@@ -518,6 +526,16 @@ void MLangCodeStatementGenerator::on_visit(CodeBinaryOperatorExpression* object)
 		expression_right->accept(expression_gen_right);
 		expression_right_value = expression_gen_right->result();
 		expression_right_value = LLVMUserData::get_r_value( expression_right ); // load_if_needed(expression_right, expression_right_value, this->m_block);
+
+
+        if (expression_left_value == nullptr)
+        {
+            auto load = new llvm::LoadInst( LLVMUserData::get_l_value( expression_right ), "", this->m_block);
+            LLVMUserData::set_r_value( expression_right, load);
+            expression_right_value = load;
+        }
+
+
 		method_args.push_back(expression_right_value);
 	}
 
@@ -544,6 +562,7 @@ void MLangCodeStatementGenerator::on_visit(CodeBinaryOperatorExpression* object)
 	case CodeBinaryOperatorType::GreaterThanOrEqual:
 		this->m_result = llvm::CallInst::Create(f, method_args, "",
 						this->m_block);
+        LLVMUserData::set_r_value(object,  this->m_result);
 		break;
 	}
 }
@@ -1213,6 +1232,13 @@ void MLangCodeStatementGenerator::on_visit(CodeAssignExpression* object) {
 	object->right()->accept(right_gen);
 	llvm::Value* right = right_gen->result();
 	right = LLVMUserData::get_r_value(object->right());
+    
+    if (right == nullptr)
+    {
+        auto sv = new llvm::LoadInst( LLVMUserData::get_l_value( object->right() ), "", this->m_block );
+        right = sv;
+        LLVMUserData::set_l_value(object->right(), sv);
+    }
 
 	auto st = new llvm::StoreInst(right, left, false, this->m_block);
 	this->m_result = left;
