@@ -1,6 +1,6 @@
 #The yoda-project.
 
-[wiki](URL_to_wiki)
+[wiki](https://github.com/devchild/yoda-project/wiki)
 
 In lack of a final (better) name for this language I name this the yoda-project.
 If you have a proposition for a cool new name for this language, please let me know.
