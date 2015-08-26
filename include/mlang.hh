@@ -1,13 +1,29 @@
-/* 
- * File:   codedom.hh
+/*
+ * File:   mlang.hh
  * Author: mario
  *
- * Created on August 26, 2014, 6:42 PM
+ * Created on June 23, 2014, 11:09 PM
  */
 
-#ifndef CODEDOM_HH
-#define	CODEDOM_HH
+#ifndef MLANG_HH
+#define	MLANG_HH
 
+#include "argvparser.hh"
+#include "compiler_error.hh"
+#include "compiler_parameters.hh"
+#include "compiler_results.hh"
+#include "linker.hh"
+#include "code_compiler.hh"
+#include "code_generator.hh"
+#include "code_parser.hh"
+#include "code_type_inference.hh"
+#include "dom_provider.hh"
+#include "semantic_analysis.hh"
+#include "pstream.hh"
+
+//
+// codedom/*
+//
 #include "codedom/code_object_visitor.hh"
 #include "codedom/code_assign_expression.hh"
 #include "codedom/code_array_create_expression.hh"
@@ -48,5 +64,4 @@
 #include "codedom/code_attribute_argument.hh"
 #include "codedom/code_attribute_declaration.hh"
 
-#endif	/* CODEDOM_HH */
-
+#endif	/* MLANG_HH */

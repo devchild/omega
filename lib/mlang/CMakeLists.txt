@@ -85,30 +85,29 @@ set(PROJECT_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/compiler_error.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/compiler_parameters.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/compiler_results.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/mlang_code_compiler.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/mlang_code_generator.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/mlang_code_parser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/mlang_code_type_inference.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/mlang_dom_provider.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/mlang_semantic_analysis.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/code_compiler.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/code_generator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/code_parser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/code_type_inference.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/dom_provider.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/semantic_analysis.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
 
     # ./../../include/
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/argvparser.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/linker.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/codedom.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/mlang.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/compiler_error.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/compiler_parameters.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/compiler_results.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/file_system.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/mlang_code_compiler.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/mlang_code_generator.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/mlang_code_parser.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/mlang_code_type_inference.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/mlang_dom_provider.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/mlang_semantic_analysis.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../include/code_compiler.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../include/code_generator.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../include/code_parser.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../include/code_type_inference.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../include/dom_provider.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../include/semantic_analysis.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/pstream.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/utils.hh
     ${CMAKE_CURRENT_BINARY_DIR}/config.h
 
     # ./parser/

@@ -1,25 +1,119 @@
-#include <mlang_code_compiler.hh>
-#include <mlang_dom_provider.hh>
-#include <mlang_code_parser.hh>
 #include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
 #include <iterator>
 #include <argvparser.hh>
 #include <dirent.h>
-#include <utils.hh>
-#include <file_system.hh>
 
 #include <linker.hh>
 
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/Path.h>
 
+#include <mlang.hh>
+#include <file_system.hh>
+#include <easylogging++.hh>
+INITIALIZE_EASYLOGGINGPP
+
+
 using namespace std;
 using namespace CommandLineProcessing;
+using namespace mlang;
+
+
+bool GeneralTextCompare(
+        char * pTameText, // A string without wildcards
+        char * pWildText, // A (potentially) corresponding string with wildcards
+        bool bCaseSensitive = false, // By default, match on 'X' vs 'x'
+        char cAltTerminator = '\0' // For function names, for example, you can stop at the first '('
+) {
+    bool bMatch = true;
+    char * pAfterLastWild = NULL; // The location after the last '*', if we’ve encountered one
+    char * pAfterLastTame = NULL; // The location in the tame string, from which we started after last wildcard
+    char t, w;
+
+    // Walk the text strings one character at a time.
+    while (1) {
+        t = *pTameText;
+        w = *pWildText;
+
+        // How do you match a unique text string?
+        if (!t || t == cAltTerminator) {
+            // Easy: unique up on it!
+            if (!w || w == cAltTerminator) {
+                break; // "x" matches "x"
+            } else if (w == '*') {
+                pWildText++;
+                continue; // "x*" matches "x" or "xy"
+            } else if (pAfterLastTame) {
+                if (!(*pAfterLastTame) || *pAfterLastTame == cAltTerminator) {
+                    bMatch = false;
+                    break;
+                }
+                pTameText = pAfterLastTame++;
+                pWildText = pAfterLastWild;
+                continue;
+            }
+
+            bMatch = false;
+            break; // "x" doesn't match "xy"
+        } else {
+            if (!bCaseSensitive) {
+                // Lowercase the characters to be compared.
+                if (t >= 'A' && t <= 'Z') {
+                    t += ('a' - 'A');
+                }
+
+                if (w >= 'A' && w <= 'Z') {
+                    w += ('a' - 'A');
+                }
+            }
+
+            // How do you match a tame text string?
+            if (t != w) {
+                // The tame way: unique up on it!
+                if (w == '*') {
+                    pAfterLastWild = ++pWildText;
+                    pAfterLastTame = pTameText;
+                    w = *pWildText;
+
+                    if (!w || w == cAltTerminator) {
+                        break; // "*" matches "x"
+                    }
+                    continue; // "*y" matches "xy"
+                } else if (pAfterLastWild) {
+                    if (pAfterLastWild != pWildText) {
+                        pWildText = pAfterLastWild;
+                        w = *pWildText;
+
+                        if (!bCaseSensitive && w >= 'A' && w <= 'Z') {
+                            w += ('a' - 'A');
+                        }
+
+                        if (t == w) {
+                            pWildText++;
+                        }
+                    }
+                    pTameText++;
+                    continue; // "*sip*" matches "mississippi"
+                } else {
+                    bMatch = false;
+                    break; // "x" doesn't match "y"
+                }
+            }
+        }
+
+        pTameText++;
+        pWildText++;
+    }
+
+    return bMatch;
+}
+
 
 void
 parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
+    LOG(DEBUG);
     ArgvParser cmd;
     // init
     cmd.setIntroductoryDescription("MLang Compiler.");
@@ -55,7 +149,7 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
         // todo: parse out '/' or '\' to find out if we need to search inside some directory.
         
         string argument = cmd.argument(i);
-        auto searchDir = SourceFile::get_directory(argument);
+        auto searchDir =  SourceFile::get_directory(argument);
         auto searchPart = SourceFile::get_file_name(argument);
         
         char* c_argument = const_cast<char*>(searchPart.c_str());
@@ -82,7 +176,8 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
 }
 
 int main(int argc, char ** argv) {
-    std::cout << ">> main " << std::endl;
+    START_EASYLOGGINGPP(argc, argv);
+    LOG(DEBUG);
 
     CompilerParameters parameters;
     parse_command_line(argc, argv, &parameters);
@@ -93,7 +188,7 @@ int main(int argc, char ** argv) {
     }
     
     mlang::CodeCompileUnit* compile_unit = new mlang::CodeCompileUnit();
-    MLangDomProvider provider;
+    DomProvider provider;
     int total_errors = 0;
     bool parser_success = true;
 
@@ -109,10 +204,7 @@ int main(int argc, char ** argv) {
         parser_success &= parser->sucess();
 
         if (errors.size() > 0) {
-            std::cout << " - main 2 " << std::endl;
-
             for (auto e : errors) {
-                std::cout << "errr" << std::endl;
                 std::cerr << e->location()->to_string() << ": error: "
                         << e->message() << std::endl;
             }
@@ -147,11 +239,8 @@ int main(int argc, char ** argv) {
             }
         }
     } else {
-        std::cout << " - main 999 " << std::endl;
-
         exit(EXIT_FAILURE);
     }
-
     exit(EXIT_SUCCESS);
 }
 

@@ -1,4 +1,4 @@
-#include <codedom.hh>
+#include <mlang.hh>
 
 namespace mlang {
 
@@ -24,7 +24,6 @@ namespace mlang {
     void
 	CodeArrayCreateExpression::scope(CodeScope* scope) {
         CodeExpression::scope(scope);
-
         if (this->m_create_type != nullptr)
         	this->m_create_type->scope(scope);
 

@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 project(mlang)
+
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/Users/mario/Projects/yoda.obj" CACHE FILEPATH "where to generate the cmake build files")
+# set(LLVM_DIR "/Users/mario/Projects/llvm-3.6.2.bin/share/llvm/cmake" CACHE FILEPATH "where to find the llvm cmake build files")
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 

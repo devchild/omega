@@ -8,9 +8,7 @@
 #ifndef CODE_ASSEMBLY_CALL_EXPRESSION_HH
 #define	CODE_ASSEMBLY_CALL_EXPRESSION_HH
 
-#include "code_object.hh"
-#include "code_object_collections.hh"
-#include "code_object_visitor.hh"
+#include "code_expression.hh"
 
 namespace mlang {
     class CodeScope;

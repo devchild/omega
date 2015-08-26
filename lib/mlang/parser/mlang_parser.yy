@@ -1,11 +1,12 @@
 %skeleton "glr.cc" /* -*- C++ -*- */
 %require "2.6.90.8-d4fe"
 %defines
-%define parser_class_name {mlang_parser}
+%define parser_class_name 	{ mlang_parser }
+
 %code requires {
 # include <string>
 # include <vector>
-# include <codedom.hh>
+# include <mlang.hh>
 
 class mlang_driver;
 }

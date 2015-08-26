@@ -9,10 +9,11 @@
 #define	CODE_ATTRIBUTE_ARGUMENT_HH
 
 #include "code_object.hh"
-#include "code_object_collections.hh"
-#include "code_object_visitor.hh"
 
 namespace mlang {
+    class CodeExpression;
+    class ICodeObjectVisitor;
+
     class CodeAttributeArgument : public CodeObject {
 
     public:

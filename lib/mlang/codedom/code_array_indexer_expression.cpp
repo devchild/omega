@@ -1,4 +1,4 @@
-#include <codedom.hh>
+#include <mlang.hh>
 
 namespace mlang {
 
@@ -30,6 +30,7 @@ namespace mlang {
 
         for(auto item: *this->m_indices) {
         	item->scope(scope);
+
         }
     }
 

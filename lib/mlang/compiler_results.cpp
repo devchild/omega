@@ -7,21 +7,23 @@
 
 #include "compiler_results.hh"
 
-CompilerResults::CompilerResults() {
-}
+namespace mlang {
+    CompilerResults::CompilerResults() {
+    }
 
-CompilerResults::CompilerResults(const CompilerResults& orig) {
-}
+    CompilerResults::CompilerResults(const CompilerResults &orig) {
+    }
 
-CompilerResults::~CompilerResults() {
-}
+    CompilerResults::~CompilerResults() {
+    }
 
-vector<mlang::p_CompilerError>& CompilerResults::errors() {
-    return this->m_errors;
-}
+    vector<mlang::CompilerError*> &CompilerResults::errors() {
+        return this->m_errors;
+    }
 
-vector<std::string>& CompilerResults::output() {
-    return this->m_output;
+    vector<std::string> &CompilerResults::output() {
+        return this->m_output;
+    }
 }
 
 

@@ -16,6 +16,8 @@
 # include "mlang_parser.hh"
 # include "compiler_error.hh"
 
+using namespace mlang;
+
 namespace yy {
 
 /** Scanner is a derived class to add some extra function to the scanner

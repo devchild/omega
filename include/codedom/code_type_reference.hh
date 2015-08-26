@@ -9,10 +9,10 @@
 #define	CODE_TYPE_REFERENCE_HH
 #include <string>
 
+#include "code_object.hh"
 
 namespace mlang 
 {
-    class CodeObject;
     class ICodeObjectVisitor;
     enum class CodeObjectKind;
     class CodeScope;

@@ -9,9 +9,6 @@
 #define	CODE_ASSIGN_EXPRESSION_HH
 
 #include "code_expression.hh"
-#include "code_object.hh"
-#include "code_object_collections.hh"
-#include "code_object_visitor.hh"
 
 namespace mlang {
     class CodeAssignExpression : public CodeExpression {

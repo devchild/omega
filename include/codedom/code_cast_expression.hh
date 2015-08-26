@@ -8,8 +8,11 @@
 #ifndef CODE_CAST_EXPRESSION_HH
 #define	CODE_CAST_EXPRESSION_HH
 
+#include "code_expression.hh"
+#include "code_object_collections.hh"
+#include "code_object_visitor.hh"
+
 namespace mlang {
-    class CodeExpression;
     class CodeTypeReference;
     class CodeScope;
     class ICodeObjectVisitor;

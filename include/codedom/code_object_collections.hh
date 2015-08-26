@@ -10,14 +10,13 @@
 
 #include <list>
 
-#include "code_type_reference.hh"
-
 namespace mlang {
     class CodeObject;
     class CodeMemberMethod;
     class CodeNamespace;
     class CodeParameterDeclarationExpression;
     class CodeTypeDeclaration;
+    class CodeTypeReference;
     class CodeTypeMember;
     class CodeStatement;
     class CodeExpression;

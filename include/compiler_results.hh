@@ -10,27 +10,34 @@
 
 #include <vector>
 #include <string>
-#include "compiler_error.hh"
 
 using namespace std;
 
-class CompilerResults {
-public:
-    CompilerResults();
-    CompilerResults(const CompilerResults& orig);
-    virtual ~CompilerResults();
-    vector<mlang::p_CompilerError>& errors();
-    vector<std::string>& output();
-    
-private:
-    vector<mlang::p_CompilerError> m_errors;
-    vector<std::string> m_output;
-    // CompiledAssembly -> ?
-    // Errors   -> ErrorCollectiong
-    // NativeCompilerReturnValue -> int
-    // Output --> StringCollection
-    // PathToAssembly --> string
-};
+namespace mlang {
+    class CompilerError;
+
+    class CompilerResults {
+    public:
+        CompilerResults();
+
+        CompilerResults(const CompilerResults &orig);
+
+        virtual ~CompilerResults();
+
+        vector<CompilerError*> &errors();
+
+        vector<std::string> &output();
+
+    private:
+        vector<CompilerError*> m_errors;
+        vector<std::string> m_output;
+        // CompiledAssembly -> ?
+        // Errors   -> ErrorCollectiong
+        // NativeCompilerReturnValue -> int
+        // Output --> StringCollection
+        // PathToAssembly --> string
+    };
+}
 
 #endif	/* COMPILERRESULTS_HH */
 
