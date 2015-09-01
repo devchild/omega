@@ -25,23 +25,26 @@
       <sourceFolder url="file://$MODULE_DIR$/MlangConfig.cmake.in" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MlangConfigVersion.cmake.in" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/argvparser.hh" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/codedom.hh" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/compiler_error.hh" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/compiler_parameters.hh" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/compiler_results.hh" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/file_system.hh" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/linker.hh" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/code_compiler.hh" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/code_generator.hh" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/code_parser.hh" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/code_type_inference.hh" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/compiler_error.hh" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/compiler_parameters.hh" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/compiler_results.hh" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/dom_provider.hh" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/semantic_analysis.hh" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/file_system.hh" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/linker.hh" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/mlang.hh" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/include/pstream.hh" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/utils.hh" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/include/semantic_analysis.hh" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/argvparser.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/code_compiler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/code_generator.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/code_parser.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/code_type_inference.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/codedom/code_array_create_expression.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/codedom/code_array_indexer_expression.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/codedom/code_assembly_call_expression.cpp" isTestSource="false" />
@@ -83,15 +86,11 @@
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/compiler_parameters.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/compiler_results.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/config.h.in" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/linker.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/code_compiler.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/code_generator.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/code_parser.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/code_type_inference.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/dom_provider.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/semantic_analysis.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/linker.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/parser/mlang_driver.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/mlang/parser/mlang_driver.hh" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/mlang/semantic_analysis.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tools/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tools/mlang/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tools/mlang/main.cpp" isTestSource="false" />

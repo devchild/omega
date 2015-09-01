@@ -18,6 +18,8 @@
 
 #include <mlang.hh>
 
+#include <easylogging++.hh>
+
 namespace mlang {
 
 	class LLVMUserData {
@@ -395,7 +397,8 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		/*
         llvm::Function::Create(function_type,
         llvm::GlobalValue::LinkageTypes::ExternalLinkage, method_name,
-        module);*/
+        module);
+        */
 
 		if (method->attributes() != MemberAttributes::External) {
 			auto bblock = llvm::BasicBlock::Create(m_context, "entry", function, 0);
@@ -510,7 +513,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 					expression_left);   //load_if_needed(expression_left,	expression_left_value, this->m_block);
 
 			if (expression_left_value == nullptr) {
-				auto load = new llvm::LoadInst(LLVMUserData::get_l_value(expression_left), "", this->m_block);
+                auto load = new llvm::LoadInst(LLVMUserData::get_l_value(expression_left), "", this->m_block);
 				LLVMUserData::set_r_value(expression_left, load);
 				expression_left_value = load;
 			}
@@ -527,19 +530,23 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 					expression_right); // load_if_needed(expression_right, expression_right_value, this->m_block);
 
 
-			if (expression_left_value == nullptr) {
+			if (expression_right_value == nullptr) {
 				auto load = new llvm::LoadInst(LLVMUserData::get_l_value(expression_right), "", this->m_block);
 				LLVMUserData::set_r_value(expression_right, load);
 				expression_right_value = load;
 			}
 
-
 			method_args.push_back(expression_right_value);
 		}
 
-		CodeMemberMethod * resolved_method = (CodeMemberMethod *) object->user_data(
+        mlang::CodeMemberMethod * resolved_method = (mlang::CodeMemberMethod *) object->user_data(
 				UserDataKind::MLANG_RESOLVED_MEMBER_METHOD);
 		llvm::Function *f = mod->getFunction(resolved_method->id());
+
+
+        if (expression_left_value == nullptr || expression_right_value == nullptr)
+            LOG(DEBUG) << "Error trying to call " << (int)object->operator_();
+
 		switch (object->operator_()) {
 			case CodeBinaryOperatorType::Add:
 			case CodeBinaryOperatorType::Divide:
@@ -624,6 +631,8 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		auto name = object->name();
 		llvm::AllocaInst *alloc = new llvm::AllocaInst(llvm_type, name.c_str(), this->m_block);
 		object->user_data(UserDataKind::LLVM_L_VALUE, alloc);
+
+
 		this->m_result = alloc;
 	}
 
@@ -816,7 +825,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		method_arg_types.push_back(expression_type_decl);
 
 		// I'll need the return type of the method to resolve
-		CodeTypeDeclaration * td_return =
+		mlang::CodeTypeDeclaration * td_return =
 				(CodeTypeDeclaration *) object->target_type()->user_data(
 						UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(
 		//object->target_type());
@@ -997,6 +1006,8 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 																   llvm::APInt(64, l.getTypeAllocSize(
 																					   create_type), /* isSigned = */
 																			   false));
+
+		LLVMUserData::set_r_value(object, const_int64_14);
 		this->m_result = const_int64_14;
 	}
 
@@ -1300,6 +1311,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		llvm::Function *f = nullptr;
 		f = module->getFunction(resolved_method->id());
 		this->m_result = llvm::CallInst::Create(f, args, "", this->m_block);
+        LLVMUserData::set_r_value(object, this->m_result);
 	}
 
 	void CodeStatementGenerator::on_visit(CodeConditionStatement *object) {
