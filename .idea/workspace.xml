@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" assignedExecutableTargets="true" buildAllGenerated="true">
     <generated>
       <config projectName="mlang" targetName="mlang" />
@@ -12,7 +15,52 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e594be0-8a0b-4142-8944-3d43bee9f4c1" name="Default" comment="" />
+    <list default="true" id="9e594be0-8a0b-4142-8944-3d43bee9f4c1" name="Default" comment="fixed: shift / reduce conflicts for parser&#10;fixed: while statements">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/yoda.src.iml" afterPath="$PROJECT_DIR$/.idea/yoda.src.iml" />
+    </list>
+    <list id="c46d95b2-a3c2-4475-807b-63c200936970" name="Rejected commit: Default" comment="fixed: shift / reduce conflicts for parser&#10;fixed: while statements">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/mlang/code_resolver.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/code_resolver.hh" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/include/codedom/code_object_resolver.hh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/mlang/codedom/code_object_resolver.cpp" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/CMakeLists.txt" afterPath="$PROJECT_DIR$/lib/mlang/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_array_create_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_array_create_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_array_indexer_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_array_indexer_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_assembly_call_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_assembly_call_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_assign_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_assign_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_attribute_argument.hh" afterPath="$PROJECT_DIR$/include/codedom/code_attribute_argument.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_attribute_declaration.hh" afterPath="$PROJECT_DIR$/include/codedom/code_attribute_declaration.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_binary_operator_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_binary_operator_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/codedom/code_compile_unit.cpp" afterPath="$PROJECT_DIR$/lib/mlang/codedom/code_compile_unit.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/code_compiler.cpp" afterPath="$PROJECT_DIR$/lib/mlang/code_compiler.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_field_reference_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_field_reference_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/code_generator.cpp" afterPath="$PROJECT_DIR$/lib/mlang/code_generator.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/code_generator.hh" afterPath="$PROJECT_DIR$/include/code_generator.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_ir_block_statement.hh" afterPath="$PROJECT_DIR$/include/codedom/code_ir_block_statement.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_member_field.hh" afterPath="$PROJECT_DIR$/include/codedom/code_member_field.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_method_reference_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_method_reference_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/codedom/code_object.cpp" afterPath="$PROJECT_DIR$/lib/mlang/codedom/code_object.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_object.hh" afterPath="$PROJECT_DIR$/include/codedom/code_object.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_parameter_declaration_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_parameter_declaration_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/codedom/code_primitive_expression.cpp" afterPath="$PROJECT_DIR$/lib/mlang/codedom/code_primitive_expression.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/codedom/code_scope.cpp" afterPath="$PROJECT_DIR$/lib/mlang/codedom/code_scope.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_size_of_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_size_of_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/codedom/code_type_declaration.cpp" afterPath="$PROJECT_DIR$/lib/mlang/codedom/code_type_declaration.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/code_type_inference.cpp" afterPath="$PROJECT_DIR$/lib/mlang/code_type_inference.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/code_type_inference.hh" afterPath="$PROJECT_DIR$/include/code_type_inference.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/codedom/code_type_reference.cpp" afterPath="$PROJECT_DIR$/lib/mlang/codedom/code_type_reference.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_variable_declaration_statement.hh" afterPath="$PROJECT_DIR$/include/codedom/code_variable_declaration_statement.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/codedom/code_variable_reference_expression.hh" afterPath="$PROJECT_DIR$/include/codedom/code_variable_reference_expression.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/compiler_parameters.cpp" afterPath="$PROJECT_DIR$/lib/mlang/compiler_parameters.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/linker.cpp" afterPath="$PROJECT_DIR$/lib/mlang/linker.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/mlang.hh" afterPath="$PROJECT_DIR$/include/mlang.hh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy" afterPath="$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll" afterPath="$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/semantic_analysis.cpp" afterPath="$PROJECT_DIR$/lib/mlang/semantic_analysis.cpp" />
+    </list>
     <ignored path="yoda.src.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,21 +80,101 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="code_method_return_statement.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_method_return_statement.cpp">
+      <file leaf-file-name="code_expression.hh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/codedom/code_expression.hh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.39461884">
-              <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="code_binary_operator_expression.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_binary_operator_expression.cpp">
+      <file leaf-file-name="code_variable_reference_expression.hh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/codedom/code_variable_reference_expression.hh">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mlang_parser.yy" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mlang_scanner.ll" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/mlang/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5313808">
+              <caret line="124" column="16" selection-start-line="124" selection-start-column="16" selection-end-line="124" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="code_array_indexer_expression.hh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/codedom/code_array_indexer_expression.hh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="code_assembly_call_expression.hh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/codedom/code_assembly_call_expression.hh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="code_array_create_expression.hh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/codedom/code_array_create_expression.hh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="code_generator.hh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/code_generator.hh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.9285715">
+              <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="code_size_of_expression.hh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/codedom/code_size_of_expression.hh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -54,60 +182,63 @@
       </file>
     </leaf>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_object_create_expression.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_object_resolver.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_object_visitor.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_parameter_declaration_expression.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_primitive_expression.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_scope.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_size_of_expression.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_statement.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_type_declaration.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_type_member.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_type_reference.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_variable_declaration_statement.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_variable_reference_expression.cpp" />
-        <option value="$PROJECT_DIR$/include/mlang_dom_provider.hh" />
-        <option value="$PROJECT_DIR$/include/mlang_code_type_inference.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_object_visitor.hh" />
-        <option value="$PROJECT_DIR$/include/mlang_code_compiler.hh" />
-        <option value="$PROJECT_DIR$/include/compiler_results.hh" />
-        <option value="$PROJECT_DIR$/include/compiler_parameters.hh" />
-        <option value="$PROJECT_DIR$/include/compiler_error.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_type_reference.hh" />
-        <option value="$PROJECT_DIR$/include/mlang_semantic_analysis.hh" />
-        <option value="$PROJECT_DIR$/lib/mlang/compiler_parameters.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/compiler_results.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/mlang_dom_provider.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/mlang_code_type_inference.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/mlang_semantic_analysis.cpp" />
-        <option value="$PROJECT_DIR$/include/mlang_code_generator.hh" />
-        <option value="$PROJECT_DIR$/lib/mlang/mlang_code_generator.cpp" />
-        <option value="$PROJECT_DIR$/include/mlang_code_parser.hh" />
-        <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.hh" />
-        <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_driver.hh" />
-        <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_driver.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_array_indexer_expression.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_array_create_expression.cpp" />
-        <option value="$PROJECT_DIR$/include/utils.hh" />
         <option value="$PROJECT_DIR$/include/codedom/code_object_collections.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_assembly_call_expression.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_assign_expression.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_attribute_argument.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_attribute_declaration.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_binary_operator_expression.hh" />
         <option value="$PROJECT_DIR$/include/codedom/code_cast_expression.hh" />
         <option value="$PROJECT_DIR$/lib/mlang/mlang_code_parser.cpp" />
         <option value="$PROJECT_DIR$/include/file_system.hh" />
-        <option value="$PROJECT_DIR$/include/mlang.hh" />
-        <option value="$PROJECT_DIR$/tools/mlang/main.cpp" />
         <option value="$PROJECT_DIR$/lib/mlang/mlang_code_compiler.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/compiler_parameters.cpp" />
+        <option value="$PROJECT_DIR$/tools/mlang/main.cpp" />
+        <option value="$PROJECT_DIR$/include/code_reference_resolution.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/code_reference_resolution.cpp" />
+        <option value="$PROJECT_DIR$/include/codedom/code_parameter_declaration_expression.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_variable_declaration_statement.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_method_reference_expression.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_object_resolver.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_field_reference_expression.cpp" />
+        <option value="$PROJECT_DIR$/include/codedom/code_type_reference.hh" />
+        <option value="$PROJECT_DIR$/include/code_type_inference.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_type_declaration.cpp" />
+        <option value="$PROJECT_DIR$/include/codedom/code_type_declaration.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_member_field.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_member_field.cpp" />
+        <option value="$PROJECT_DIR$/include/codedom/code_member_method.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_member_method.cpp" />
         <option value="$PROJECT_DIR$/lib/mlang/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy" />
+        <option value="$PROJECT_DIR$/include/mlang.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_object.cpp" />
+        <option value="$PROJECT_DIR$/include/codedom/code_object.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_compile_unit.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_scope.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_primitive_expression.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/code_type_inference.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/semantic_analysis.cpp" />
+        <option value="$PROJECT_DIR$/include/codedom/code_binary_operator_expression.hh" />
+        <option value="$PROJECT_DIR$/include/code_resolver.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_type_reference.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/linker.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/code_compiler.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/code_resolver.cpp" />
         <option value="$PROJECT_DIR$/lib/mlang/code_generator.cpp" />
+        <option value="$PROJECT_DIR$/include/codedom/code_attribute_declaration.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_size_of_expression.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_attribute_argument.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_field_reference_expression.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_ir_block_statement.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_assign_expression.hh" />
+        <option value="$PROJECT_DIR$/include/code_generator.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_array_create_expression.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_variable_reference_expression.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_array_indexer_expression.hh" />
+        <option value="$PROJECT_DIR$/include/codedom/code_assembly_call_expression.hh" />
+        <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy" />
+        <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll" />
       </list>
     </option>
   </component>
@@ -124,7 +255,7 @@
     <option name="width" value="1920" />
     <option name="height" value="1108" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -179,24 +310,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -208,6 +321,11 @@
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/mlang" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Build All">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="mlang" TARGET_NAME="libmlang" CONFIG_NAME="Debug">
@@ -231,7 +349,7 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="$PROJECT_DIR$/../mlang.samples/*.ml" WORKING_DIR="file://$PROJECT_DIR$/../mlang.samples/" PASS_PARENT_ENVS="FALSE" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mlang" RUN_TARGET_NAME="mlang" EXPLICIT_BUILD_TARGET_NAME="all">
+    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--out=test /Users/mario/Projects/mlang.samples/*.ml" WORKING_DIR="file://$PROJECT_DIR$/../yoda.obj/" PASS_PARENT_ENVS="FALSE" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="mlang" RUN_TARGET_NAME="mlang" EXPLICIT_BUILD_TARGET_NAME="all">
       <envs />
       <method />
     </configuration>
@@ -258,21 +376,21 @@
     <frame x="0" y="23" width="1920" height="1108" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24446583" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28296438" sideWeight="0.42916667" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25505292" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27622715" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32708332" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39942253" sideWeight="0.49791667" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32916266" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24639076" sideWeight="0.49479166" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26822916" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43792108" sideWeight="0.48177084" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24254091" sideWeight="0.45208332" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39942253" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23676611" sideWeight="0.5182292" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19947962" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -289,235 +407,316 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed: shift / reduce conflicts for parser&#10;fixed: while statements" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed: shift / reduce conflicts for parser&#10;fixed: while statements" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/IR/Value.h</url>
-          <line>221</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="7" />
+      <option name="time" value="141" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
-        <watch expression="f-&gt;getName()" language="ObjectiveC" />
+        <watch expression="passed_parameter" language="ObjectiveC" />
+        <watch expression="*ret-&gt;parameters()" language="ObjectiveC" />
+        <watch expression="((mlang::CodeParameterDeclarationExpressionCollection)(*ret-&gt;parameters()))[0]" language="ObjectiveC" />
+        <watch expression="(*(((mlang::CodeParameterDeclarationExpressionCollection)(*ret-&gt;parameters())).[1]))" />
       </configuration>
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_driver.cpp">
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/Support/Casting.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37254903">
+          <caret line="238" column="40" selection-start-line="238" selection-start-column="40" selection-end-line="238" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/vector">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="120" column="26" selection-start-line="120" selection-start-column="26" selection-end-line="120" selection-end-column="26" />
+          <caret line="1605" column="0" selection-start-line="1605" selection-start-column="0" selection-end-line="1605" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_array_indexer_expression.cpp">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/linker.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.84313726">
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/Support/ErrorOr.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <caret line="253" column="0" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_array_create_expression.cpp">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_expression_statement.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44483986">
-          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.6661562">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/code_parser.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="27" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/pstream.hh">
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/ostream">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="309" column="0" selection-start-line="309" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/code_generator.hh">
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.bin/include/llvm/IR/Instructions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3323124">
+          <caret line="2414" column="21" selection-start-line="2414" selection-start-column="21" selection-end-line="2414" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_variable_reference_expression.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../yoda.obj/lib/mlang/CMakeFiles/libmlang.dir/CXX.includecache">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_ir_block_statement.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2247" column="0" selection-start-line="2247" selection-start-column="0" selection-end-line="2247" selection-end-column="0" />
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../yoda.obj/lib/mlang/parser/mlang_parser.cpp">
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/IR/Use.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="140" column="0" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/linker.hh">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_object.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12455516">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/code_compiler.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="6" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_object_collections.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_expression.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_object_visitor.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="67" column="23" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.3323124">
+          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/codedom/code_object.hh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.3323124">
+          <caret line="37" column="43" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_array_create_expression.hh">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_method_invoke_expression.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_array_indexer_expression.hh">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_method_return_statement.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_assembly_call_expression.hh">
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/lib/IR/LegacyPassManager.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3323124">
+          <caret line="1537" column="0" selection-start-line="1537" selection-start-column="0" selection-end-line="1537" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/ADT/ilist.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+          <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_assign_expression.hh">
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/lib/CodeGen/UnreachableBlockElim.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3323124">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/lib/IR/BasicBlock.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="6" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
+          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_attribute_argument.hh">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_object_visitor.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/argvparser.hh">
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/IR/Value.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.017793594">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.54740834">
+          <caret line="231" column="8" selection-start-line="231" selection-start-column="8" selection-end-line="231" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/compiler_error.hh">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_iteration_statement.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2669039">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.25663716">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/compiler_parameters.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16014235">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/compiler_results.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17793594">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/code_parser.cpp">
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/lib/IR/Instructions.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="10" selection-start-line="65" selection-start-column="10" selection-end-line="65" selection-end-column="10" />
+          <caret line="273" column="0" selection-start-line="273" selection-start-column="0" selection-end-line="273" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/IR/Instructions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3324905">
+          <caret line="1272" column="0" selection-start-line="1272" selection-start-column="0" selection-end-line="1272" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/mlang/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="111" selection-start-line="31" selection-start-column="111" selection-end-line="31" selection-end-column="111" />
           <folding>
-            <element signature="e#98#123#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/file_system.hh">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/code_compiler.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <caret line="152" column="47" selection-start-line="152" selection-start-column="47" selection-end-line="152" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/code_resolver.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/list">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="317" column="0" selection-start-line="317" selection-start-column="0" selection-end-line="317" selection-end-column="0" />
           <folding>
-            <element signature="e#137#156#0" expanded="true" />
+            <marker date="1438191237000" expanded="false" signature="7497:7530" placeholder="&lt;_Tp,_Alloc&gt;" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/code_resolver.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.86565274">
-          <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding>
+            <element signature="e#1138#1681#0" expanded="false" />
+            <element signature="e#6596#6955#0" expanded="false" />
+            <element signature="e#7315#7677#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/mlang/semantic_analysis.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="364" column="71" selection-start-line="364" selection-start-column="71" selection-end-line="364" selection-end-column="71" />
+          <folding>
+            <element signature="e#219#1054#1" expanded="false" />
+            <element signature="e#1061#3616#1" expanded="false" />
+            <element signature="e#1351#1467#0" expanded="false" />
+            <element signature="e#1477#1570#0" expanded="false" />
+            <element signature="e#1580#1613#0" expanded="false" />
+            <element signature="e#1623#2030#0" expanded="false" />
+            <element signature="e#2040#2581#0" expanded="false" />
+            <element signature="e#2591#3610#0" expanded="false" />
+            <element signature="e#12403#15854#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.bin/include/llvm/IR/InlineAsm.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83778435">
+          <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/lib/Support/Unix/Signals.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.573741">
+          <caret line="519" column="0" selection-start-line="519" selection-start-column="0" selection-end-line="519" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_array_create_expression.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/mlang.hh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23131673">
-          <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding>
+            <element signature="e#121#145#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_compile_unit.hh">
+    <entry file="file://$PROJECT_DIR$/include/argvparser.hh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37366548">
-          <caret line="21" column="46" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
+        <state vertical-scroll-proportion="-1.7207792">
+          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_cast_expression.hh">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_binary_operator_expression.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
+          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/mlang/code_generator.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="514" column="23" selection-start-line="514" selection-start-column="23" selection-end-line="514" selection-end-column="23" />
           <folding>
-            <element signature="e#169#198#0" expanded="true" />
+            <element signature="e#101#116#0" expanded="true" />
+            <element signature="e#432#2453#1" expanded="false" />
+            <element signature="e#464#584#0" expanded="false" />
+            <element signature="e#588#708#0" expanded="false" />
+            <element signature="e#2457#3142#1" expanded="false" />
+            <element signature="e#3146#6300#1" expanded="false" />
+            <element signature="e#6304#8111#1" expanded="false" />
+            <element signature="e#20845#20953#0" expanded="false" />
+            <element signature="e#20956#21070#0" expanded="false" />
+            <element signature="e#24813#24922#0" expanded="false" />
+            <element signature="e#30838#30957#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -525,183 +724,119 @@
     <entry file="file://$PROJECT_DIR$/include/codedom/code_attribute_declaration.hh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-          <folding>
-            <element signature="e#188#213#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/clion11/cmake/generated/e9bac61d/e9bac61d/Debug/lib/mlang/config.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="22" column="65" selection-start-line="22" selection-start-column="65" selection-end-line="22" selection-end-column="65" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/clion11/cmake/generated/e9bac61d/e9bac61d/MinSizeRel/lib/mlang/config.h">
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_attribute_argument.hh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <caret line="23" column="65" selection-start-line="23" selection-start-column="65" selection-end-line="23" selection-end-column="65" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/mlang/main.cpp">
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_field_reference_expression.hh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="218" column="13" selection-start-line="218" selection-start-column="13" selection-end-line="218" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
+          <caret line="30" column="65" selection-start-line="30" selection-start-column="65" selection-end-line="30" selection-end-column="65" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll">
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_ir_block_statement.hh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_assign_expression.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="65" selection-start-line="20" selection-start-column="65" selection-end-line="20" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_size_of_expression.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/code_generator.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9285715">
+          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_array_create_expression.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_expression.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_variable_reference_expression.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_array_indexer_expression.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/codedom/code_assembly_call_expression.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.9259257">
-          <caret line="748" column="83" selection-start-line="748" selection-start-column="79" selection-end-line="748" selection-end-column="83" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_cast_expression.cpp">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_member_method.cpp">
+    <entry file="file://$PROJECT_DIR$/lib/mlang/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.3672391">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/code_compiler.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75297225">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="40" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/easylogging++.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33289298">
-          <caret line="4862" column="0" selection-start-line="4862" selection-start-column="0" selection-end-line="4862" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_binary_operator_expression.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50838923">
-          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
-          <folding>
-            <element signature="e#204#233#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_type_member.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30201343">
-          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/codedom/code_member_method.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42281878">
-          <caret line="27" column="41" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/IR/GlobalValue.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34080717">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/IR/Value.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29596412">
-          <caret line="221" column="0" selection-start-line="221" selection-start-column="0" selection-end-line="221" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/lib/IR/Value.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29596412">
-          <caret line="181" column="0" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/code_generator.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20093457">
-          <caret line="271" column="28" selection-start-line="271" selection-start-column="28" selection-end-line="271" selection-end-column="28" />
-          <folding>
-            <element signature="e#101#116#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/include/llvm/IR/Instructions.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29596412">
-          <caret line="1516" column="0" selection-start-line="1516" selection-start-column="0" selection-end-line="1516" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.6.2.src/lib/IR/Instructions.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29596412">
-          <caret line="1039" column="0" selection-start-line="1039" selection-start-column="0" selection-end-line="1039" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_object_visitor.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29596412">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_binary_operator_expression.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_method_return_statement.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39461884">
-          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.5313808">
+          <caret line="124" column="16" selection-start-line="124" selection-start-column="16" selection-end-line="124" selection-end-column="16" />
           <folding />
         </state>
       </provider>
