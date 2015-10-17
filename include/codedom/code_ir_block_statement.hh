@@ -19,13 +19,13 @@ namespace mlang {
         using CodeObject::scope;
         CodeIrBlockStatement();
         ~CodeIrBlockStatement();
-        virtual void accept(ICodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor) override;
         
 
         void content(std::string value);
         std::string content();
         
-        virtual bool type_of(CodeObjectKind kind);
+        virtual bool type_of(CodeObjectKind kind) override;
         void scope(CodeScope* scope) override;
     private:
         std::string m_content;

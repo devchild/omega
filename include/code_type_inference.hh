@@ -12,13 +12,18 @@
 
 namespace mlang {
 
-	class MLangCodeTypeInference : public CodeObjectVisitorBase {
+	class CodeTypeInference : public CodeObjectVisitorBase {
 	public:
 		CodeTypeReference *result();
 
-		MLangCodeTypeInference();
+		CodeTypeInference();
 
-		virtual ~MLangCodeTypeInference();
+		virtual ~CodeTypeInference();
+
+        static CodeTypeReference* get_type_reference(CodeObject* object);
+
+	protected:
+		using CodeObjectVisitorBase::on_visit;
 
 	private:
 		/*CodeObjectVisitor*/

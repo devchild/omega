@@ -18,7 +18,7 @@ namespace mlang {
 
         CodeAssignExpression();
         ~CodeAssignExpression();
-        virtual void accept(ICodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor) override;
         
         void left(CodeExpression* value);
         CodeExpression* left();
@@ -26,7 +26,7 @@ namespace mlang {
         void right(CodeExpression* value);
         CodeExpression* right();
         
-        virtual bool type_of(CodeObjectKind kind);
+        virtual bool type_of(CodeObjectKind kind) override;
         void scope(CodeScope* scope) override;
     private:
         CodeExpression * m_left;

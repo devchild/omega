@@ -20,7 +20,7 @@ namespace mlang {
         using CodeObject::scope;
         CodeAssemblyCallExpression();
         ~CodeAssemblyCallExpression();
-        virtual void accept(ICodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor) override;
         
 
         void content(std::string value);
@@ -34,7 +34,7 @@ namespace mlang {
 
         CodeExpressionCollection* parameters();
 
-        virtual bool type_of(CodeObjectKind kind);
+        virtual bool type_of(CodeObjectKind kind) override;
         void scope(CodeScope* scope) override;
     private:
         CodeTypeReference* m_return_type;

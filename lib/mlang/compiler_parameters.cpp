@@ -13,7 +13,7 @@ using namespace std;
 
 namespace mlang {
     CompilerParameters::CompilerParameters() {
-        this->m_optimize = true;
+        this->m_optimize = false;
         this->m_generate_executable = true;
         this->m_dump_ir = false;
         this->m_input_files = new list<string>();

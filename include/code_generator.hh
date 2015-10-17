@@ -55,90 +55,101 @@ namespace mlang {
         llvm::LLVMContext &m_context;
     };
 
-    class CodeStatementGenerator : public CodeObjectVisitorBase {
+    class CodeEmitLLVM : public CodeObjectVisitorBase {
     public:
-        llvm::Value *result();
 
-        llvm::BasicBlock *block();
+        static llvm::BasicBlock* emit_code(CodeObject* object, llvm::BasicBlock *block);
 
-        CodeStatementGenerator(llvm::BasicBlock *block);
+        //
+        // --> a <-- = 2 + 2
+        //
+        static llvm::Value* get_l_value(CodeObject* object, llvm::BasicBlock *block);
 
-        virtual ~CodeStatementGenerator();
+        //
+        // a = --> 2 + 2 <--
+        // In general a loadinst is aplied to the get_l_value
+        static llvm::Value* get_r_value(CodeObject* object, llvm::BasicBlock *block);
+
+        virtual ~CodeEmitLLVM();
+
+        CodeEmitLLVM(llvm::BasicBlock *block);
+
+        llvm::BasicBlock *m_block;
+        llvm::Value *m_l_result;
+        llvm::Value *m_r_result;
         /*CodeObjectVisitor*/
     private:
 
-        llvm::Type *get_llvm_type(CodeTypeReference *code_type_reference);
 
-        virtual void on_visit(CodeBinaryOperatorExpression *object);
+        virtual void on_visit(CodeBinaryOperatorExpression *object) override;
 
-        virtual void on_visit(CodeCompileUnit *object);
+        virtual void on_visit(CodeCompileUnit *object) override;
 
-        virtual void on_visit(CodeConditionStatement *object);
+        virtual void on_visit(CodeConditionStatement *object) override;
 
-        virtual void on_visit(CodeExpression *object);
+        virtual void on_visit(CodeExpression *object) override;
 
-        virtual void on_visit(CodeExpressionStatement *object);
+        virtual void on_visit(CodeExpressionStatement *object) override;
 
-        virtual void on_visit(CodeIterationStatement *object);
+        virtual void on_visit(CodeIterationStatement *object) override;
 
-        virtual void on_visit(CodeMemberField *object);
+        virtual void on_visit(CodeMemberField *object) override;
 
-        virtual void on_visit(CodeMemberMethod *object);
+        virtual void on_visit(CodeMemberMethod *object) override;
 
-        virtual void on_visit(CodeMemberProperty *object);
+        virtual void on_visit(CodeMemberProperty *object) override;
 
-        virtual void on_visit(CodeMethodInvokeExpression *object);
+        virtual void on_visit(CodeMethodInvokeExpression *object) override;
 
-        virtual void on_visit(CodeMethodReferenceExpression *object);
+        virtual void on_visit(CodeMethodReferenceExpression *object) override;
 
-        virtual void on_visit(CodeMethodReturnStatement *object);
+        virtual void on_visit(CodeMethodReturnStatement *object) override;
 
-        virtual void on_visit(CodeNamespace *object);
+        virtual void on_visit(CodeNamespace *object) override;
 
-        virtual void on_visit(CodeObject *object);
+        virtual void on_visit(CodeObject *object) override;
 
-        virtual void on_visit(CodeParameterDeclarationExpression *object);
+        virtual void on_visit(CodeParameterDeclarationExpression *object) override;
 
-        virtual void on_visit(CodePrimitiveExpression *object);
+        virtual void on_visit(CodePrimitiveExpression *object) override;
 
-        virtual void on_visit(CodeStatement *object);
+        virtual void on_visit(CodeStatement *object) override;
 
-        virtual void on_visit(CodeTypeDeclaration *object);
+        virtual void on_visit(CodeTypeDeclaration *object) override;
 
-        virtual void on_visit(CodeTypeMember *object);
+        virtual void on_visit(CodeTypeMember *object) override;
 
-        virtual void on_visit(CodeTypeReference *object);
+        virtual void on_visit(CodeTypeReference *object) override;
 
-        virtual void on_visit(CodeVariableDeclarationStatement *object);
+        virtual void on_visit(CodeVariableDeclarationStatement *object) override;
 
-        virtual void on_visit(CodeVariableReferenceExpression *object);
+        virtual void on_visit(CodeVariableReferenceExpression *object) override;
 
-        virtual void on_visit(CodeAssignExpression *object);
+        virtual void on_visit(CodeAssignExpression *object) override;
 
-        virtual void on_visit(CodeCastExpression *object);
+        virtual void on_visit(CodeCastExpression *object) override;
 
-        virtual void on_visit(CodeObjectCreateExpression *object);
+        virtual void on_visit(CodeObjectCreateExpression *object) override;
 
-        virtual void on_visit(CodeIrBlockStatement *object);
+        virtual void on_visit(CodeIrBlockStatement *object) override;
 
-        virtual void on_visit(CodeFileInclude *object);
+        virtual void on_visit(CodeFileInclude *object) override;
 
-        virtual void on_visit(CodeArrayCreateExpression *object);
+        virtual void on_visit(CodeArrayCreateExpression *object) override;
 
-        virtual void on_visit(CodeArrayIndexerExpression *object);
+        virtual void on_visit(CodeArrayIndexerExpression *object) override;
 
-        virtual void on_visit(CodeFieldReferenceExpression *object);
+        virtual void on_visit(CodeFieldReferenceExpression *object) override;
 
-        virtual void on_visit(CodeAssemblyCallExpression *object);
+        virtual void on_visit(CodeAssemblyCallExpression *object) override;
 
-        virtual void on_visit(CodeSizeOfExpression *object);
+        virtual void on_visit(CodeSizeOfExpression *object) override;
 
-        virtual void on_visit(CodeAttributeArgument *object);
+        virtual void on_visit(CodeAttributeArgument *object) override;
 
-        virtual void on_visit(CodeAttributeDeclaration *object);
+        virtual void on_visit(CodeAttributeDeclaration *object) override;
 
-        llvm::BasicBlock *m_block;
-        llvm::Value *m_result;
+
     };
 }
 

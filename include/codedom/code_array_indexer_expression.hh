@@ -19,9 +19,9 @@ namespace mlang {
         using CodeObject::scope;
         CodeArrayIndexerExpression();
         ~CodeArrayIndexerExpression();
-        virtual void accept(ICodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor) override;
 
-        virtual bool type_of(CodeObjectKind kind);
+        virtual bool type_of(CodeObjectKind kind) override;
         void scope(CodeScope* scope) override;
 
         CodeExpressionCollection* indices();

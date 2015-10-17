@@ -30,7 +30,7 @@ bool CodePrimitiveExpression::type_of(CodeObjectKind kind) {
 
 void CodePrimitiveExpression::scope(CodeScope* scope) {
 	CodeExpression::scope(scope);
-
+	this->type()->scope(scope);
 }
 
 CodeTypeReference*

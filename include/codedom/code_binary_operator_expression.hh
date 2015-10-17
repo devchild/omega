@@ -15,6 +15,7 @@
 namespace mlang {
 
     enum class CodeBinaryOperatorType {
+        None,
         Add,
         Subtract,
 		IdentityEquality,

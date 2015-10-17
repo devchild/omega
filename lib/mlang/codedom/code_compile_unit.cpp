@@ -41,7 +41,7 @@ namespace mlang {
     void 
     CodeCompileUnit::scope(CodeScope* scope) {
         CodeObject::scope(scope);
-        auto current_scope = scope->begin_scope();
+        auto current_scope = scope; //scope->begin_scope();
         for(auto x:*this->namespaces()) {
             x->scope(current_scope);
         }
@@ -54,6 +54,6 @@ namespace mlang {
             cout << "setting method scope" << endl;
         	x->scope(current_scope);
         }
-        current_scope = current_scope->end_scope();
+        //current_scope = current_scope->end_scope();
     }
 }

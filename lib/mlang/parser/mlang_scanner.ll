@@ -7,6 +7,14 @@
 # include "mlang_scanner.hh"
 # include "mlang_parser.hh"
 
+
+//
+// This should be removed when this is fixed in flex
+//
+#if __cplusplus > 199711L
+#define register      // Deprecated in C++11.
+#endif  // #if __cplusplus > 199711L
+
 /* By default yylex returns int, we use token_type.
    Unfortunately yyterminate by default returns 0, which is
    not of token_type.  */ 
@@ -95,6 +103,64 @@ string_literal         				{regular_string}|{verbatim_string}
 									    std::string s = *yylval->stringVal;
 									    return token_for(s);
 									}
+">"          						{
+                                        std::stack<char> mybuffer;
+										int c;
+										do {
+										    c = yyinput();
+										    mybuffer.push(c);
+										}
+										while (c == ' ');
+
+										if (c == '(') {
+											while (!mybuffer.empty()) {
+                                                 unput(mybuffer.top());
+                                                 mybuffer.pop();
+                                            }
+											return(token::END_GENERIC);
+										}
+										else {
+							    			while (!mybuffer.empty()) {
+                                                unput(mybuffer.top());
+                                                mybuffer.pop();
+                                            }
+											return static_cast<token_type>(*yytext);
+										}
+                                    }
+"<"									{
+										std::stack<char> mybuffer;
+										int c;
+										for (;;) {
+											c = yyinput();
+											mybuffer.push(c);
+
+											if (c == '>') {
+												do {
+    											    c = yyinput();
+    											    mybuffer.push(c);
+    											}
+    											while (c == ' ');
+
+												if (c == '(') {
+													while (!mybuffer.empty())
+                                                    {
+                                                         unput(mybuffer.top());
+                                                         mybuffer.pop();
+                                                    }
+													return(token::BEGIN_GENERIC);
+												}
+											}
+
+											if (c == ')' || c == EOF) {
+							    				while (!mybuffer.empty())
+                                                {
+                                                    unput(mybuffer.top());
+                                                    mybuffer.pop();
+                                                }
+												return static_cast<token_type>(*yytext);
+											}
+										}
+									}
 \[\] 								{
 										yylval->integerVal = 1;
 										return token::RANK;
@@ -105,6 +171,7 @@ string_literal         				{regular_string}|{verbatim_string}
 "]" 								{
 										return token::RIGHT_BRACKET;
 									}
+
 <INITIAL>[ \t\r]+ 					{
 										/* gobble up white-spaces */
     									yylloc->step();
@@ -113,8 +180,9 @@ string_literal         				{regular_string}|{verbatim_string}
 										yyless(0);
 										yylloc->columns(-1);
                                         BEGIN(INDENTSTATE);
-                                       	//return (token::END_STATEMENT);
+                                       	// return (token::EOL);
                                     }
+
 <INITIAL><<EOF>>           			{
 										if (indent.size() > 0)
                                         {

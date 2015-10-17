@@ -20,7 +20,6 @@ namespace mlang {
                
     public:
         using CodeObject::scope;
-        using CodeObject::resolve_type;
         CodeParameterDeclarationExpression();
         virtual ~CodeParameterDeclarationExpression();
         

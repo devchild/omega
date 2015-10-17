@@ -19,9 +19,9 @@ namespace mlang {
         using CodeObject::scope;
         CodeArrayCreateExpression();
         ~CodeArrayCreateExpression();
-        virtual void accept(ICodeObjectVisitor* visitor);
+        virtual void accept(ICodeObjectVisitor* visitor) override;
 
-        virtual bool type_of(CodeObjectKind kind);
+        virtual bool type_of(CodeObjectKind kind) override;
         void scope(CodeScope* scope) override;
 
         CodeExpression* size_expression();

@@ -25,8 +25,6 @@ namespace mlang {
 
     void
     CodeScope::push_back(CodeObject* object) {
-        if (scope_ended)
-            exit(EXIT_FAILURE);
         this->m_members->push_back(object);
     }
 
@@ -38,6 +36,8 @@ namespace mlang {
 
     CodeScope*
     CodeScope::end_scope() {
+        if (scope_ended)
+            exit(EXIT_FAILURE);
         this->scope_ended = true;
         return this->m_parent;
     }

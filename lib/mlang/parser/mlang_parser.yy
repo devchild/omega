@@ -1,4 +1,6 @@
 %skeleton "glr.cc" /* -*- C++ -*- */
+%define lr.type ielr
+
 %require "2.6.90.8-d4fe"
 %defines
 %define parser_class_name 	{ mlang_parser }
@@ -45,7 +47,6 @@ class mlang_driver;
 %token						DEF							"def"
 %token						LEFT_BRACKET				"["
 %token						RIGHT_BRACKET				"]"
-%token						END_STATEMENT				"end of statement"
 %token						INDENT						"indent"
 %token						DEDENT						"dedent"
 %token						BLOCK_END   				"end"
@@ -69,6 +70,9 @@ class mlang_driver;
 %token						OP_ANDAND					"&&"
 %token						OP_SHIFT_RIGHT  			">>"
 %token						OP_SHIFT_LEFT				"<<"
+%token						BEGIN_GENERIC				"start of generic <"
+%token						END_GENERIC					"end of generic >"
+%token 						END_STATEMENT				"end of statement"
 %token <integerVal>			RANK						"[]"
 %token <stringVal>			BLOCKCONTENT 				"block content"
 %token <stringVal>			EXTERNAL					"external"
@@ -78,18 +82,21 @@ class mlang_driver;
 %token <stringVal>			STRING_LITERAL 				"string"
 
 %type  <stringVal>			attribute_name
-%type  <node>				empty_statement statement_expression  bad_primary_expression bad_statement sizeof_expression
+%type  <node>				statement_expression  sizeof_expression
 %type  <node> 				unary_expression non_assign_expression method_reference_expression multiplicative_expression additive_expression shift_expression relational_expression equality_expression and_expression exclusive_or_expression inclusive_or_expression conditional_and_expression conditional_expression primary_expression assembly_call_expression expression_opt object_create_expression field_reference_expression member_field assign_expression non_array_type_reference array_type_reference ir_block_statement type_reference compile_unit compile_unit_member namespace type_declaration method namespace_member class_declaration struct_declaration type_member
 %type  <node> 				statement method_return_statement condition_statement expression_statement iteration_statement variable_declaration_statement
 %type  <node> 				attribute array_indexer_expression array_create_expression file_include expression binary_operator_expression method_invoke_expression variable_reference_expression primitive_expression cast_expression parameter_declaration_expression
-%type  <node_collection>	attribute_arguments_opt attribute_arguments attribute_list attributes_section attributes_sections attributes_opt attributes type_argument_list type_argument_list_opt type_reference_list compile_unit_member_list_opt compile_unit_member_list namespace_member_list_opt namespace_member_list type_member_list_opt type_member_list 
+%type  <node_collection>	statement_list_without_return attribute_arguments_opt attribute_arguments attribute_list attributes_section attributes_sections attributes_opt attributes type_argument_list type_argument_list_opt type_reference_list compile_unit_member_list_opt compile_unit_member_list namespace_member_list type_member_list
 %type  <node_collection>	file_include_list_opt file_include_list expression_list expression_list_opt parameter_declaration_expression_list parameter_declaration_expression_list_opt statement_list
 
 %printer    { yyoutput << *$$; } 		"identifier"
 %destructor { delete $$; } 				"identifier"
 %printer    { yyoutput << $$; } 		<integerVal>
 
+%left TOK_RETURN
+
 %%
+
 %start compile_unit;
 
 compile_unit:					{	
@@ -100,10 +107,9 @@ compile_unit:					{
 									}
 									driver.success(false);
 								}
-	file_include_list_opt
 	compile_unit_member_list_opt
 								{
-									if ($2 != nullptr)
+									/*if ($2 != nullptr)
 									{
 										for(auto child_nd:*$2)
 										{
@@ -111,11 +117,11 @@ compile_unit:					{
 											auto search_str = file_include_nd->file_name().substr(1, file_include_nd->file_name().size() - 2);
 											driver.include(search_str);
 										}
-									}
+									}*/
 								
-									if ($3 != nullptr)
+									if ($2 != nullptr)
 									{
-										for(auto child_nd:*$3)
+										for(auto child_nd:*$2)
 										{
 											if (child_nd->type_of(mlang::CodeObjectKind::CodeNamespace))
 											{
@@ -141,35 +147,6 @@ compile_unit:					{
 								}
 	;
 	
-file_include_list_opt:
-	%empty						{	$$ = nullptr;	}
-	| file_include_list			{	$$ = $1;		}
-	;
-
-file_include_list:
-	file_include
-								{	
-									auto nd = new mlang::CodeObjectCollection();
-									nd->push_back($1);
-									$$ = nd;
-								}
-	| file_include_list file_include
-								{
-									auto nd = $1;
-									nd->push_back($2);
-									$$ = nd;
-								}
-	;
-
-file_include:
-	INCLUDE STRING_LITERAL 		
-											{	
-												auto nd = new mlang::CodeFileInclude();
-												nd->file_name(*$2);
-												$$ = nd;
-											}
-	;
-	
 compile_unit_member_list_opt:
 	%empty									{	$$ = nullptr; }
 	| compile_unit_member_list  			{	$$ = $1; }
@@ -191,10 +168,12 @@ compile_unit_member_list:
 
 compile_unit_member:
 	namespace								{	$$ = $1; }
-	| attributes_opt type_declaration		{	
-												$$ = $2; 
+	| attributes_opt type_declaration
+											{
+												$$ = $2;
 											}
-	| attributes_opt method					{
+	| attributes_opt method
+											{
 												auto method = static_cast<mlang::CodeMemberMethod*>($2);
 												if ($1 != nullptr)
 												{
@@ -206,6 +185,7 @@ compile_unit_member:
 												$$ = method;
 											}
 	;
+
 
 namespace:
 	NAMESPACE IDENTIFIER INDENT namespace_member_list DEDENT
@@ -302,7 +282,7 @@ struct_declaration:
 	;
 
 type_member_list:
-	type_member								{	
+	type_member								{
 												auto nd = new mlang::CodeObjectCollection();	
 												nd->push_back($1);
 												$$ = nd;
@@ -316,39 +296,52 @@ type_member_list:
 	;
 	
 type_member:
-	attributes_opt method									
+	 method
 											{
-												auto method = static_cast<mlang::CodeMemberMethod*>($2);
-												if ($1 != nullptr)
-												{
-													for(auto x:*$1)
-													{
-														method->custom_attributes().push_back(static_cast<mlang::CodeAttributeDeclaration*>(x));
-													}
-												}
+												auto method = static_cast<mlang::CodeMemberMethod*>($1);
+
 												$$ = method;
 											}
-	| attributes_opt member_field			{
+	|  member_field			{
 												// this generates 1 conflict
-												auto field = static_cast<mlang::CodeMemberMethod*>($2);
-												if ($1 != nullptr)
-												{
-													for(auto x:*$1)
-													{
-														field->custom_attributes().push_back(static_cast<mlang::CodeAttributeDeclaration*>(x));
-													}
-												}
+												auto field = static_cast<mlang::CodeMemberMethod*>($1);
+
 												$$ = field;
 											}
 	;
-	
+
 statement_list:
-	statement								{	
+    method_return_statement				    {
+                             					auto nd = new mlang::CodeObjectCollection();
+                       							nd->push_back($1);
+                           						$$ = nd;
+                  							}
+	| statement_list_without_return         {
+	                                            $$ = $1;
+	                                        }
+	| statement_list_without_return method_return_statement
+               								{
+                   								// this one causes 6 shift/reduce conflicts.
+                   								// adding an extra term could help eg. ';'
+                   								// eg.
+                   								//   1. >> return exec_test() <<
+                   								// OR
+                  								//   1. >> return <<
+                								//   2. >> exec_test() <<
+                								//
+                								// REMARK: this one should be fixed
+                								//
+                   								$$ = $1;
+                   							}
+
+statement_list_without_return:
+	statement								{
 												auto nd = new mlang::CodeObjectCollection();	
 												nd->push_back($1);
 												$$ = nd;
 											}
-	| statement_list statement				{	
+	| statement_list_without_return statement
+											{
 												auto nd = $1;	
 												if ($2 != nullptr)
 												{
@@ -359,27 +352,22 @@ statement_list:
 	;
 
 statement:
-	expression_statement					{	$$ = $1;	}
+	expression_statement 					{	$$ = $1;	}
 	| condition_statement					{	$$ = $1;	}
 	| iteration_statement					{	$$ = $1;	}
 	| ir_block_statement					{	$$ = $1;	}
 	| variable_declaration_statement		{	$$ = $1;	}
-	| method_return_statement				{	
-												// this one causes 6 shift/reduce conflicts.
-												// adding an extra term could help eg. ';'
-												$$ = $1;	
-											}
 	| error									{	$$ = nullptr; }
 	;
 
 ir_block_statement:
-	IR ':' INDENT							{	
+	IR ':'  INDENT							{
 												driver.scanner()->begin_block();	
 											}
 	BLOCKCONTENT							{	
 												driver.scanner()->end_block();
 											}
-	DEDENT  								{
+	DEDENT			  						{
 												auto nd = new mlang::CodeIrBlockStatement();
 												nd->content(*$5);
 												$$ = nd;
@@ -570,7 +558,15 @@ expression_opt:
 	;
 
 method_return_statement:
-	TOK_RETURN 	expression_opt 
+	TOK_RETURN
+											{
+												// this generates 7 conflicts
+												auto nd = new mlang::CodeMethodReturnStatement();
+
+												$$ = nd;
+											}
+
+	| TOK_RETURN expression
 											{	
 												// this generates 7 conflicts
 												auto nd = new mlang::CodeMethodReturnStatement();
@@ -580,7 +576,7 @@ method_return_statement:
 													nd->expression()->parent(nd);
 												}
 												$$ = nd;
-											}		
+											}
 	;
 
 parameter_declaration_expression:
@@ -1078,15 +1074,27 @@ variable_reference_expression:
 											}
 	;
 
+
+generic_type_list_opt:
+    %empty
+    | BEGIN_GENERIC generic_type_list END_GENERIC
+    ;
+
+generic_type_list:
+    IDENTIFIER
+    | generic_type_list ',' IDENTIFIER
+    ;
+
+
 method:
-	EXTERNAL type_reference IDENTIFIER '(' parameter_declaration_expression_list_opt ')'
+	EXTERNAL type_reference IDENTIFIER generic_type_list_opt '(' parameter_declaration_expression_list_opt ')'
 											{
 												auto nd = new mlang::CodeMemberMethod();
 												nd->return_type(static_cast<mlang::CodeTypeReference*>($2));
 												nd->name(*$3);
-												if ($5 != nullptr)
+												if ($6 != nullptr)
 												{
-													for (auto child_nd:*$5)
+													for (auto child_nd:*$6)
 													{
 														nd->parameters()->push_back(static_cast<mlang::CodeParameterDeclarationExpression*>(child_nd));
 														child_nd->parent(nd);
@@ -1095,23 +1103,23 @@ method:
 												nd->attributes(mlang::MemberAttributes::External);
 												$$ = nd;
 											}
-	| type_reference IDENTIFIER '(' parameter_declaration_expression_list_opt ')' ':'  INDENT statement_list DEDENT
+	| type_reference IDENTIFIER generic_type_list_opt '(' parameter_declaration_expression_list_opt ')' ':'   INDENT statement_list DEDENT
 											{
 												auto nd = new mlang::CodeMemberMethod();
 												nd->return_type(static_cast<mlang::CodeTypeReference*>($1));
 												nd->name(*$2);
-												if ($4 != nullptr)
+												if ($5 != nullptr)
 												{
-													for (auto child_nd:*$4)
+													for (auto child_nd:*$5)
 													{
 														nd->parameters()->push_back(static_cast<mlang::CodeParameterDeclarationExpression*>(child_nd));
 														child_nd->parent(nd);
 													}
 												}
 												
-												if ($8 != nullptr)
+												if ($9 != nullptr)
 												{
-													for (auto child_nd:*$8)
+													for (auto child_nd:*$9)
 													{
 														if (child_nd != nullptr)
 														{
@@ -1122,23 +1130,23 @@ method:
 												}
 												$$ = nd;
 											}
-	| DEF IDENTIFIER '(' parameter_declaration_expression_list_opt ')' ':'  INDENT statement_list DEDENT
+	| DEF IDENTIFIER generic_type_list_opt '(' parameter_declaration_expression_list_opt ')' ':'  INDENT statement_list DEDENT
 											{
 												auto nd = new mlang::CodeMemberMethod();
 												nd->return_type(nullptr);
 												nd->name(*$2);
-												if ($4 != nullptr)
+												if ($5 != nullptr)
 												{
-													for (auto child_nd:*$4)
+													for (auto child_nd:*$5)
 													{
 														nd->parameters()->push_back(static_cast<mlang::CodeParameterDeclarationExpression*>(child_nd));
 														child_nd->parent(nd);
 													}
 												}
 												
-												if ($8 != nullptr)
+												if ($9 != nullptr)
 												{
-													for (auto child_nd:*$8)
+													for (auto child_nd:*$9)
 													{
 														if (child_nd != nullptr)
 														{
@@ -1196,18 +1204,32 @@ method_invoke_expression:
 											}
 	;
 
+
 method_reference_expression:
-	IDENTIFIER								{	
+	IDENTIFIER	type_argument_list_opt		{
 												auto nd = new mlang::CodeMethodReferenceExpression();
 												nd->method_name(*$1);
 												nd->location(driver.get_location(@1));
+
+												if ($2 != nullptr) {
+												    for (auto arg: *$2) {
+												        nd->type_arguments().push_back(static_cast<mlang::CodeTypeReference*>(arg));
+												    }
+												}
+
 												$$ = nd;
 											}
-	| primary_expression '.' IDENTIFIER		{	
+	| primary_expression '.' IDENTIFIER	type_argument_list_opt
+	                                        {
 												auto nd = new mlang::CodeMethodReferenceExpression();
 												nd->method_name(*$3);
 												nd->target_object(static_cast<mlang::CodeExpression*>($1));
 												nd->location(driver.get_location(@1));
+												if ($4 != nullptr) {
+												    for (auto arg: *$4) {
+												        nd->type_arguments().push_back(static_cast<mlang::CodeTypeReference*>(arg));
+												    }
+												}
 												$$ = nd;
 											}
 	;
@@ -1222,7 +1244,8 @@ type_argument_list_opt:
 	;
 
 type_argument_list:
-	'<' type_reference_list '>'				{
+	BEGIN_GENERIC type_reference_list END_GENERIC
+					                        {
 												$$ = $2;
 											}
 	;

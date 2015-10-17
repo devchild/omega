@@ -54,7 +54,7 @@ namespace mlang {
 
 			if (obj->type_of(CodeObjectKind::CodeTypeReference)) {
 				auto ret = code_type_reference_get_llvm_type((CodeTypeReference *) obj);
-				if (ret == nullptr)
+				if (ret != nullptr)
 					LLVMUserData::set_llvm_type(obj, ret);
 				return ret;
 			}
@@ -65,8 +65,7 @@ namespace mlang {
 	private:
 		static llvm::Type *code_type_reference_get_llvm_type(CodeTypeReference *code_type_reference) {
 			llvm::Type *ret = nullptr;
-			CodeTypeDeclaration * code_type_declaration = (CodeTypeDeclaration *) code_type_reference->user_data(
-					UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
+			CodeTypeDeclaration * code_type_declaration = CodeResolver::resolve(code_type_reference);
 			if (code_type_declaration->is_embedded() && code_type_declaration->name() == "Array") {
 				if (code_type_reference->array_element_type() != nullptr) {
 					llvm::Type *element_type = LLVMUserData::get_llvm_type(code_type_reference->array_element_type());
@@ -282,6 +281,7 @@ namespace mlang {
 
 			llvm::FunctionType *function_type = llvm::FunctionType::get(result_type, param_types, false);
 
+
 			if (object->name() == "main" || object->name() == "_start")
 				object->attributes(MemberAttributes::Public);
 
@@ -311,7 +311,7 @@ namespace mlang {
 		llvm::PointerType *PointerTy_3 = llvm::PointerType::get(
 				llvm::IntegerType::get(mod->getContext(), 8), 0);
 		std::vector<llvm::Type *> FuncTy_11_args;
-		FuncTy_11_args.push_back(llvm::IntegerType::get(mod->getContext(), 64));
+		FuncTy_11_args.push_back(llvm::IntegerType::get(mod->getContext(), 32));
 		llvm::FunctionType *FuncTy_11 = llvm::FunctionType::get(
 				/*Result=*/PointerTy_3,
 				/*Params=*/FuncTy_11_args,
@@ -337,7 +337,7 @@ namespace mlang {
 		for (auto code_type_declaration : *compile_unit->types()) {
 			auto bblock = llvm::BasicBlock::Create(m_context,
 												   code_type_declaration->name(), 0, 0);
-			auto gen = new CodeStatementGenerator(bblock);
+			auto gen = new CodeEmitLLVM(bblock);
 			code_type_declaration->accept(gen);
 		}
 
@@ -349,7 +349,7 @@ namespace mlang {
 			for (auto code_type_declaration : *code_namespace->types()) {
 				auto bblock = llvm::BasicBlock::Create(m_context,
 													   code_type_declaration->name(), 0, 0);
-				auto gen = new CodeStatementGenerator(bblock);
+				auto gen = new CodeEmitLLVM(bblock);
 				code_type_declaration->accept(gen);
 			}
 
@@ -364,7 +364,7 @@ namespace mlang {
 /*
 llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		llvm::BasicBlock* block) {
-	MLangCodeTypeInference inf;
+	CodeTypeInference inf;
 	obj->accept(&inf);
 	auto obj_type = inf.result();
 
@@ -402,32 +402,19 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 		if (method->attributes() != MemberAttributes::External) {
 			auto bblock = llvm::BasicBlock::Create(m_context, "entry", function, 0);
-
 			llvm::Function::arg_iterator args = function->arg_begin();
 
 			for (auto p : *method->parameters()) {
 				llvm::Value *paramter_input = args++;
 				paramter_input->setName(p->name());
-
-				auto parameter_gen = new CodeStatementGenerator(bblock);
-				p->accept(parameter_gen);
-				auto parameter_input_addr =
-						(llvm::AllocaInst *) parameter_gen->result();
-
-				//auto td = method->resolve_type(p->type());
+				auto parameter_input_addr = CodeEmitLLVM::get_l_value( p, bblock);
 				parameter_input_addr->setName(p->name() + ".addr");
-				//llvm::StoreInst* void_15 =
-				new llvm::StoreInst(paramter_input, parameter_input_addr, false,
-									bblock);
+				new llvm::StoreInst(paramter_input, parameter_input_addr, false, bblock);
 			}
 
 			if (method->statements() != nullptr) {
 				for (auto statement : *method->statements()) {
-					auto statement_gen = new CodeStatementGenerator(bblock);
-					statement->accept(statement_gen);
-					//not used
-					//auto statement_res = statement_gen.result();
-					bblock = statement_gen->block();
+                    bblock = CodeEmitLLVM::emit_code(statement, bblock);
 				}
 			}
 		}
@@ -463,180 +450,138 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		return ret;
 	}
 
-	CodeStatementGenerator::CodeStatementGenerator(
+	CodeEmitLLVM::CodeEmitLLVM(
 			llvm::BasicBlock *block) {
-		this->m_result = nullptr;
+		this->m_l_result = nullptr;
+        this->m_r_result = nullptr;
 		this->m_block = block;
 	}
 
-	CodeStatementGenerator::~CodeStatementGenerator() {
+    llvm::BasicBlock* CodeEmitLLVM::emit_code(CodeObject* object, llvm::BasicBlock *block) {
+        CodeEmitLLVM* em = new CodeEmitLLVM(block);
+        object->accept(em);
+
+
+        if (em->m_l_result && em->m_l_result != nullptr)
+            LLVMUserData::set_l_value(object, em->m_l_result);
+
+        if (em->m_r_result && em->m_r_result != nullptr)
+            LLVMUserData::set_r_value(object, em->m_r_result);
+
+        auto res = em->m_block;
+        delete em;
+        return res;
+    }
+
+    //
+    // --> a <-- = 2 + 2
+    //
+    llvm::Value* CodeEmitLLVM::get_l_value(CodeObject* object, llvm::BasicBlock *block){
+        auto l_val = LLVMUserData::get_l_value(object);
+
+        if (l_val == nullptr) {
+            CodeEmitLLVM::emit_code(object, block);
+            return LLVMUserData::get_l_value(object);
+        }
+        return l_val;
+    }
+
+    //
+    // a = --> 2 + 2 <--
+    // In general a loadinst is aplied to the get_l_value
+    llvm::Value* CodeEmitLLVM::get_r_value(CodeObject* object, llvm::BasicBlock *block){
+        auto r_val = LLVMUserData::get_r_value(object);
+
+        if (r_val == nullptr) {
+            CodeEmitLLVM::emit_code(object, block);
+
+            r_val = LLVMUserData::get_r_value(object);
+            // if tmp is empty we can take the l_value and load from the pointer
+            if (r_val == nullptr) {
+                auto tmp = LLVMUserData::get_l_value(object);
+                if (tmp && tmp != nullptr) {
+                    r_val = new llvm::LoadInst(tmp, "", block);
+                    LLVMUserData::set_r_value(object, r_val);
+                }
+            }
+        }
+        return r_val;
+    }
+
+	CodeEmitLLVM::~CodeEmitLLVM() {
 
 	}
 
-	llvm::Value *CodeStatementGenerator::result() {
-		return this->m_result;
-	}
-
-	llvm::BasicBlock *CodeStatementGenerator::block() {
-		return this->m_block;
-	}
-
-	void CodeStatementGenerator::on_visit(CodeBinaryOperatorExpression *object) {
-		// // std::cout << ">> CodeBinaryOperatorExpression" << std::endl;
-		llvm::LLVMContext &ctx = this->m_block->getContext();
-		llvm::Constant *zero = llvm::Constant::getNullValue(
-				llvm::IntegerType::getInt32Ty(ctx));
-
+	void CodeEmitLLVM::on_visit(CodeBinaryOperatorExpression *object) {
 		llvm::Function *parent_function = this->m_block->getParent();
 		llvm::Module *mod = parent_function->getParent();
 
 		auto expression_left = object->left();
 		auto expression_right = object->right();
-
-		llvm::Value *expression_left_value = nullptr;
-		llvm::Value *expression_right_value = nullptr;
-
-		CodeTypeDeclaration * left_type_decl = nullptr;
-		CodeTypeReference * left_type = nullptr;
-		CodeTypeDeclaration * right_type_decl = nullptr;
-		CodeTypeReference * right_type = nullptr;
-
-		std::list<CodeTypeDeclaration *> method_arg_types;
 		std::vector<llvm::Value *> method_args;
 
 		if (expression_left != nullptr) {
-			auto expression_gen_left = new CodeStatementGenerator(
-					this->m_block);
-			expression_left->accept(expression_gen_left);
-			expression_left_value = expression_gen_left->result();
-			expression_left_value = LLVMUserData::get_r_value(
-					expression_left);   //load_if_needed(expression_left,	expression_left_value, this->m_block);
-
-			if (expression_left_value == nullptr) {
-                auto load = new llvm::LoadInst(LLVMUserData::get_l_value(expression_left), "", this->m_block);
-				LLVMUserData::set_r_value(expression_left, load);
-				expression_left_value = load;
-			}
-
-			method_args.push_back(expression_left_value);
+			method_args.push_back( CodeEmitLLVM::get_r_value(expression_left, this->m_block));
 		}
 
 		if (expression_right != nullptr) {
-			auto expression_gen_right = new CodeStatementGenerator(
-					this->m_block);
-			expression_right->accept(expression_gen_right);
-			expression_right_value = expression_gen_right->result();
-			expression_right_value = LLVMUserData::get_r_value(
-					expression_right); // load_if_needed(expression_right, expression_right_value, this->m_block);
-
-
-			if (expression_right_value == nullptr) {
-				auto load = new llvm::LoadInst(LLVMUserData::get_l_value(expression_right), "", this->m_block);
-				LLVMUserData::set_r_value(expression_right, load);
-				expression_right_value = load;
-			}
-
-			method_args.push_back(expression_right_value);
+            method_args.push_back( CodeEmitLLVM::get_r_value(expression_right, this->m_block));
 		}
 
-        mlang::CodeMemberMethod * resolved_method = (mlang::CodeMemberMethod *) object->user_data(
-				UserDataKind::MLANG_RESOLVED_MEMBER_METHOD);
-		llvm::Function *f = mod->getFunction(resolved_method->id());
-
-
-        if (expression_left_value == nullptr || expression_right_value == nullptr)
-            LOG(DEBUG) << "Error trying to call " << (int)object->operator_();
-
-		switch (object->operator_()) {
-			case CodeBinaryOperatorType::Add:
-			case CodeBinaryOperatorType::Divide:
-			case CodeBinaryOperatorType::Subtract:
-			case CodeBinaryOperatorType::Multiply:
-			case CodeBinaryOperatorType::Modulus:
-			case CodeBinaryOperatorType::ShiftLeft:
-			case CodeBinaryOperatorType::ShiftRight:
-			case CodeBinaryOperatorType::BitwiseOr:
-			case CodeBinaryOperatorType::BooleanOr:
-			case CodeBinaryOperatorType::BitwiseAnd:
-			case CodeBinaryOperatorType::BooleanAnd:
-			case CodeBinaryOperatorType::ExlusiveOr:
-			case CodeBinaryOperatorType::IdentityEquality:
-			case CodeBinaryOperatorType::IdentityInEquality:
-			case CodeBinaryOperatorType::LessThan:
-			case CodeBinaryOperatorType::LessThanOrEqual:
-			case CodeBinaryOperatorType::GreaterThan:
-			case CodeBinaryOperatorType::GreaterThanOrEqual:
-				this->m_result = llvm::CallInst::Create(f, method_args, "",
-														this->m_block);
-				LLVMUserData::set_r_value(object, this->m_result);
-				break;
-		}
+        auto resolved_method = CodeResolver::resolve(object);
+        auto f = mod->getFunction(resolved_method->id());
+		this->m_r_result = llvm::CallInst::Create(f, method_args, "", this->m_block);
 	}
 
-	void CodeStatementGenerator::on_visit(CodeCompileUnit *object) {
+	void CodeEmitLLVM::on_visit(CodeCompileUnit *object) {
 		// std::cout << ">> CodeCompileUnit" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeExpression *object) {
+	void CodeEmitLLVM::on_visit(CodeExpression *object) {
 		// std::cout << ">> CodeExpression" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeMemberField *object) {
+	void CodeEmitLLVM::on_visit(CodeMemberField *object) {
 		// std::cout << ">> CodeMemberField" << std::endl;
 
 	}
 
-	void CodeStatementGenerator::on_visit(CodeMemberMethod *object) {
+	void CodeEmitLLVM::on_visit(CodeMemberMethod *object) {
 		// std::cout << ">> CodeMemberMethod" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeMemberProperty *object) {
+	void CodeEmitLLVM::on_visit(CodeMemberProperty *object) {
 		// std::cout << ">> CodeMemberProperty" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeMethodReturnStatement *object) {
-		// std::cout << ">> CodeMethodReturnStatement" << std::endl;
+	void CodeEmitLLVM::on_visit(CodeMethodReturnStatement *object) {
 		auto expression = object->expression();
 		if (expression != nullptr) {
-			auto expression_gen = new CodeStatementGenerator(this->m_block);
-			expression->accept(expression_gen);
-			auto return_val = expression_gen->result();
-			return_val = LLVMUserData::get_r_value(expression);// load_if_needed(expression, return_val, this->m_block);
-			if (return_val == nullptr) {
-				llvm::Value *r_value = new llvm::LoadInst(LLVMUserData::get_l_value(expression), "", this->m_block);
-				LLVMUserData::set_r_value(expression, r_value);
-				return_val = r_value;
-			}
+            auto return_val = CodeEmitLLVM::get_r_value(expression, this->m_block);
+            m_l_result = llvm::ReturnInst::Create(this->m_block->getContext(), return_val, this->m_block);
 
-			m_result = llvm::ReturnInst::Create(this->m_block->getContext(),
-												return_val, m_block);
 		} else {
-			// return void
-			m_result = llvm::ReturnInst::Create(this->m_block->getContext(),
-												m_block);
+			m_l_result = llvm::ReturnInst::Create(this->m_block->getContext(), m_block);
 		}
 	}
 
-	void CodeStatementGenerator::on_visit(CodeNamespace *object) {
+	void CodeEmitLLVM::on_visit(CodeNamespace *object) {
 		// std::cout << ">> CodeNamespace" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeObject *object) {
+	void CodeEmitLLVM::on_visit(CodeObject *object) {
 		// std::cout << ">> CodeObject" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(
+	void CodeEmitLLVM::on_visit(
 			CodeParameterDeclarationExpression *object) {
 		auto llvm_type = LLVMUserData::get_llvm_type(object->type());
 		auto name = object->name();
 		llvm::AllocaInst *alloc = new llvm::AllocaInst(llvm_type, name.c_str(), this->m_block);
-		object->user_data(UserDataKind::LLVM_L_VALUE, alloc);
-
-
-		this->m_result = alloc;
+		this->m_l_result = alloc;
 	}
 
-	void CodeStatementGenerator::on_visit(CodePrimitiveExpression *object) {
+	void CodeEmitLLVM::on_visit(CodePrimitiveExpression *object) {
 		// std::cout << ">> CodePrimitiveExpression" << std::endl;
 
 		auto module = this->m_block->getParent()->getParent();
@@ -644,18 +589,17 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 		//auto type_reference = object->type();
 
-		CodeTypeDeclaration * td = (CodeTypeDeclaration *) object->type()->user_data(
-				UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
+		CodeTypeDeclaration * td = (CodeTypeDeclaration *) CodeResolver::resolve( object->type() );
 		llvm::Type *type = LLVMUserData::get_llvm_type(object->type());
 		//static_cast<llvm::Type*>(td->user_data(
 		//UserDataKind::LLVM_TYPE)); //td->llvm_type();
 
 		if (td->name() == "Int32") {
 			uint64_t v = (uint64_t) (uint64_t *) object->value();
-			m_result = llvm::ConstantInt::get(
+			m_r_result = llvm::ConstantInt::get(
 					llvm::Type::getInt32Ty(m_block->getContext()), v, true);
 
-			LLVMUserData::set_r_value(object, m_result);
+			//LLVMUserData::set_r_value(object, m_r_result);
 		}
 
 		if (td->is_embedded() && object->type()->base_type() == "Array"
@@ -680,19 +624,19 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 			indices.push_back(zero);
 			llvm::Constant *var_ref = llvm::ConstantExpr::getGetElementPtr(str_var,
 																		   indices);
-			m_result = var_ref;
+			m_r_result = var_ref;
 
-			LLVMUserData::set_r_value(object, m_result);
+			//LLVMUserData::set_r_value(object, m_r_result);
 		}
 
 		// std::cout << "<< CodePrimitiveExpression" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeStatement *object) {
+	void CodeEmitLLVM::on_visit(CodeStatement *object) {
 		// std::cout << ">> CodeStatement" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeTypeDeclaration *object) {
+	void CodeEmitLLVM::on_visit(CodeTypeDeclaration *object) {
 		llvm::LLVMContext &ctx = this->m_block->getContext();
 		//auto module = this->m_block->getParent()->getParent();
 
@@ -703,7 +647,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 			std::vector<llvm::Type *> struct_type_fields;
 			for (auto field_decl : *object->members()) {
-				CodeMemberField * field = static_cast<CodeMemberField *>(field_decl);
+				auto field = static_cast<CodeMemberField *>(field_decl);
 				if (field != nullptr) {
 					llvm::Type *field_type = LLVMUserData::get_llvm_type(field->type());
 					struct_type_fields.push_back(field_type);
@@ -719,7 +663,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 			std::vector<llvm::Type *> class_type_fields;
 			for (auto field_decl : *object->members()) {
-				CodeMemberField * field = static_cast<CodeMemberField *>(field_decl);
+				auto field = static_cast<CodeMemberField *>(field_decl);
 				if (field != nullptr) {
 					llvm::Type *field_type = LLVMUserData::get_llvm_type(field->type());
 					class_type_fields.push_back(field_type);
@@ -732,77 +676,41 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		}
 	}
 
-	void CodeStatementGenerator::on_visit(CodeTypeMember *object) {
+	void CodeEmitLLVM::on_visit(CodeTypeMember *object) {
 		// std::cout << ">> CodeTypeMember" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeTypeReference *object) {
+	void CodeEmitLLVM::on_visit(CodeTypeReference *object) {
 		// std::cout << ">> CodeTypeReference" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(
+	void CodeEmitLLVM::on_visit(
 			CodeVariableDeclarationStatement *object) {
-		// find out the llvm type for a single instance of the type
+        auto name = object->name();
 		auto llvm_type = LLVMUserData::get_llvm_type(
-				object->type()); // static_cast<llvm::Type*>(type_declaration->user_data(UserDataKind::LLVM_TYPE)); //resolved->llvm_type();
+				object->type());
 
-		// if its a array_type_reference we should declare a pointer
-		auto name = object->name();
 		llvm::AllocaInst *alloc = new llvm::AllocaInst(llvm_type, name.c_str(), this->m_block);
-		LLVMUserData::set_l_value(object, alloc);
-		std::cout << "l_value set for : " << object->name() << std::endl;
-
-		//object->user_data(UserDataKind::LLVM_L_VALUE, alloc);
-		this->m_result = alloc;
-
+        this->m_l_result = alloc;
 		if (object->init_expression() != nullptr) {
-            CodeStatementGenerator *expr = new CodeStatementGenerator(
-					this->m_block);
-			object->init_expression()->accept(expr);
-			auto expr_res = expr->result();
+			auto expr_res = CodeEmitLLVM::get_r_value( object->init_expression(), this->m_block );
+            new llvm::StoreInst(expr_res, alloc, false, this->m_block);
+            this->m_r_result = expr_res;
 
-			expr_res = LLVMUserData::get_r_value(object->init_expression());
-
-			if (expr_res != nullptr) {
-				new llvm::StoreInst(expr_res, alloc, false, this->m_block);
-			}
 		}
 	}
 
-	void CodeStatementGenerator::on_visit(
+	void CodeEmitLLVM::on_visit(
 			CodeVariableReferenceExpression *object) {
-		CodeObject * resolved_variable_reference = nullptr;
-
-		if (object->user_data(UserDataKind::MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT))
-			resolved_variable_reference = (CodeObject *) object->user_data(
-					UserDataKind::MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT);
-
-		if (object->user_data(UserDataKind::MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION))
-			resolved_variable_reference = (CodeObject *) object->user_data(
-					UserDataKind::MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION);
-
-		if (object->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_FIELD))
-			resolved_variable_reference = (CodeObject *) object->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_FIELD);
+		auto resolved_variable_reference = CodeResolver::resolve(object);
 
 		if (resolved_variable_reference == nullptr)
 			return;
 
-		if (resolved_variable_reference->type_of(CodeObjectKind::CodeVariableDeclarationStatement)) {
-			llvm::Value *value = LLVMUserData::get_l_value(resolved_variable_reference);
-			if (value == nullptr)
-				std::cout << "variable " << object->variable_name() << " not found" << std::endl;
-			LLVMUserData::set_l_value(object, value);
-			this->m_result = value;
-		}
-
-		if (resolved_variable_reference->type_of(CodeObjectKind::CodeParameterDeclarationExpression)) {
-			llvm::Value *value = LLVMUserData::get_l_value(resolved_variable_reference);
-			LLVMUserData::set_l_value(object, value);
-			this->m_result = value;
-		}
+        this->m_l_result = CodeEmitLLVM::get_l_value( resolved_variable_reference , this->m_block);
 	}
 
-	void CodeStatementGenerator::on_visit(CodeCastExpression *object) {
+	void CodeEmitLLVM::on_visit(CodeCastExpression *object) {
 		// std::cout << ">> CodeCastExpression" << std::endl;
 
 		llvm::LLVMContext &ctx = this->m_block->getContext();
@@ -816,49 +724,44 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		std::vector<llvm::Value *> method_args;
 
 		// infer the type of the target_expression
-		MLangCodeTypeInference type_inf;
-		object->expression()->accept(&type_inf);
-		auto expression_type = type_inf.result();
-		auto expression_type_decl =
-				(CodeTypeDeclaration *) expression_type->user_data(
-						UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(expression_type);
+		auto expression_type = CodeTypeInference::get_type_reference( object->expression() );
+		auto expression_type_decl = CodeResolver::resolve(expression_type);
 		method_arg_types.push_back(expression_type_decl);
 
 		// I'll need the return type of the method to resolve
-		mlang::CodeTypeDeclaration * td_return =
-				(CodeTypeDeclaration *) object->target_type()->user_data(
-						UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(
+		auto td_return = CodeResolver::resolve(object->target_type());
 		//object->target_type());
 
 		std::string method_name = "cast";
-		auto resolved_method = object->resolve_method(method_name, td_return,
+		/*auto resolved_method = object->resolve_method(method_name, td_return,
 													  &method_arg_types);
+													  */
 
 		// generate the code for the target_expression
-		auto tp_gen = new CodeStatementGenerator(this->m_block);
+		auto tp_gen = new CodeEmitLLVM(this->m_block);
 		object->expression()->accept(tp_gen);
-		auto expression_value = tp_gen->result();
+		auto expression_value = tp_gen->m_l_result;
 
 		// prepare a list of parameters i need to pass to the target method
 		expression_value = LLVMUserData::get_r_value(object->expression());
-
+/*
 		if (resolved_method != nullptr) {
 			method_args.push_back(expression_value);
 			auto f = mod->getFunction(resolved_method->id());
-			this->m_result = llvm::CallInst::Create(f, method_args, "",
+			this->m_l_result = llvm::CallInst::Create(f, method_args, "",
 													this->m_block);
 		} else {
 			auto create_type = static_cast<llvm::Type *>(td_return->user_data(
 					UserDataKind::LLVM_TYPE));
-			this->m_result = new llvm::BitCastInst(expression_value, create_type,
+			this->m_l_result = new llvm::BitCastInst(expression_value, create_type,
 												   "", this->m_block);
 		}
+		*/
 	}
 
-	void CodeStatementGenerator::on_visit(CodeObjectCreateExpression *object) {
+	void CodeEmitLLVM::on_visit(CodeObjectCreateExpression *object) {
 		// std::cout << ">> CodeObjectCreateExpression" << std::endl;
-		auto resolved = (CodeTypeDeclaration *) object->create_type()->user_data(
-				UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(object->create_type());
+		auto resolved = (CodeTypeDeclaration *) CodeResolver::resolve( object->create_type() );
 
 		if (resolved->is_class()) {
 			auto create_type = (llvm::PointerType *) LLVMUserData::get_llvm_type(object->create_type());
@@ -873,24 +776,20 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 			llvm::Function *func_malloc = module->getFunction("malloc");
 			llvm::CallInst *ptr_19 = llvm::CallInst::Create(func_malloc, const_int64_14, "", this->m_block);
-			this->m_result = new llvm::BitCastInst(ptr_19, create_type, "", this->m_block);
+			this->m_l_result = new llvm::BitCastInst(ptr_19, create_type, "", this->m_block);
 		} else {
-			this->m_result = nullptr;
+			this->m_l_result = nullptr;
 		}
 	}
 
-	void CodeStatementGenerator::on_visit(CodeFileInclude *object) {
+	void CodeEmitLLVM::on_visit(CodeFileInclude *object) {
 		// std::cout << ">> CodeFileImport" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeFieldReferenceExpression *object) {
-        CodeStatementGenerator target_object_gen(this->m_block);
-		object->target_object()->accept(&target_object_gen);
-		llvm::Value *target_object_l_value = target_object_gen.result();
+	void CodeEmitLLVM::on_visit(CodeFieldReferenceExpression *object) {
+		auto target_object_l_value = CodeEmitLLVM::get_l_value( object->target_object(), this->m_block );
+		auto target_object_type_declaration = CodeResolver::resolve(CodeTypeInference::get_type_reference(object->target_object())) ;
 
-		CodeTypeDeclaration *
-		target_object_type_declaration = (CodeTypeDeclaration *) object->target_object()->user_data(
-				UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
 		if (target_object_type_declaration->is_class()) {
 			target_object_l_value = new llvm::LoadInst(target_object_l_value, "", this->m_block);
 		}
@@ -914,89 +813,59 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		ptr_a_indices.push_back(const_int32_0);
 		ptr_a_indices.push_back(const_int32_i);
 
-		this->m_result = llvm::GetElementPtrInst::Create(target_object_l_value, ptr_a_indices, object->field_name(),
-														 this->m_block);
+		this->m_l_result = llvm::GetElementPtrInst::Create(target_object_l_value,
+                                                           ptr_a_indices,
+                                                           object->field_name(),
+                                                           this->m_block);
 	}
 
-	void CodeStatementGenerator::on_visit(CodeArrayIndexerExpression *object) {
-		// std::cout << ">> CodeArrayIndexerExpression" << std::endl;
-
-		auto m_func = this->m_block->getParent();
-		auto m_module = m_func->getParent();
-		llvm::LLVMContext &m_context = m_module->getContext();
-
-		static llvm::Constant *zero = llvm::Constant::getNullValue(
-				llvm::IntegerType::getInt32Ty(m_context));
-
-        CodeStatementGenerator *target_object_gen =
-				new CodeStatementGenerator(this->m_block);
-		object->target_object()->accept(target_object_gen);
-		llvm::Value *ptr_29 = target_object_gen->result();
-
-		ptr_29 = LLVMUserData::get_r_value(object->target_object());
-		// -> need a loadinst
+	void CodeEmitLLVM::on_visit(CodeArrayIndexerExpression *object) {
+		llvm::Value *ptr_29 = CodeEmitLLVM::get_r_value( object->target_object(), this->m_block );
 
 		std::vector<llvm::Value *> indices;
 		for (auto x : *object->indices()) {
-            CodeStatementGenerator *index_gen =
-					new CodeStatementGenerator(this->m_block);
-			x->accept(index_gen);
-			llvm::Value *index = index_gen->result();
-			index = LLVMUserData::get_r_value(x);
-			indices.push_back(index);
+			indices.push_back( CodeEmitLLVM::get_r_value(x, this->m_block) );
 		}
 
-		llvm::GetElementPtrInst *ptr_30 = llvm::GetElementPtrInst::Create(ptr_29,
-																		  indices, "", this->m_block);
-
-		this->m_result = ptr_30;
-		//this->m_result = new llvm::LoadInst(this->m_result, "", this->m_block);
-
+		this->m_l_result = llvm::GetElementPtrInst::Create(ptr_29,
+                                                           indices, "", this->m_block);
 	}
 
-	void CodeStatementGenerator::on_visit(CodeArrayCreateExpression *object) {
-		// std::cout << ">> CodeArrayCreateExpression" << std::endl;
-
+	void CodeEmitLLVM::on_visit(CodeArrayCreateExpression *object) {
 		auto m_func = this->m_block->getParent();
 		auto m_module = m_func->getParent();
 		llvm::LLVMContext &m_context = m_module->getContext();
 
-		auto resolved = (CodeTypeDeclaration *) object->create_type()->user_data(
-				UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
+		auto size_expression = CodeEmitLLVM::get_r_value(object->size_expression(), this->m_block );
+        auto llvm_type = LLVMUserData::get_llvm_type(object->create_type());
 
-		//auto resolved = object->resolve_type(object->create_type());
-		auto llvm_type = static_cast<llvm::Type *>(resolved->user_data(
-				UserDataKind::LLVM_TYPE)); //resolved->llvm_type();
+        llvm::DataLayout l = llvm::DataLayout(m_module);
+        llvm::ConstantInt *const_int64_14 = llvm::ConstantInt::get(m_context,
+                                                                   llvm::APInt(32, l.getTypeAllocSize(
+                                                                                       llvm_type), /* isSigned = */
+                                                                               false));
 
-		if (object->create_type()->array_element_type() != nullptr)
-			llvm_type = llvm::PointerType::get(llvm_type, 0);
+        size_expression = llvm::BinaryOperator::CreateMul(size_expression, const_int64_14, "", this->m_block);
 
-        CodeStatementGenerator *size_gen = new CodeStatementGenerator(
-				this->m_block);
-		object->size_expression()->accept(size_gen);
-		llvm::Value *size_expression = size_gen->result();
 
-		size_expression = LLVMUserData::get_r_value(object->size_expression());
-		auto alloca = new llvm::AllocaInst(llvm_type, size_expression, "",
-										   this->m_block);
-		this->m_result = alloca;
-
-		auto func_malloc = m_module->getOrInsertFunction("malloc",
+        auto func_malloc = m_module->getOrInsertFunction("malloc",
 														 get_malloc_functiontype(m_module));
 		llvm::CallInst *ptr_55 = llvm::CallInst::Create(func_malloc,
 														size_expression, "", this->m_block);
-		this->m_result = ptr_55;
-	}
 
-	void CodeStatementGenerator::on_visit(CodeSizeOfExpression *object) {
+
+		this->m_r_result =  llvm::BitCastInst::Create( llvm::Instruction::CastOps::BitCast, ptr_55, llvm_type, "", this->m_block);
+
+    }
+
+	void CodeEmitLLVM::on_visit(CodeSizeOfExpression *object) {
 		auto m_func = this->m_block->getParent();
 		auto m_module = m_func->getParent();
 		llvm::LLVMContext &m_context = m_module->getContext();
 
-		auto resolved = (CodeTypeDeclaration *) object->type()->user_data(
-				UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); // object->resolve_type(object->type());
+		auto resolved = CodeResolver::resolve( CodeTypeInference::get_type_reference( object->type() )  );
 		auto create_type = static_cast<llvm::Type *>(resolved->user_data(
-				UserDataKind::LLVM_TYPE)); //resolved->llvm_type();
+				UserDataKind::LLVM_TYPE));
 
 		if (create_type->isPointerTy())
 			create_type = ((llvm::PointerType *) create_type)->getElementType();
@@ -1007,11 +876,11 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 																					   create_type), /* isSigned = */
 																			   false));
 
-		LLVMUserData::set_r_value(object, const_int64_14);
-		this->m_result = const_int64_14;
+		//LLVMUserData::set_r_value(object, const_int64_14);
+		this->m_r_result = const_int64_14;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeAssemblyCallExpression *object) {
+	void CodeEmitLLVM::on_visit(CodeAssemblyCallExpression *object) {
 		// std::cout << ">> CodeAsmBlockStatement" << std::endl;
 
 		auto m_func = this->m_block->getParent();
@@ -1031,10 +900,13 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		int i = 0;
 		for (auto p_arg : *object->parameters()) {
 
-			MLangCodeTypeInference type_inf;
+			CodeTypeInference type_inf;
 			p_arg->accept(&type_inf);
-			auto par_type = (CodeTypeDeclaration *) type_inf.result()->user_data(
+			/* auto par_type = (CodeTypeDeclaration *) type_inf.result()->user_data(
 					UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(type_inf.result());
+					*/
+			auto par_type = CodeResolver::resolve( CodeTypeInference::get_type_reference(p_arg) );
+
 			parameter_types.push_back(par_type);
 			llvm::Type *tp = static_cast<llvm::Type *>(par_type->user_data(
 					UserDataKind::LLVM_TYPE)); //par_type->llvm_type()
@@ -1043,10 +915,10 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 			if (cv.at(i).Type == llvm::InlineAsm::ConstraintPrefix::isOutput)
 				return_type = tp;
 
-            CodeStatementGenerator *p_gen = new CodeStatementGenerator(
+            CodeEmitLLVM *p_gen = new CodeEmitLLVM(
 					this->m_block);
 			p_arg->accept(p_gen);
-			auto res = p_gen->result();
+			auto res = p_gen->m_l_result;
 			res = LLVMUserData::get_r_value(p_arg);
 			args.push_back(res);
 		}
@@ -1060,7 +932,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		call_inst->setCallingConv(llvm::CallingConv::C);
 		call_inst->setTailCall(false);
 
-		this->m_result = call_inst;
+		this->m_l_result = call_inst;
 		/*		::get(FT, code, constraints, sideeffect);
          llvm::Value* rv = gIR->ir->CreateCall(ia, args, "");
          */
@@ -1068,7 +940,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		// std::cout << "<< CodeAsmBlockStatement" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeIrBlockStatement *object) {
+	void CodeEmitLLVM::on_visit(CodeIrBlockStatement *object) {
 		// std::cout << ">> CodeIrBlockStatement" << std::endl;
 
 		auto m_func = this->m_block->getParent();
@@ -1086,12 +958,12 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		while (parent != nullptr) {
 
 			for (auto m : *parent->members()) {
+
 				if (m->type_of(CodeObjectKind::CodeVariableDeclarationStatement)) {
-					CodeVariableDeclarationStatement * var =
-							(CodeVariableDeclarationStatement *) m;
+                    auto var = (CodeVariableDeclarationStatement *) m;
 					if (i > 0)
 						stream << ", ";
-					auto l_value = static_cast<llvm::Value *>(var->user_data(UserDataKind::LLVM_L_VALUE)); //
+					auto l_value = CodeEmitLLVM::get_l_value( var, this->m_block );//  static_cast<llvm::Value *>(var->user_data(UserDataKind::LLVM_L_VALUE)); //
 					l_value->getType()->print(stream);
 					stream << " ";
 					stream << "%" << var->name();
@@ -1101,12 +973,11 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 				if (m->type_of(
 						CodeObjectKind::CodeParameterDeclarationExpression)) {
-					CodeParameterDeclarationExpression * var =
-							(CodeParameterDeclarationExpression *) m;
+					auto var = (CodeParameterDeclarationExpression *) m;
 					if (i > 0)
 						stream << ", ";
 
-					auto l_value = static_cast<llvm::Value *>(var->user_data(UserDataKind::LLVM_L_VALUE)); //
+					auto l_value = CodeEmitLLVM::get_l_value( var, this->m_block );//  static_cast<llvm::Value *>(var->user_data(UserDataKind::LLVM_L_VALUE)); //
 					l_value->getType()->print(stream);
 					stream << " ";
 					stream << "%" << var->name();
@@ -1141,180 +1012,44 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		llvm::Function *fun = m_module->getFunction("_" + object->id());
 		fun->setLinkage(llvm::GlobalValue::LinkOnceODRLinkage);
 		fun->addFnAttr(llvm::Attribute::AlwaysInline);
-		this->m_result = llvm::CallInst::Create(fun, params, "", this->m_block);
+		this->m_l_result = llvm::CallInst::Create(fun, params, "", this->m_block);
 	}
 
-	void CodeStatementGenerator::on_visit(CodeAssignExpression *object) {
-		// std::cout << ">> CodeAssignExpression" << std::endl;
-
-		llvm::Value *left = nullptr;
-
-		if (object->left() != nullptr
-			&& object->left()->type_of(
-				CodeObjectKind::CodeVariableReferenceExpression)) {
-			CodeObjectCollection *var = nullptr;
-			CodeVariableReferenceExpression * v =
-					static_cast<CodeVariableReferenceExpression *>(object->left());
-			var = (CodeObjectCollection *) object->resolve_variable(
-					v->variable_name());
-			if (var == nullptr || var->size() == 0)
-				return;
-
-			int i = 0;
-			for (CodeObject *part : *var) {
-				if (i == 0) {
-					if (part->type_of(
-							CodeObjectKind::CodeVariableDeclarationStatement)) {
-						CodeVariableDeclarationStatement * code_variable_declaration_statement =
-								static_cast<CodeVariableDeclarationStatement *>(part);
-						left =
-								static_cast<llvm::Value *>(code_variable_declaration_statement->user_data(
-										UserDataKind::LLVM_L_VALUE)); //code_variable_declaration_statement->alloca_inst();
-					}
-
-					if (part->type_of(
-							CodeObjectKind::CodeParameterDeclarationExpression)) {
-						CodeParameterDeclarationExpression * code_parameter_declaration_statement =
-								static_cast<CodeParameterDeclarationExpression *>(part);
-						left =
-								static_cast<llvm::Value *>(code_parameter_declaration_statement->user_data(
-										UserDataKind::LLVM_L_VALUE)); //code_parameter_declaration_statement->alloca_inst();
-					}
-				} else {
-					if (part->type_of(CodeObjectKind::CodeMemberField)) {
-						CodeMemberField * code_member_field =
-								static_cast<CodeMemberField *>(part);
-						CodeTypeDeclaration * t_d =
-								static_cast<CodeTypeDeclaration *>(code_member_field->parent());
-
-						int index = 0;
-						for (auto x : *t_d->members()) {
-							if (x == code_member_field)
-								break;
-
-							if (x->type_of(CodeObjectKind::CodeMemberField))
-								index++;
-						}
-
-						llvm::ConstantInt *const_int32_0 = llvm::ConstantInt::get(
-								this->m_block->getContext(),
-								llvm::APInt(32, llvm::StringRef("0"), 10));
-						llvm::ConstantInt *const_int32_i = llvm::ConstantInt::get(
-								this->m_block->getContext(),
-								llvm::APInt(32, index));
-
-						std::vector<llvm::Value *> ptr_a_indices;
-						ptr_a_indices.push_back(const_int32_0);
-						ptr_a_indices.push_back(const_int32_i);
-
-						if (t_d->is_class())
-							left = new llvm::LoadInst(left, "", this->m_block);
-
-						left = llvm::GetElementPtrInst::Create(left, ptr_a_indices,
-															   code_member_field->name(), this->m_block);
-					}
-				}
-				i++;
-			}
-		}
-
-		if (object->left() != nullptr
-			&& object->left()->type_of(
-				CodeObjectKind::CodeArrayIndexerExpression)) {
-			CodeArrayIndexerExpression * v =
-					static_cast<CodeArrayIndexerExpression *>(object->left());
-
-            CodeStatementGenerator *p_gen = new CodeStatementGenerator(
-					this->m_block);
-			v->accept(p_gen);
-			auto res = p_gen->result();
-			left = res;
-		}
-
-		if (object->left() != nullptr
-			&& object->left()->type_of(
-				CodeObjectKind::CodeFieldReferenceExpression)) {
-			CodeFieldReferenceExpression * v =
-					static_cast<CodeFieldReferenceExpression *>(object->left());
-            CodeStatementGenerator *p_gen = new CodeStatementGenerator(
-					this->m_block);
-			v->accept(p_gen);
-			auto res = p_gen->result();
-			left = res;
-		}
-
-        CodeStatementGenerator *right_gen = new CodeStatementGenerator(
-				this->m_block);
-		object->right()->accept(right_gen);
-		llvm::Value *right = right_gen->result();
-		right = LLVMUserData::get_r_value(object->right());
-
-		if (right == nullptr) {
-			auto sv = new llvm::LoadInst(LLVMUserData::get_l_value(object->right()), "", this->m_block);
-			right = sv;
-			LLVMUserData::set_l_value(object->right(), sv);
-		}
-
+	void CodeEmitLLVM::on_visit(CodeAssignExpression *object) {
+        auto left = CodeEmitLLVM::get_l_value(object->left(), this->m_block);
+        auto right = CodeEmitLLVM::get_r_value(object->right(), this->m_block);
 		auto st = new llvm::StoreInst(right, left, false, this->m_block);
-		this->m_result = left;
-		// std::cout << "<< CodeAssignExpression" << std::endl;
+		this->m_l_result = left;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeExpressionStatement *object) {
-		// std::cout << ">> CodeExpressionStatement" << std::endl;
-
-        CodeStatementGenerator *gen = new CodeStatementGenerator(
-				this->m_block);
-		object->expression()->accept(gen);
-		m_result = gen->result();
-
-		m_result = LLVMUserData::get_r_value(object->expression()); // new llvm::LoadInst(m_result, "", this->m_block);
+	void CodeEmitLLVM::on_visit(CodeExpressionStatement *object) {
+        CodeEmitLLVM::emit_code( object->expression(), this->m_block);
 	}
 
-	void CodeStatementGenerator::on_visit(CodeMethodInvokeExpression *object) {
+	void CodeEmitLLVM::on_visit(CodeMethodInvokeExpression *object) {
 		// std::cout << ">> CodeMethodInvokeExpression" << std::endl;
-
+        auto method_name = object->method()->method_name();
 		auto parent_function = this->m_block->getParent();
 		auto module = parent_function->getParent();
 		llvm::LLVMContext &ctx = module->getContext();
 
 		std::vector<llvm::Value *> args;
 		if (object->method()->target_object() != nullptr) {
-            CodeStatementGenerator *p_gen = new CodeStatementGenerator(this->m_block);
-			object->method()->target_object()->accept(p_gen);
-			auto res = p_gen->result();
-			res = LLVMUserData::get_r_value(object->method()->target_object());
-
-			if (res == nullptr) {
-				res = new llvm::LoadInst(LLVMUserData::get_l_value(object->method()->target_object()), "",
-										 this->m_block);
-				LLVMUserData::set_r_value(object->method()->target_object(), res);
-			}
+            auto res = CodeEmitLLVM::get_r_value(object->method()->target_object(), this->m_block);
 			args.push_back(res);
 		}
 
 		for (auto p_arg : *object->parameters()) {
-            CodeStatementGenerator *p_gen = new CodeStatementGenerator(this->m_block);
-			p_arg->accept(p_gen);
-			auto res = p_gen->result();
-			res = LLVMUserData::get_r_value(p_arg);
-
-			if (res == nullptr) {
-				res = new llvm::LoadInst(LLVMUserData::get_l_value(p_arg), "", this->m_block);
-				LLVMUserData::set_r_value(p_arg, res);
-			}
-
+            auto res = CodeEmitLLVM::get_r_value( p_arg, this->m_block );
 			args.push_back(res);
 		}
 
-		auto resolved_method = (CodeMemberMethod *) object->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_METHOD);
-		llvm::Function *f = nullptr;
-		f = module->getFunction(resolved_method->id());
-		this->m_result = llvm::CallInst::Create(f, args, "", this->m_block);
-        LLVMUserData::set_r_value(object, this->m_result);
+		auto resolved_method = CodeResolver::resolve ( object );
+		llvm::Function *f = module->getFunction(resolved_method->id());
+		this->m_r_result = llvm::CallInst::Create(f, args, "", this->m_block);
 	}
 
-	void CodeStatementGenerator::on_visit(CodeConditionStatement *object) {
+	void CodeEmitLLVM::on_visit(CodeConditionStatement *object) {
 		// std::cout << ">> CodeConditionStatement" << std::endl;
 
 		bool has_false_block = object->false_statements()->size();
@@ -1334,34 +1069,39 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 													  parent_function, 0);
 
 		// condition
-        CodeStatementGenerator *gen_condition =
-				new CodeStatementGenerator(this->m_block);
+        /*
+        CodeEmitLLVM *gen_condition =
+				new CodeEmitLLVM(this->m_block);
 		object->condition()->accept(gen_condition);
+         */
 
-		llvm::CmpInst *compare_instr =
-				static_cast<llvm::CmpInst *>(gen_condition->result());
+        auto tmp = CodeEmitLLVM::get_r_value(object->condition(), this->m_block);
+		llvm::CmpInst *compare_instr =  static_cast<llvm::CmpInst *>(tmp);
 		llvm::CmpInst *result_tobool = nullptr;
 		if (compare_instr == nullptr)
 			result_tobool = new llvm::ICmpInst(*this->m_block,
-											   llvm::ICmpInst::ICMP_NE, gen_condition->result(), true_val,
+											   llvm::ICmpInst::ICMP_NE, tmp, true_val,
 											   "tobool");
 		else
 			result_tobool = compare_instr;
 
 		if (has_false_block)
-			this->m_result = llvm::BranchInst::Create(label_if_true, label_if_false,
+			this->m_l_result = llvm::BranchInst::Create(label_if_true, label_if_false,
 													  result_tobool, this->m_block);
 		else
-			this->m_result = llvm::BranchInst::Create(label_if_true, label_if_end,
+			this->m_l_result = llvm::BranchInst::Create(label_if_true, label_if_end,
 													  result_tobool, this->m_block);
 
 		// true
 		this->m_block = label_if_true;
 		for (auto statement : *object->true_statements()) {
-            CodeStatementGenerator *gen_true = new CodeStatementGenerator(
+            /*
+            CodeEmitLLVM *gen_true = new CodeEmitLLVM(
 					this->m_block);
 			statement->accept(gen_true);
-			this->m_block = gen_true->block();
+			this->m_block = gen_true->m_block;
+             */
+            this->m_block = CodeEmitLLVM::emit_code(statement, this->m_block);
 		}
 		if (this->m_block->getTerminator() == nullptr)
 			llvm::BranchInst::Create(label_if_end, this->m_block);
@@ -1370,10 +1110,13 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		if (has_false_block) {
 			this->m_block = label_if_false;
 			for (auto statement : *object->false_statements()) {
-                CodeStatementGenerator *gen_false =
-						new CodeStatementGenerator(this->m_block);
+                /*
+                CodeEmitLLVM *gen_false =
+						new CodeEmitLLVM(this->m_block);
 				statement->accept(gen_false);
-				this->m_block = gen_false->block();
+				this->m_block = gen_false->m_block;
+                 */
+                this->m_block = CodeEmitLLVM::emit_code(statement, this->m_block);
 			}
 			if (this->m_block->getTerminator() == nullptr)
 				llvm::BranchInst::Create(label_if_end, this->m_block);
@@ -1382,20 +1125,20 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		this->m_block = label_if_end;
 	}
 
-	void CodeStatementGenerator::on_visit(
+	void CodeEmitLLVM::on_visit(
 			CodeMethodReferenceExpression *object) {
 		// std::cout << ">> CodeMethodReferenceExpression" << std::endl;
 	}
 
-	void CodeStatementGenerator::on_visit(CodeAttributeArgument *object) {
+	void CodeEmitLLVM::on_visit(CodeAttributeArgument *object) {
 
 	}
 
-	void CodeStatementGenerator::on_visit(CodeAttributeDeclaration *object) {
+	void CodeEmitLLVM::on_visit(CodeAttributeDeclaration *object) {
 
 	}
 
-	void CodeStatementGenerator::on_visit(CodeIterationStatement *object) {
+	void CodeEmitLLVM::on_visit(CodeIterationStatement *object) {
 		// std::cout << ">> CodeIterationStatement" << std::endl;
 
 		llvm::LLVMContext &context = this->m_block->getContext();
@@ -1416,26 +1159,30 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 		// label_init
 		if (object->init_statement() != nullptr) {
-			auto gen_init_statement = new CodeStatementGenerator(label_entry);
+			auto gen_init_statement = new CodeEmitLLVM(label_entry);
 			object->init_statement()->accept(gen_init_statement);
 		}
-		this->m_result = llvm::BranchInst::Create(label_for_cond, label_entry);
+		this->m_l_result = llvm::BranchInst::Create(label_for_cond, label_entry);
 
 		// label_cond
 		if (object->test_expression() != nullptr) {
 			auto true_val = llvm::ConstantInt::get(context,
 												   llvm::APInt(32, llvm::StringRef("0"), 10));
-            CodeStatementGenerator *gen_condition =
-					new CodeStatementGenerator(label_for_cond);
+            /*
+            CodeEmitLLVM *gen_condition =
+					new CodeEmitLLVM(label_for_cond);
 			auto test_expression = object->test_expression();
 			test_expression->accept(gen_condition);
+            */
+
+            auto tmp = CodeEmitLLVM::get_r_value(object->test_expression(), label_for_cond);
 
 			llvm::CmpInst *compare_instr =
-					static_cast<llvm::CmpInst *>(gen_condition->result());
+					static_cast<llvm::CmpInst *>(tmp);
 			llvm::CmpInst *result_tobool = nullptr;
 			if (compare_instr == nullptr)
 				result_tobool = new llvm::ICmpInst(*label_for_cond,
-												   llvm::ICmpInst::ICMP_NE, gen_condition->result(), true_val,
+												   llvm::ICmpInst::ICMP_NE, tmp, true_val,
 												   "tobool");
 			else
 				result_tobool = compare_instr;
@@ -1449,9 +1196,13 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		// label_body
 		if (object->statements()->size() > 0) {
 			for (auto statement : *object->statements()) {
-                CodeStatementGenerator *gen_s =
-						new CodeStatementGenerator(label_for_body);
+                /*
+                CodeEmitLLVM *gen_s =
+						new CodeEmitLLVM(label_for_body);
 				statement->accept(gen_s);
+                 */
+
+                label_for_body = CodeEmitLLVM::emit_code(statement, label_for_body);
 			}
 		}
 		llvm::BranchInst::Create(label_for_inc, label_for_body);
@@ -1459,7 +1210,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		// label_inc
 		if (object->increment_statement() != nullptr) {
 
-			auto gen_increment_statement = new CodeStatementGenerator(
+			auto gen_increment_statement = new CodeEmitLLVM(
 					label_for_inc);
 			object->increment_statement()->accept(gen_increment_statement);
 		}

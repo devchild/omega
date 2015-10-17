@@ -7,9 +7,13 @@
 
 namespace mlang {
 	const std::string UserDataKind::MLANG_INFERRED_TYPE_REFERENCE = "MLANG_INFERRED_TYPE_REFERENCE";
-	const std::string UserDataKind::MLANG_RESOLVED_MEMBER_METHOD = "MLANG_RESOLVED_MEMBER_METHOD";
-	const std::string UserDataKind::MLANG_RESOLVED_MEMBER_METHOD_LIST = "MLANG_RESOLVED_MEMBER_METHOD_LIST";
-	const std::string UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION = "MLANG_RESOLVED_TYPE_DECLARATION";
+
+
+    const std::string UserDataKind::MLANG_RESOLVED_VARIABLE = "MLANG_RESOLVED_VARIABLE";
+    const std::string UserDataKind::MLANG_RESOLVED_TYPE = "MLANG_RESOLVED_TYPE_DECLARATION";
+	const std::string UserDataKind::MLANG_RESOLVED_METHOD = "MLANG_RESOLVED_MEMBER_METHOD";
+
+
 	const std::string UserDataKind::MLANG_RESOLVED_MEMBER_FIELD = "MLANG_RESOLVED_MEMBER_FIELD";
 	const std::string UserDataKind::MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT = "MLANG_RESOLVED_VARIABLE_DECLARATION_STATEMENT";
 	const std::string UserDataKind::MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION = "MLANG_RESOLVED_PARAMETER_DECLARATION_EXPRESSION";
@@ -79,58 +83,6 @@ namespace mlang {
 
     void CodeObject::location(Location* value) {
     	this->m_location = value;
-    }
-
-    /*
-	CodeTypeDeclaration*
-	CodeObject::resolve_type(CodeTypeReference* type_reference) {
-		if (type_reference->array_element_type() != nullptr)
-		{
-			auto ret = resolve_type(type_reference->base_type());;
-			if (ret == nullptr)
-			{
-				auto element_type = resolve_type(type_reference->array_element_type());
-				auto decl = new CodeTypeDeclaration();
-				decl->name(type_reference->base_type());
-				decl->is_class(true);
-				decl->user_data()[UserDataKind::LLVM_TYPE] =
-						llvm::PointerType::get(static_cast<llvm::Type*>(element_type->user_data()[UserDataKind::LLVM_TYPE]), 0);
-				return decl;
-			}
-			else
-			{
-				return ret;
-			}
-		}
-		else
-		{
-			return resolve_type(type_reference->base_type());
-		}
-	}
-	*/
-
-    
-
-    CodeTypeDeclaration*
-    CodeObject::resolve_type(std::string type_name) {
-    	return (CodeTypeDeclaration*)this->user_data(UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION);
-    }
-
-    CodeMemberMethod*
-	CodeObject::resolve_method(std::string method_name, std::list<CodeTypeDeclaration*>* parameter_types) {
-    	return (CodeMemberMethod*)this->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_METHOD);
-    }
-
-    CodeMemberMethod*
-    CodeObject::resolve_method(std::string method_name, CodeTypeDeclaration* return_type, std::list<CodeTypeDeclaration*>* parameter_types) {
-    	return (CodeMemberMethod*)this->user_data(UserDataKind::MLANG_RESOLVED_MEMBER_METHOD);
-     }
-
-    std::list<CodeObject*>*
-    CodeObject::resolve_variable(std::string variable_name) {
-        // look for a variable
-        VariableFieldOrParameterResolver * resolver = new VariableFieldOrParameterResolver(this->scope(), variable_name);
-        return resolver->resolve();
     }
 
     CodeCompileUnit*

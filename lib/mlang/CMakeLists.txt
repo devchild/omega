@@ -66,7 +66,6 @@ set(PROJECT_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/codedom/code_namespace.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codedom/code_object.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codedom/code_object_create_expression.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/codedom/code_object_resolver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codedom/code_object_visitor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codedom/code_parameter_declaration_expression.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codedom/code_primitive_expression.cpp
@@ -91,6 +90,7 @@ set(PROJECT_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/code_type_inference.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/dom_provider.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/semantic_analysis.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/code_resolver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
 
     # ./../../include/
@@ -107,6 +107,8 @@ set(PROJECT_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/../../include/code_type_inference.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/../../include/dom_provider.hh
         ${CMAKE_CURRENT_SOURCE_DIR}/../../include/semantic_analysis.hh
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../include/code_resolver.hh
+
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/pstream.hh
     ${CMAKE_CURRENT_BINARY_DIR}/config.h
 
@@ -115,7 +117,7 @@ set(PROJECT_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/parser/mlang_driver.cpp
     ${BisonOutput}
     ${FlexOutput}
-)
+ )
 
 include_directories("/opt/local/include/")
 include_directories("/usr/local/include/")

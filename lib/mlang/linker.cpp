@@ -65,5 +65,7 @@ Linker::createExecutable(std::vector<std::string>& fileNames, std::string output
     args.push_back("/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.1.0/lib/darwin/libclang_rt.osx.a");
 
     std::cout << "executing tool" << std::endl;
+
+    std::cout << tool.getError().message() << std::endl;
     return execute(tool.get(), args, true); 
 }

@@ -18,7 +18,6 @@ namespace mlang {
     class CodeMemberField : public CodeTypeMember {
     public:
         using CodeObject::scope;
-        using CodeObject::resolve_type;
 
         CodeMemberField();
         virtual void accept(ICodeObjectVisitor* visitor);

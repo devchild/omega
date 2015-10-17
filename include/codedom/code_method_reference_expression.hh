@@ -18,7 +18,6 @@ namespace mlang {
     class CodeMethodReferenceExpression : public CodeExpression {  
     public:
         using CodeObject::scope;
-        using CodeObject::resolve_method;
         CodeMethodReferenceExpression();
         virtual ~CodeMethodReferenceExpression();
         

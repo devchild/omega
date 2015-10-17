@@ -28,8 +28,8 @@ namespace mlang {
         CodeExpression* target_object();
         void target_object(CodeExpression* target_object);
 
-        virtual void accept(ICodeObjectVisitor* visitor);
-        virtual bool type_of(CodeObjectKind kind);
+        virtual void accept(ICodeObjectVisitor* visitor) override;
+        virtual bool type_of(CodeObjectKind kind) override;
         void scope(CodeScope* scope) override;
 
     private:

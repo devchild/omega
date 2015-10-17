@@ -19,6 +19,7 @@
 #include "code_type_inference.hh"
 #include "dom_provider.hh"
 #include "semantic_analysis.hh"
+#include "code_resolver.hh"
 #include "pstream.hh"
 
 //
@@ -52,7 +53,6 @@
 #include "codedom/code_expression_statement.hh"
 #include "codedom/code_condition_statement.hh"
 #include "codedom/code_iteration_statement.hh"
-#include "codedom/code_object_resolver.hh"
 #include "codedom/code_scope.hh"
 #include "codedom/code_object_create_expression.hh"
 #include "codedom/code_ir_block_statement.hh"

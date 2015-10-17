@@ -16,7 +16,6 @@ namespace mlang {
     class CodeVariableDeclarationStatement : public CodeStatement {
     public:
         using CodeObject::scope;
-        using CodeObject::resolve_type;
         CodeVariableDeclarationStatement();
         ~CodeVariableDeclarationStatement();
         

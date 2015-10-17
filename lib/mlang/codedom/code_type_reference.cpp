@@ -32,6 +32,9 @@ namespace mlang {
     void 
     CodeTypeReference::scope(CodeScope* scope) {
         CodeObject::scope(scope);
+
+        if (this->m_array_element_type != nullptr)
+            this->m_array_element_type->scope(scope);
     }
 
     void CodeTypeReference::array_element_type(CodeTypeReference* value){
