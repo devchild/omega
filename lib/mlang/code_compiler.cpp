@@ -20,7 +20,7 @@
 #include <llvm/Bitcode/ReaderWriter.h>
 #include <llvm/Support/raw_ostream.h>
 
-#include <llvm/PassManager.h>
+#include <llvm/IR/LegacyPassManager.h>
 #include <llvm/IR/CallingConv.h>
 #include <llvm/IR/Verifier.h>
 #include <llvm/ExecutionEngine/ExecutionEngine.h>
@@ -61,7 +61,7 @@ namespace mlang {
 		LOG(TRACE);
 
 		// Set up the function-level optimizations we want
-		llvm::FunctionPassManager passManager(module);
+		llvm::legacy::FunctionPassManager passManager(module);
 		passManager.add(llvm::createVerifierPass());
 		passManager.add(llvm::createPromoteMemoryToRegisterPass());
 		passManager.add(llvm::createReassociatePass());
@@ -84,7 +84,7 @@ namespace mlang {
 		passManager.doFinalization();
 
 		// Set up the module-level optimizations we want
-		llvm::PassManager modulePassManager;
+		llvm::legacy::PassManager modulePassManager;
 		modulePassManager.add(llvm::createAlwaysInlinerPass());
 		modulePassManager.add(llvm::createGlobalOptimizerPass());
 
@@ -93,7 +93,7 @@ namespace mlang {
 
 		if (changed) {
 			// removing globals created stack allocations we want to eliminate
-			llvm::FunctionPassManager postGlobalManager(module);
+			llvm::legacy::FunctionPassManager postGlobalManager(module);
 			postGlobalManager.add(llvm::createPromoteMemoryToRegisterPass());
 
 			// run across all functions
@@ -120,7 +120,7 @@ namespace mlang {
 	static int generateobj(llvm::raw_fd_ostream &out, llvm::Module *module) {
 		LOG(TRACE);
 
-		llvm::PassManager PM;
+		llvm::legacy::PassManager PM;
 		llvm::TargetOptions Options;
 		std::string Err;
 
@@ -135,8 +135,8 @@ namespace mlang {
 																			Options);
 
 		// Figure out where we are going to send the output...
-		llvm::formatted_raw_ostream FOS(out);
-		if (machineTarget->addPassesToEmitFile(PM, FOS, llvm::TargetMachine::CGFT_ObjectFile, true)) {
+		// llvm::raw_fd_ostream FOS(out);
+		if (machineTarget->addPassesToEmitFile(PM, out, llvm::TargetMachine::CGFT_ObjectFile, true)) {
 			std::cerr << " target does not support generation of this file type!\n";
 			return 1;
 		}

@@ -622,8 +622,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 			std::vector<llvm::Constant *> indices;
 			indices.push_back(zero);
 			indices.push_back(zero);
-			llvm::Constant *var_ref = llvm::ConstantExpr::getGetElementPtr(str_var,
-																		   indices);
+			llvm::Constant *var_ref = llvm::ConstantExpr::getGetElementPtr(type, str_var, indices);
 			m_r_result = var_ref;
 
 			//LLVMUserData::set_r_value(object, m_r_result);
@@ -789,6 +788,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 	void CodeEmitLLVM::on_visit(CodeFieldReferenceExpression *object) {
 		auto target_object_l_value = CodeEmitLLVM::get_l_value( object->target_object(), this->m_block );
 		auto target_object_type_declaration = CodeResolver::resolve(CodeTypeInference::get_type_reference(object->target_object())) ;
+		auto target_object_type_declaration_type = LLVMUserData::get_llvm_type(target_object_type_declaration);
 
 		if (target_object_type_declaration->is_class()) {
 			target_object_l_value = new llvm::LoadInst(target_object_l_value, "", this->m_block);
@@ -813,7 +813,8 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		ptr_a_indices.push_back(const_int32_0);
 		ptr_a_indices.push_back(const_int32_i);
 
-		this->m_l_result = llvm::GetElementPtrInst::Create(target_object_l_value,
+		this->m_l_result = llvm::GetElementPtrInst::Create(target_object_type_declaration_type,
+														   target_object_l_value,
                                                            ptr_a_indices,
                                                            object->field_name(),
                                                            this->m_block);
@@ -821,13 +822,14 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 	void CodeEmitLLVM::on_visit(CodeArrayIndexerExpression *object) {
 		llvm::Value *ptr_29 = CodeEmitLLVM::get_r_value( object->target_object(), this->m_block );
+		auto ptr_29_type = LLVMUserData::get_llvm_type( object->target_object() );
 
 		std::vector<llvm::Value *> indices;
 		for (auto x : *object->indices()) {
 			indices.push_back( CodeEmitLLVM::get_r_value(x, this->m_block) );
 		}
 
-		this->m_l_result = llvm::GetElementPtrInst::Create(ptr_29,
+		this->m_l_result = llvm::GetElementPtrInst::Create(ptr_29_type, ptr_29,
                                                            indices, "", this->m_block);
 	}
 

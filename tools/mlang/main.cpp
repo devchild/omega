@@ -11,6 +11,8 @@
 #include <llvm/Support/Path.h>
 
 #include <mlang.hh>
+
+
 #include <file_system.hh>
 #include <easylogging++.hh>
 INITIALIZE_EASYLOGGINGPP
@@ -187,7 +189,8 @@ int main(int argc, char ** argv) {
         exit(EXIT_FAILURE);
     }
     
-    mlang::CodeCompileUnit* compile_unit = new mlang::CodeCompileUnit();
+    CodeCompileUnit* compile_unit = new CodeCompileUnit();
+
     DomProvider provider;
     int total_errors = 0;
     bool parser_success = true;
@@ -216,6 +219,7 @@ int main(int argc, char ** argv) {
         // I think this part should be moved into to parser part, I don't know.
         mlang::CodeScope* global_scope = new mlang::CodeScope(nullptr);
         compile_unit->scope(global_scope);
+
         // --
 
         CompilerParameters parameters;

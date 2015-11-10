@@ -4,6 +4,7 @@
 #include <iostream>
 #include <llvm/Support/Program.h>
 #include <llvm/Support/ErrorOr.h>
+#include <llvm/ADT/StringRef.h>
 
 int
 Linker::execute(const std::string &tool, std::vector<std::string> const &args, bool verbose) {
