@@ -28,9 +28,7 @@ namespace mlang {
 
         std::vector<CompilerError*> &errors();
 
-        mlang::CodeCompileUnit *parse(std::istream *in);
-
-        mlang::CodeCompileUnit *parse(const std::string &filename, mlang::CodeCompileUnit *compile_unit);
+        mlang::CodeCompileUnit & parse(const std::string &filename, mlang::CodeCompileUnit & compile_unit);
 
         const DomProvider &provider();
 

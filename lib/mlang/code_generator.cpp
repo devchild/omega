@@ -282,12 +282,15 @@ namespace mlang {
 			llvm::FunctionType *function_type = llvm::FunctionType::get(result_type, param_types, false);
 
 
-			if (object->name() == "main" || object->name() == "_start")
+			if (object->name() == "_main" || object->name() == "_start")
 				object->attributes(MemberAttributes::Public);
 
 			std::string method_name = object->id();
-			auto function = llvm::Function::Create(function_type, llvm::GlobalValue::LinkageTypes::ExternalLinkage,
-												   method_name, m_module);
+			auto function = llvm::Function::Create(function_type,
+                                                   llvm::GlobalValue::LinkageTypes::ExternalLinkage,
+												   method_name,
+                                                   m_module);
+            function->setCallingConv(llvm::CallingConv::C);
 		}
 	};
 
@@ -324,6 +327,7 @@ namespace mlang {
 		llvm::Module *module = new llvm::Module("in_memory_module", m_context);
 		module->setDataLayout(
 				"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-n8:16:32:64-S128");
+		//module->setTargetTriple("x86_64-apple-macosx10.11.0"); //llvm::sys::getDefaultTargetTriple());
 		module->setTargetTriple(llvm::sys::getDefaultTargetTriple());
 
 		std::vector<CompilerError*> err;
@@ -591,6 +595,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 		CodeTypeDeclaration * td = (CodeTypeDeclaration *) CodeResolver::resolve( object->type() );
 		llvm::Type *type = LLVMUserData::get_llvm_type(object->type());
+
 		//static_cast<llvm::Type*>(td->user_data(
 		//UserDataKind::LLVM_TYPE)); //td->llvm_type();
 
@@ -604,25 +609,28 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 		if (td->is_embedded() && object->type()->base_type() == "Array"
 			&& object->type()->array_element_type()->base_type() == "Char") {
+			auto element_Type =  LLVMUserData::get_llvm_type(object->type()->array_element_type());
 			std::string v = object->value_as_string();
 			// not used
 			llvm::Constant *str_val = llvm::ConstantDataArray::getString(ctx, v);
+			//llvm::Type *element_type = LLVMUserData::get_llvm_type(object->type()->array_element_type());
 
 			llvm::GlobalVariable *str_var = new llvm::GlobalVariable(*module,
-																	 llvm::ArrayType::get(
-																			 llvm::IntegerType::get(ctx, 8),
-																			 (uint64_t) v.size() + 1), true,
-																	 llvm::GlobalValue::PrivateLinkage, str_val, "");
+																	 llvm::ArrayType::get(element_Type,  (uint64_t) v.size() + 1),
+																	 true,
+																	 llvm::GlobalValue::PrivateLinkage,
+																	 str_val,
+																	 "");
 
 			str_var->setInitializer(str_val);
 
 			llvm::Constant *zero = llvm::Constant::getNullValue(
-					llvm::IntegerType::getInt32Ty(ctx));
+					llvm::IntegerType::getInt64Ty(ctx));
 
 			std::vector<llvm::Constant *> indices;
 			indices.push_back(zero);
 			indices.push_back(zero);
-			llvm::Constant *var_ref = llvm::ConstantExpr::getGetElementPtr(type, str_var, indices);
+			llvm::Constant *var_ref = llvm::ConstantExpr::getGetElementPtr(str_var->getValueType(), str_var, indices);
 			m_r_result = var_ref;
 
 			//LLVMUserData::set_r_value(object, m_r_result);

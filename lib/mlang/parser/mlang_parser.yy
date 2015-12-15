@@ -99,12 +99,7 @@ class mlang_driver;
 
 %start compile_unit;
 
-compile_unit:					{	
-									if (driver.root() == nullptr)
-									{
-										auto nd = new mlang::CodeCompileUnit();
-										driver.root(nd);
-									}
+compile_unit:					{
 									driver.success(false);
 								}
 	compile_unit_member_list_opt
@@ -125,24 +120,24 @@ compile_unit:					{
 										{
 											if (child_nd->type_of(mlang::CodeObjectKind::CodeNamespace))
 											{
-												driver.root()->namespaces()->push_back(static_cast<mlang::CodeNamespace*>(child_nd));
-												child_nd->parent(driver.root());
+												driver.root().namespaces()->push_back(static_cast<mlang::CodeNamespace*>(child_nd));
+												child_nd->parent(&driver.root());
 											}
 												
 											if (child_nd->type_of(mlang::CodeObjectKind::CodeMemberMethod))
 											{
-												driver.root()->methods()->push_back(static_cast<mlang::CodeMemberMethod*>(child_nd));
-												child_nd->parent(driver.root());
+												driver.root().methods()->push_back(static_cast<mlang::CodeMemberMethod*>(child_nd));
+												child_nd->parent(&driver.root());
 											}
 											
 											if (child_nd->type_of(mlang::CodeObjectKind::CodeTypeDeclaration))
 											{
-												driver.root()->types()->push_back(static_cast<mlang::CodeTypeDeclaration*>(child_nd));
-												child_nd->parent(driver.root());
+												driver.root().types()->push_back(static_cast<mlang::CodeTypeDeclaration*>(child_nd));
+												child_nd->parent(&driver.root());
 											}
 										}
 									}
-									$$ = driver.root();
+									$$ = &driver.root();
 									driver.success(true);
 								}
 	;
@@ -332,6 +327,7 @@ statement_list:
                 								// REMARK: this one should be fixed
                 								//
                    								$$ = $1;
+                   								$$->push_back($2);
                    							}
 
 statement_list_without_return:

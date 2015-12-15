@@ -24,7 +24,7 @@ namespace mlang {
 
         virtual ~CodeCompiler();
 
-        CompilerResults *FromDomBatch(CompilerParameters &parameters, mlang::CodeCompileUnit *compile_unit);
+        CompilerResults *FromDomBatch(CompilerParameters &parameters, mlang::CodeCompileUnit & compile_unit);
 
         DomProvider &provider();
 

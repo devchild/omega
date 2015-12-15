@@ -117,6 +117,37 @@ namespace mlang {
 //    }
 	}
 
+/*	static int generateobj(std::shared_ptr<llvm::tool_output_file> Out, llvm::Module * module)
+	{
+		llvm::legacy::PassManager PM;
+
+		llvm::TargetOptions Options;
+
+		std::string Err;
+
+		llvm::Triple TheTriple(module->getTargetTriple());
+		if (TheTriple.getTriple().empty())
+			TheTriple.setTriple(llvm::sys::getDefaultTargetTriple());
+
+		const llvm::Target* TheTarget = llvm::TargetRegistry::lookupTarget(TheTriple.getTriple(), Err);
+
+		std::string MCPU,FeaturesStr;
+
+		llvm::TargetMachine * machineTarget =
+				TheTarget->createTargetMachine(TheTriple.getTriple(), MCPU, FeaturesStr, Options);
+
+		// Figure out where we are going to send the output...
+
+		if (machineTarget->addPassesToEmitFile(PM, Out->os(), llvm::TargetMachine::CGFT_ObjectFile))
+		{
+			std::cerr << " target does not support generation of this"     << " file type!\n";
+			return 1;
+		}
+
+		PM.run(*module);
+		return 0;
+	}*/
+
 	static int generateobj(llvm::raw_fd_ostream &out, llvm::Module *module) {
 		LOG(TRACE);
 
@@ -136,7 +167,7 @@ namespace mlang {
 
 		// Figure out where we are going to send the output...
 		// llvm::raw_fd_ostream FOS(out);
-		if (machineTarget->addPassesToEmitFile(PM, out, llvm::TargetMachine::CGFT_ObjectFile, true)) {
+		if (machineTarget->addPassesToEmitFile(PM, out, llvm::TargetMachine::CGFT_ObjectFile)) {
 			std::cerr << " target does not support generation of this file type!\n";
 			return 1;
 		}
@@ -321,21 +352,21 @@ namespace mlang {
 
 	CompilerResults *
 	CodeCompiler::FromDomBatch(CompilerParameters &parameters,
-							   mlang::CodeCompileUnit *compile_unit) {
+							   mlang::CodeCompileUnit &compile_unit) {
 		LOG(TRACE);
 		auto ret = new CompilerResults();
 
-		IncludeEmbeddedTypes(compile_unit);
+		IncludeEmbeddedTypes(&compile_unit);
 
 		SemanticAnalysis *semantics = this->m_provider.CreateSemanticAnalysis();
-		semantics->analyse(compile_unit);
+		semantics->analyse(&compile_unit);
 
 		if (semantics->errors().size() > 0) {
 			for (auto er : semantics->errors())
 				ret->errors().push_back(er);
 		} else {
 			CodeGenerator *code_gen = this->m_provider.CreateGenerator();
-			auto module = code_gen->GenerateCodeFromCompileUnit(compile_unit);
+			auto module = code_gen->GenerateCodeFromCompileUnit(&compile_unit);
 
 			 if (parameters.optimize()) {
 				runLLVMOptimizations1(module);

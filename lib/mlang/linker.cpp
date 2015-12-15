@@ -47,12 +47,21 @@ Linker::createExecutable(std::vector<std::string>& fileNames, std::string output
 
     std::vector<std::string> args;
 
-
+/*
+ * -demangle
+ * -dynamic
+ * -arch x86_64
+ * -macosx_version_min 10.11.0
+ * -o a.out /var/folders/yy/wkc6pcr1143f9t9d17n2sfch0000gn/T/test-1d5543.o
+ * -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.2/lib/darwin/libclang_rt.osx.a
+ */
     args.push_back("-demangle");
     args.push_back("-dynamic");
+
+
     args.push_back("-arch"); args.push_back("x86_64");
-    args.push_back("-macosx_version_min"); args.push_back("10.10.0");
-    args.push_back("-syslibroot"); args.push_back("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk");
+    args.push_back("-macosx_version_min"); args.push_back("10.11.0");
+    //args.push_back("-syslibroot"); args.push_back("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
 
     args.push_back("-o");args.push_back(output);
 
@@ -61,10 +70,12 @@ Linker::createExecutable(std::vector<std::string>& fileNames, std::string output
         args.push_back(fileName);
     }
 
-    args.push_back("-lm"); 
+    //args.push_back("/usr/lib/libstdc++.6.dylib");
+    //args.push_back("-lm");
     args.push_back("-lSystem");
-    args.push_back("/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.1.0/lib/darwin/libclang_rt.osx.a");
-
+    //args.push_back("-lc");
+    args.push_back("/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.2/lib/darwin/libclang_rt.osx.a");
+    //args.push_back("--entry"); args.push_back("main");
     std::cout << "executing tool" << std::endl;
 
     std::cout << tool.getError().message() << std::endl;

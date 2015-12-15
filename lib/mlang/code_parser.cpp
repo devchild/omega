@@ -43,13 +43,11 @@ namespace mlang {
 		return this->m_sucess;
 	}
 
-	mlang::CodeCompileUnit *
-	CodeParser::parse(const std::string &filename, mlang::CodeCompileUnit *compile_unit) {
+	mlang::CodeCompileUnit&
+	CodeParser::parse(const std::string &filename, mlang::CodeCompileUnit & compile_unit) {
 		//LOG(DEBUG);
 		this->m_sucess = false;
-		mlang_driver p;
-
-		p.root(compile_unit);
+		mlang_driver p(compile_unit);
 		// p.trace_parsing = true;
 
 		this->m_sucess = p.parse_file(filename);
@@ -57,23 +55,6 @@ namespace mlang {
 		for (auto e: p.errors()) {
 			this->m_errors.push_back(e);
 		}
-
-		return p.root();
-	}
-
-	mlang::CodeCompileUnit *
-	CodeParser::parse(std::istream *in) {
-		//LOG(DEBUG);
-		this->m_sucess = false;
-		mlang_driver p;
-		this->m_sucess = p.parse_stream(*in, ":memory:");
-
-		//mlang::CodeScope* global_scope = nullptr;
-		if (p.root()->scope() == nullptr)
-			p.root()->scope(new mlang::CodeScope(nullptr));
-
-		for (auto e: p.errors())
-			this->m_errors.push_back(e);
 
 		return p.root();
 	}

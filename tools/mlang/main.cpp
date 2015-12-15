@@ -189,7 +189,7 @@ int main(int argc, char ** argv) {
         exit(EXIT_FAILURE);
     }
     
-    CodeCompileUnit* compile_unit = new CodeCompileUnit();
+    CodeCompileUnit compile_unit;
 
     DomProvider provider;
     int total_errors = 0;
@@ -218,7 +218,7 @@ int main(int argc, char ** argv) {
         std::cout << "Identify scopes" << std::endl;
         // I think this part should be moved into to parser part, I don't know.
         mlang::CodeScope* global_scope = new mlang::CodeScope(nullptr);
-        compile_unit->scope(global_scope);
+        compile_unit.scope(global_scope);
 
         // --
 
@@ -240,6 +240,7 @@ int main(int argc, char ** argv) {
             Linker l;
             if (l.createExecutable( result->output(), "test") != 0) {
                 std::cout << "create executable failed" << std::endl;
+                exit(EXIT_FAILURE);
             }
         }
     } else {

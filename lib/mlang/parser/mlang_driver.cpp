@@ -7,11 +7,10 @@
 # include <pstream.hh>
 # include <file_system.hh>
 
-	mlang_driver::mlang_driver() :
-			trace_scanning(false), trace_parsing(false) {
+	mlang_driver::mlang_driver(mlang::CodeCompileUnit& root) :
+			trace_scanning(false), trace_parsing(false), m_root(root) {
 		m_errors = new std::vector<mlang::CompilerError*>();
 		m_streamname = "";
-		m_root = nullptr;
 		m_success = false;
 		m_scanner = nullptr;
 		m_parser = nullptr;
@@ -70,12 +69,12 @@
 		return this->m_scanner;
 	}
 
-	mlang::CodeCompileUnit *
+	mlang::CodeCompileUnit&
 	mlang_driver::root() {
 		return this->m_root;
 	}
 
-	void mlang_driver::root(mlang::CodeCompileUnit *value) {
+	void mlang_driver::root(mlang::CodeCompileUnit& value) {
 		this->m_root = value;
 	}
 

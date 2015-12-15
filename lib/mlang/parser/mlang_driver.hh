@@ -10,7 +10,7 @@
 // Conducting the whole scanning and parsing of Calc++.
     class mlang_driver {
     public:
-        mlang_driver();
+        mlang_driver(mlang::CodeCompileUnit& value);
 
         virtual ~mlang_driver();
 
@@ -38,9 +38,9 @@
 
         yy::Scanner *scanner();
 
-        mlang::CodeCompileUnit *root();
+        mlang::CodeCompileUnit& root();
 
-        void root(mlang::CodeCompileUnit *value);
+        void root(mlang::CodeCompileUnit &value);
 
         bool success();
 
@@ -52,7 +52,7 @@
         mlang::Location *get_location(const YYLTYPE &begin, const YYLTYPE &end);
 
     private:
-        mlang::CodeCompileUnit *m_root;
+        mlang::CodeCompileUnit & m_root;
         yy::Scanner *m_scanner;
         yy::mlang_parser *m_parser;
         std::string m_streamname;
