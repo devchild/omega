@@ -3,8 +3,6 @@
 [wiki](https://github.com/devchild/yoda-project/wiki)
 
 The yoda-project is my attempt to build a compiler for my very own invented programming language.
-Some people wonder why I would want to create a programming language.
-Well, I just wanted to know if it was hard and I was hoping that the process whould teach me new things about programming and why some languages are designed the way that they are.
 
 In lack of a final (better) name for this language I name this the yoda-project.
 If you have a proposition for a cool new name for this language, please let me know.
