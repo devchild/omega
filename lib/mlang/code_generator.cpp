@@ -282,7 +282,7 @@ namespace mlang {
 			llvm::FunctionType *function_type = llvm::FunctionType::get(result_type, param_types, false);
 
 
-			if (object->name() == "_main" || object->name() == "_start")
+			if (object->name() == "start")
 				object->attributes(MemberAttributes::Public);
 
 			std::string method_name = object->id();
@@ -493,7 +493,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
     //
     // a = --> 2 + 2 <--
     // In general a loadinst is aplied to the get_l_value
-    llvm::Value* CodeEmitLLVM::get_r_value(CodeObject* object, llvm::BasicBlock *block){
+    llvm::Value* CodeEmitLLVM::get_r_value(CodeObject* object, llvm::BasicBlock *block) {
         auto r_val = LLVMUserData::get_r_value(object);
 
         if (r_val == nullptr) {
@@ -898,56 +898,27 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 		llvm::LLVMContext &m_context = m_module->getContext();
 
 		std::vector<llvm::Value *> args;
-		std::list<CodeTypeDeclaration *> parameter_types;
 		std::vector<llvm::Type *> parameter_llvm_types;
-
 		auto cv = llvm::InlineAsm::ParseConstraints(object->constraints());
 
-		//ia->ParseConstraints().front().Type == llvm::InlineAsm::ConstraintPrefix::isInput;
-
 		llvm::Type *return_type = llvm::Type::getVoidTy(m_context);
+		if (object->return_type() != nullptr) {
+			return_type = LLVMUserData::get_llvm_type( CodeResolver::resolve( object->return_type() ) );
+		}
 
-		int i = 0;
 		for (auto p_arg : *object->parameters()) {
-
-			CodeTypeInference type_inf;
-			p_arg->accept(&type_inf);
-			/* auto par_type = (CodeTypeDeclaration *) type_inf.result()->user_data(
-					UserDataKind::MLANG_RESOLVED_TYPE_DECLARATION); //object->resolve_type(type_inf.result());
-					*/
-			auto par_type = CodeResolver::resolve( CodeTypeInference::get_type_reference(p_arg) );
-
-			parameter_types.push_back(par_type);
-			llvm::Type *tp = static_cast<llvm::Type *>(par_type->user_data(
-					UserDataKind::LLVM_TYPE)); //par_type->llvm_type()
-			parameter_llvm_types.push_back(tp);
-
-			if (cv.at(i).Type == llvm::InlineAsm::ConstraintPrefix::isOutput)
-				return_type = tp;
-
-            CodeEmitLLVM *p_gen = new CodeEmitLLVM(
-					this->m_block);
-			p_arg->accept(p_gen);
-			auto res = p_gen->m_l_result;
-			res = LLVMUserData::get_r_value(p_arg);
-			args.push_back(res);
+            auto res = CodeEmitLLVM::get_r_value( p_arg, this->m_block );
+            args.push_back(res);
+			parameter_llvm_types.push_back( res->getType() );
 		}
 
 		auto FT = llvm::FunctionType::get(return_type, parameter_llvm_types, false);
-		llvm::InlineAsm *ia = llvm::InlineAsm::get(FT, object->content(),
-												   object->constraints(), true);
-
-		llvm::CallInst *call_inst = llvm::CallInst::Create(ia, args, "",
-														   this->m_block);
+		llvm::InlineAsm *ia = llvm::InlineAsm::get(FT, object->content(), object->constraints(), true);
+		llvm::CallInst *call_inst = llvm::CallInst::Create(ia, args, "", this->m_block);
 		call_inst->setCallingConv(llvm::CallingConv::C);
 		call_inst->setTailCall(false);
 
 		this->m_l_result = call_inst;
-		/*		::get(FT, code, constraints, sideeffect);
-         llvm::Value* rv = gIR->ir->CreateCall(ia, args, "");
-         */
-
-		// std::cout << "<< CodeAsmBlockStatement" << std::endl;
 	}
 
 	void CodeEmitLLVM::on_visit(CodeIrBlockStatement *object) {

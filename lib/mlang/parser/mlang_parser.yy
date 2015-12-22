@@ -371,16 +371,16 @@ ir_block_statement:
 	;
 	
 assembly_call_expression:
-	ASM '(' type_reference ',' expression_list ')'				
+	ASM BEGIN_GENERIC type_reference END_GENERIC '(' expression_list ')'
 											{
 												auto nd = new mlang::CodeAssemblyCallExpression();
 												if ($3 != nullptr)
 													nd->return_type(static_cast<mlang::CodeTypeReference*>($3));
 												
-												if ($5 != nullptr)
+												if ($6 != nullptr)
 												{
 													int i = 0;
-													for(auto child_nd:*$5)
+													for(auto child_nd:*$6)
 													{
 														if (child_nd != nullptr)
 														{ 
@@ -473,6 +473,12 @@ statement_expression:
 												nd->expression()->parent(nd);
 												$$ = nd;
 											}
+	| assembly_call_expression				{
+    											auto nd = new mlang::CodeExpressionStatement();
+    											nd->expression(static_cast<mlang::CodeExpression*>($1));
+    											nd->expression()->parent(nd);
+    											$$ = nd;
+    										}
 	;
 	
 condition_statement:
