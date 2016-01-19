@@ -4,16 +4,13 @@
 
 The yoda-project is my attempt to build a compiler for my very own invented programming language.
 
-In lack of a final (better) name for this language I name this the yoda-project.
-If you have a proposition for a cool new name for this language, please let me know.
+In lack of a final (better) name for this language I name this the yoda-project. If you have a proposition for a cool new name for this language, please let me know.
 
-The programming language that is being designed here is a mixture of python and c#.
-The compiler itself is written in c++ and uses llvm for the low level code generation.
-The parser bits are generated using bison and flex.
+The programming language that is being designed here is a mixture of python and c#. The compiler itself is written in c++ and uses llvm for the low level code generation. The parser bits are generated using bison and flex.
 
 The goal of this project, is the get a better understanding on the internals of a compiler without making this a life's work.
 
-Initialy I was building this on a linux system, but these days I find myself programming more on mac, so currently I am not realy looking to support many platforms. I am sure this won't compile on a windows machine, it might/should compile on a linux, but nothing is guaranteed.
+Initially I was building this on a Linux system, but these days I find myself programming more on Mac, so currently I am not really looking to support many platforms. I am sure this won't compile on a windows machine, it might/should compile on a Linux, but nothing is guaranteed.
 
 
 #How to compile this project.
