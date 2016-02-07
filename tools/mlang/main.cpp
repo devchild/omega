@@ -124,7 +124,7 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
     cmd.addErrorCode(1, "Error");
 
     cmd.setHelpOption("h", "help", "Print this help page");
-
+    
     cmd.defineOption("out", "Specifies the output file name (default: base name of file with main function or first file).", ArgvParser::OptionRequiresValue);
     cmd.defineOption("target", "Specifies the format of the output file by using one of four options:/target:appcontainerexe, --target=exe, --target=library.", ArgvParser::OptionRequiresValue);
 
@@ -149,11 +149,11 @@ parse_command_line(int argc, char ** argv, CompilerParameters* parameters) {
     // what files should we use as input
     for (int i = 0; i < cmd.arguments(); i++) {
         // todo: parse out '/' or '\' to find out if we need to search inside some directory.
-        
+
         string argument = cmd.argument(i);
         auto searchDir =  SourceFile::get_directory(argument);
         auto searchPart = SourceFile::get_file_name(argument);
-        
+
         char* c_argument = const_cast<char*>(searchPart.c_str());
         if (argument.find("*") || argument.find("?"))
         {
@@ -188,7 +188,7 @@ int main(int argc, char ** argv) {
         cerr << "mlang: error: no input files" << endl;
         exit(EXIT_FAILURE);
     }
-    
+
     CodeCompileUnit compile_unit;
 
     DomProvider provider;
@@ -219,7 +219,7 @@ int main(int argc, char ** argv) {
         // I think this part should be moved into to parser part, I don't know.
         mlang::CodeScope* global_scope = new mlang::CodeScope(nullptr);
         compile_unit.scope(global_scope);
-
+        
         // --
 
         CompilerParameters parameters;
@@ -227,7 +227,7 @@ int main(int argc, char ** argv) {
         // parameters.dump_ir(dump.getValue());
         auto compiler = provider.CreateCompiler();
         auto result = compiler->FromDomBatch(parameters, compile_unit);
-        
+
         for (auto x : result->errors()) {
             if (x->has_location())
                 std::cerr << x->location()->to_string() << ": error: " << x->message() << std::endl;
@@ -248,4 +248,3 @@ int main(int argc, char ** argv) {
     }
     exit(EXIT_SUCCESS);
 }
-

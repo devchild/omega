@@ -28,6 +28,7 @@ namespace mlang {
 	}
 
 	CodeParser::~CodeParser() {
+
 	}
 
 	const DomProvider &

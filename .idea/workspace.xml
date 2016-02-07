@@ -16,10 +16,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e594be0-8a0b-4142-8944-3d43bee9f4c1" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/samples/int32_extentions.ml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/samples/int64_extentions.ml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/code_generator.cpp" afterPath="$PROJECT_DIR$/lib/mlang/code_generator.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/linker.cpp" afterPath="$PROJECT_DIR$/lib/mlang/linker.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy" afterPath="$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/yoda.src.iml" afterPath="$PROJECT_DIR$/.idea/yoda.src.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mlang/code_parser.cpp" afterPath="$PROJECT_DIR$/lib/mlang/code_parser.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/mlang/main.cpp" afterPath="$PROJECT_DIR$/tools/mlang/main.cpp" />
     </list>
     <list id="c46d95b2-a3c2-4475-807b-63c200936970" name="Rejected commit: Default" comment="fixed: shift / reduce conflicts for parser&#10;fixed: while statements" />
     <ignored path="yoda.src.iws" />
@@ -41,31 +43,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Type.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/include/llvm/IR/Type.h">
+      <file leaf-file-name="compiler_error.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/mlang/compiler_error.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+              <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Signals.inc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/Support/Unix/Signals.inc">
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/mlang/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="548" column="0" selection-start-line="548" selection-start-column="0" selection-end-line="548" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="linker.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/mlang/linker.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <caret line="240" column="69" selection-start-line="240" selection-start-column="69" selection-end-line="240" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -74,17 +66,18 @@
       <file leaf-file-name="code_generator.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/mlang/code_generator.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.407408">
-              <caret line="289" column="100" selection-start-line="289" selection-start-column="100" selection-end-line="289" selection-end-column="100" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="336" column="0" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
               <folding>
+                <element signature="e#432#2453#1" expanded="false" />
                 <element signature="e#2457#3142#1" expanded="false" />
                 <element signature="e#3146#6300#1" expanded="false" />
+                <element signature="e#6304#8244#1" expanded="false" />
                 <element signature="e#8248#8359#0" expanded="false" />
                 <element signature="e#8362#8482#0" expanded="false" />
                 <element signature="e#8485#8521#0" expanded="false" />
                 <element signature="e#8525#8601#0" expanded="false" />
                 <element signature="e#8604#9073#0" expanded="false" />
-                <element signature="e#9076#10683#0" expanded="false" />
                 <element signature="e#10685#11337#0" expanded="false" />
                 <element signature="e#10685#13014#0" expanded="false" />
                 <element signature="e#13017#13602#0" expanded="false" />
@@ -118,8 +111,11 @@
                 <element signature="e#26857#27408#0" expanded="false" />
                 <element signature="e#27411#28711#0" expanded="false" />
                 <element signature="e#28714#29582#0" expanded="false" />
+                <element signature="e#29585#30802#0" expanded="false" />
+                <element signature="e#30805#33254#0" expanded="false" />
                 <element signature="e#33257#33572#0" expanded="false" />
                 <element signature="e#33575#33711#0" expanded="false" />
+                <element signature="e#33714#34619#0" expanded="false" />
                 <element signature="e#34622#37298#0" expanded="false" />
                 <element signature="e#37301#37443#0" expanded="false" />
                 <element signature="e#37446#37510#0" expanded="false" />
@@ -130,61 +126,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InlineAsm.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/InlineAsm.cpp">
+      <file leaf-file-name="test.ml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/samples/test.ml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.28985506">
+              <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="system.ml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/samples/system.ml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mlang_scanner.ll" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.814815">
-              <caret line="168" column="66" selection-start-line="168" selection-start-column="54" selection-end-line="168" selection-end-column="66" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mlang_parser.yy" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20686369">
-              <caret line="1005" column="56" selection-start-line="1005" selection-start-column="46" selection-end-line="1005" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConstantsContext.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/ConstantsContext.h">
+      <file leaf-file-name="operators.ml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/samples/operators.ml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="567" column="0" selection-start-line="567" selection-start-column="0" selection-end-line="567" selection-end-column="0" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Instructions.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/Instructions.cpp">
+      <file leaf-file-name="int32_extentions.ml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/samples/int32_extentions.ml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="225" column="43" selection-start-line="225" selection-start-column="43" selection-end-line="225" selection-end-column="43" />
+              <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Instructions.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.bin/include/llvm/IR/Instructions.h">
+      <file leaf-file-name="int64_extentions.ml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/samples/int64_extentions.ml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="1701" column="0" selection-start-line="1701" selection-start-column="0" selection-end-line="1701" selection-end-column="0" />
+              <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="syscalls.ml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/samples/syscalls.ml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -198,13 +194,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/mlang/code_reference_resolution.cpp" />
-        <option value="$PROJECT_DIR$/include/codedom/code_parameter_declaration_expression.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_variable_declaration_statement.hh" />
-        <option value="$PROJECT_DIR$/include/codedom/code_method_reference_expression.hh" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_object_resolver.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/codedom/code_field_reference_expression.cpp" />
-        <option value="$PROJECT_DIR$/include/codedom/code_type_reference.hh" />
         <option value="$PROJECT_DIR$/include/code_type_inference.hh" />
         <option value="$PROJECT_DIR$/lib/mlang/codedom/code_type_declaration.cpp" />
         <option value="$PROJECT_DIR$/include/codedom/code_type_declaration.hh" />
@@ -243,12 +232,19 @@
         <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_driver.cpp" />
         <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_driver.hh" />
         <option value="$PROJECT_DIR$/include/code_parser.hh" />
-        <option value="$PROJECT_DIR$/lib/mlang/code_parser.cpp" />
-        <option value="$PROJECT_DIR$/tools/mlang/main.cpp" />
         <option value="$PROJECT_DIR$/lib/mlang/code_compiler.cpp" />
-        <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy" />
         <option value="$PROJECT_DIR$/lib/mlang/linker.cpp" />
         <option value="$PROJECT_DIR$/lib/mlang/code_generator.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy" />
+        <option value="$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/InlineAsm.cpp" />
+        <option value="$PROJECT_DIR$/tools/mlang/main.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/code_parser.cpp" />
+        <option value="$PROJECT_DIR$/lib/mlang/compiler_error.cpp" />
+        <option value="$PROJECT_DIR$/samples/int_extentions.ml" />
+        <option value="$PROJECT_DIR$/samples/operators.ml" />
+        <option value="$PROJECT_DIR$/samples/int32_extentions.ml" />
+        <option value="$PROJECT_DIR$/samples/int64_extentions.ml" />
+        <option value="$PROJECT_DIR$/samples/test.ml" />
       </list>
     </option>
   </component>
@@ -295,10 +291,6 @@
               <option name="myItemId" value="yoda.src" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -338,95 +330,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlang.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlang" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlang.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlang.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlang" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yoda.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlang.src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mlang" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parser" />
+              <option name="myItemId" value="samples" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -512,7 +416,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1173" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.215625" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -521,7 +425,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26539856" sideWeight="0.53697914" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39855072" sideWeight="0.48541668" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36050725" sideWeight="0.4375" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4121377" sideWeight="0.4375" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -551,13 +455,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/lib/mlang/code_generator.cpp</url>
-          <line>932</line>
-          <option name="timeStamp" value="172" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
@@ -573,55 +470,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_driver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_driver.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5555553">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/code_parser.hh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="35" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/map">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1089" column="0" selection-start-line="1089" selection-start-column="0" selection-end-line="1089" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/__tree">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="866" column="0" selection-start-line="866" selection-start-column="0" selection-end-line="866" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/codedom/code_object.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/Constants.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8628912">
-          <caret line="2053" column="32" selection-start-line="2053" selection-start-column="32" selection-end-line="2053" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.bin/include/llvm/IR/Constants.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -720,24 +568,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/mlang/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4870283">
-          <caret line="228" column="40" selection-start-line="228" selection-start-column="40" selection-end-line="228" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/linker.hh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2476415">
           <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/code_parser.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6191038">
-          <caret line="45" column="27" selection-start-line="45" selection-start-column="27" selection-end-line="45" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -798,7 +632,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="975" column="79" selection-start-line="975" selection-start-column="66" selection-end-line="975" selection-end-column="79" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -806,7 +639,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="531" column="34" selection-start-line="531" selection-start-column="34" selection-end-line="531" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -814,7 +646,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22988506">
           <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -822,14 +653,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.3601532">
           <caret line="173" column="42" selection-start-line="173" selection-start-column="42" selection-end-line="173" selection-end-column="42" />
-          <folding>
-            <element signature="e#6596#6955#0" expanded="false" />
-            <element signature="e#6957#7313#0" expanded="false" />
-            <element signature="e#7315#7677#0" expanded="false" />
-            <element signature="e#7679#9970#0" expanded="false" />
-            <element signature="e#9972#11347#0" expanded="false" />
-            <element signature="e#11349#11713#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -837,7 +660,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5785441">
           <caret line="175" column="42" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -845,7 +667,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="371" column="0" selection-start-line="371" selection-start-column="0" selection-end-line="371" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -863,23 +684,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="221" column="0" selection-start-line="221" selection-start-column="0" selection-end-line="221" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.bin/include/llvm/IR/Instructions.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1701" column="0" selection-start-line="1701" selection-start-column="0" selection-end-line="1701" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/Instructions.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="225" column="43" selection-start-line="225" selection-start-column="43" selection-end-line="225" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -887,7 +691,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="62" column="20" selection-start-line="62" selection-start-column="20" selection-end-line="62" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -903,22 +706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="548" column="0" selection-start-line="548" selection-start-column="0" selection-end-line="548" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/ConstantsContext.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="567" column="0" selection-start-line="567" selection-start-column="0" selection-end-line="567" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/InlineAsm.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -939,19 +726,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.013940521">
+          <caret line="259" column="67" selection-start-line="259" selection-start-column="67" selection-end-line="259" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/InlineAsm.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35359803">
+          <caret line="51" column="2" selection-start-line="51" selection-start-column="2" selection-end-line="51" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.018610422">
+          <caret line="993" column="71" selection-start-line="993" selection-start-column="71" selection-end-line="993" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/ConstantsContext.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.018610422">
+          <caret line="567" column="0" selection-start-line="567" selection-start-column="0" selection-end-line="567" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.src/lib/IR/Instructions.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.018610422">
+          <caret line="225" column="43" selection-start-line="225" selection-start-column="43" selection-end-line="225" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../llvm-3.7.0.bin/include/llvm/IR/Instructions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.018610422">
+          <caret line="1701" column="0" selection-start-line="1701" selection-start-column="0" selection-end-line="1701" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/mlang/code_parser.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33995038">
+          <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/mlang/compiler_error.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/mlang/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="240" column="69" selection-start-line="240" selection-start-column="69" selection-end-line="240" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/mlang/code_generator.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.407408">
-          <caret line="289" column="100" selection-start-line="289" selection-start-column="100" selection-end-line="289" selection-end-column="100" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="336" column="0" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
           <folding>
+            <element signature="e#432#2453#1" expanded="false" />
             <element signature="e#2457#3142#1" expanded="false" />
             <element signature="e#3146#6300#1" expanded="false" />
+            <element signature="e#6304#8244#1" expanded="false" />
             <element signature="e#8248#8359#0" expanded="false" />
             <element signature="e#8362#8482#0" expanded="false" />
             <element signature="e#8485#8521#0" expanded="false" />
             <element signature="e#8525#8601#0" expanded="false" />
             <element signature="e#8604#9073#0" expanded="false" />
-            <element signature="e#9076#10683#0" expanded="false" />
             <element signature="e#10685#11337#0" expanded="false" />
             <element signature="e#10685#13014#0" expanded="false" />
             <element signature="e#13017#13602#0" expanded="false" />
@@ -985,8 +845,11 @@
             <element signature="e#26857#27408#0" expanded="false" />
             <element signature="e#27411#28711#0" expanded="false" />
             <element signature="e#28714#29582#0" expanded="false" />
+            <element signature="e#29585#30802#0" expanded="false" />
+            <element signature="e#30805#33254#0" expanded="false" />
             <element signature="e#33257#33572#0" expanded="false" />
             <element signature="e#33575#33711#0" expanded="false" />
+            <element signature="e#33714#34619#0" expanded="false" />
             <element signature="e#34622#37298#0" expanded="false" />
             <element signature="e#37301#37443#0" expanded="false" />
             <element signature="e#37446#37510#0" expanded="false" />
@@ -996,18 +859,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_scanner.ll">
+    <entry file="file://$PROJECT_DIR$/samples/system.ml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.814815">
-          <caret line="168" column="66" selection-start-line="168" selection-start-column="54" selection-end-line="168" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mlang/parser/mlang_parser.yy">
+    <entry file="file://$PROJECT_DIR$/samples/syscalls.ml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20686369">
-          <caret line="1005" column="56" selection-start-line="1005" selection-start-column="46" selection-end-line="1005" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/samples/operators.ml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/samples/int32_extentions.ml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/samples/int64_extentions.ml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/samples/test.ml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28985506">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
           <folding />
         </state>
       </provider>
