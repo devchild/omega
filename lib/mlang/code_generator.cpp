@@ -411,11 +411,11 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 			llvm::Function::arg_iterator args = function->arg_begin();
 
 			for (auto p : *method->parameters()) {
-				llvm::Value *paramter_input = args++;
+				auto paramter_input = args++;
 				paramter_input->setName(p->name());
 				auto parameter_input_addr = CodeEmitLLVM::get_l_value( p, bblock);
 				parameter_input_addr->setName(p->name() + ".addr");
-				new llvm::StoreInst(paramter_input, parameter_input_addr, false, bblock);
+				new llvm::StoreInst(&*paramter_input, parameter_input_addr, false, bblock);
 			}
 
 			if (method->statements() != nullptr) {
@@ -989,7 +989,7 @@ llvm::Value* load_if_needed(CodeObject* obj, llvm::Value* value,
 
 		std::string errstr2 = "";
 		if (m_module->getModuleIdentifier() != m->getModuleIdentifier()) {
-			llvm::Linker(m_module).linkInModule(m.get());
+			llvm::Linker(*m_module).linkInModule(std::move(m));
 		}
 
 		llvm::Function *fun = m_module->getFunction("_" + object->id());
