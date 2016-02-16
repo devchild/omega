@@ -233,6 +233,7 @@ int main(int argc, char ** argv) {
                 std::cerr << x->location()->to_string() << ": error: " << x->message() << std::endl;
             else
                 std::cerr << ": error: " << x->message() << std::endl;
+
         }
 
         if (result->errors().size() == 0) {

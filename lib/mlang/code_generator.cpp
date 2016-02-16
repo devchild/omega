@@ -27,7 +27,6 @@ namespace mlang {
 	public:
 		static void set_l_value(CodeObject *obj, llvm::Value *value) {
 			obj->user_data(UserDataKind::LLVM_L_VALUE, value);
-			
 		}
 
 		static void set_r_value(CodeObject *obj, llvm::Value *value) {
