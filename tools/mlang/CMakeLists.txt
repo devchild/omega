@@ -10,6 +10,7 @@ target_link_libraries(mlang libmlang)
 target_compile_features(mlang PRIVATE cxx_range_for)
 
 include_directories("../../include")
+SET(CMAKE_INSTALL_RPATH "@rpath/lib")
 
 install(TARGETS mlang
   # IMPORTANT: Add the bar executable to the "export-set"

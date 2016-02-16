@@ -15,6 +15,7 @@
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/Bitcode/ReaderWriter.h>
 #include <llvm/Support/raw_ostream.h>
+#include <llvm/IR/Instructions.h>
 
 #include "codedom/code_object_visitor.hh"
 #include "codedom/code_object_collections.hh"

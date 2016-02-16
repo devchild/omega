@@ -147,9 +147,15 @@ target_link_libraries(libmlang ${llvm_libs})
 #
 # We want the output to be named libmlang
 #
-set_target_properties(libmlang PROPERTIES OUTPUT_NAME mlang)
+# set_target_properties(libmlang PROPERTIES OUTPUT_NAME mlang)
 # set_target_properties(libmlang PROPERTIES PUBLIC_HEADER "${PUBLIC_HEADER_FILES}")
-set_target_properties(libmlang PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(libmlang PROPERTIES 
+	LINKER_LANGUAGE CXX
+	MACOSX_RPATH TRUE
+	INSTALL_NAME_DIR "@rpath"
+	OUTPUT_NAME mlang
+	INSTALL_RPATH_USE_LINK_PATH TRUE
+	)
 
 install(TARGETS libmlang
   # IMPORTANT: Add the foo library to the "export-set"
