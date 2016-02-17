@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   code_ir_block_statement.hh
  * Author: mario
  *
@@ -6,32 +6,30 @@
  */
 
 #ifndef CODE_IR_BLOCK_STATEMENT_HH
-#define	CODE_IR_BLOCK_STATEMENT_HH
+#define CODE_IR_BLOCK_STATEMENT_HH
 
 namespace mlang {
-    class CodeScope;
-    class CodeExpression;
-    class CodeStatement;
-    class ICodeObjectVisitor;
-    
-    class CodeIrBlockStatement : public CodeStatement {
-    public:
-        using CodeObject::scope;
-        CodeIrBlockStatement();
-        ~CodeIrBlockStatement();
-        virtual void accept(ICodeObjectVisitor* visitor) override;
-        
+class CodeScope;
+class CodeExpression;
+class CodeStatement;
+class ICodeObjectVisitor;
 
-        void content(std::string value);
-        std::string content();
-        
-        virtual bool type_of(CodeObjectKind kind) override;
-        void scope(CodeScope* scope) override;
-    private:
-        std::string m_content;
-    };
+class CodeIrBlockStatement : public CodeStatement {
+ public:
+  using CodeObject::scope;
+  CodeIrBlockStatement();
+  ~CodeIrBlockStatement();
+  virtual void accept(ICodeObjectVisitor* visitor) override;
+
+  void content(std::string value);
+  std::string content();
+
+  virtual bool type_of(CodeObjectKind kind) override;
+  void scope(CodeScope* scope) override;
+
+ private:
+  std::string m_content;
+};
 }
 
-
-#endif	/* CODE_IR_BLOCK_STATEMENT_HH */
-
+#endif /* CODE_IR_BLOCK_STATEMENT_HH */

@@ -131,7 +131,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/parser)
 
 add_library(libomega SHARED ${PROJECT_FILES})
-add_style_check_target(libomega ${PROJECT_FILES})
+add_style_check_target(libomega "${PROJECT_FILES}")
 
 #
 # Find the libraries that correspond to the LLVM components

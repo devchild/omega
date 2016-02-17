@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   code_type_reference.hh
  * Author: mario
  *
@@ -6,43 +6,42 @@
  */
 
 #ifndef CODE_TYPE_REFERENCE_HH
-#define	CODE_TYPE_REFERENCE_HH
+#define CODE_TYPE_REFERENCE_HH
 #include <string>
 
 #include "code_object.hh"
 
-namespace mlang 
-{
-    class ICodeObjectVisitor;
-    enum class CodeObjectKind;
-    class CodeScope;
-    
-    class CodeTypeReference : public CodeObject {
-    public:
-        using CodeObject::scope;
-        CodeTypeReference();
-        
-        /*Gets or sets the name of the type being referenced.*/
-        std::string base_type();
-        
-        /*Gets or sets the name of the type being referenced.*/
-        void base_type(std::string value);
-        
-        void array_element_type(CodeTypeReference* value);
-        CodeTypeReference* array_element_type();
+namespace mlang {
+class ICodeObjectVisitor;
+enum class CodeObjectKind;
+class CodeScope;
 
-        int array_rank();
-        void array_rank(int value);
+class CodeTypeReference : public CodeObject {
+ public:
+  using CodeObject::scope;
+  CodeTypeReference();
 
-        virtual void accept(ICodeObjectVisitor* visitor);
-        virtual bool type_of(CodeObjectKind kind);
-        virtual void scope(CodeScope* scope);
-    private:
-        std::string m_base_type;
-        CodeTypeReference * m_array_element_type;
-        int m_array_rank;
-    };
+  /*Gets or sets the name of the type being referenced.*/
+  std::string base_type();
+
+  /*Gets or sets the name of the type being referenced.*/
+  void base_type(std::string value);
+
+  void array_element_type(CodeTypeReference* value);
+  CodeTypeReference* array_element_type();
+
+  int array_rank();
+  void array_rank(int value);
+
+  virtual void accept(ICodeObjectVisitor* visitor);
+  virtual bool type_of(CodeObjectKind kind);
+  virtual void scope(CodeScope* scope);
+
+ private:
+  std::string m_base_type;
+  CodeTypeReference* m_array_element_type;
+  int m_array_rank;
+};
 }
 
-#endif	/* CODE_TYPE_REFERENCE_HH */
-
+#endif /* CODE_TYPE_REFERENCE_HH */

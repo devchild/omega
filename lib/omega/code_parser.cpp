@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   MLangCodeParser.cpp
  * Author: mario
- * 
+ *
  * Created on June 25, 2014, 8:18 AM
  */
 
@@ -13,50 +13,37 @@
 #include <fstream>
 #include <iomanip>
 
-
 #include <mlang.hh>
 #include "parser/mlang_driver.hh"
 
-
 namespace mlang {
-	CodeParser::CodeParser(const DomProvider &p) :
-			m_provider(p) {
-	}
+CodeParser::CodeParser(const DomProvider &p) : m_provider(p) {}
 
-	CodeParser::CodeParser(const CodeParser &orig) :
-			m_provider(orig.m_provider) {
-	}
+CodeParser::CodeParser(const CodeParser &orig) : m_provider(orig.m_provider) {}
 
-	CodeParser::~CodeParser() {
+CodeParser::~CodeParser() {}
 
-	}
+const DomProvider &CodeParser::provider() { return this->m_provider; }
 
-	const DomProvider &
-	CodeParser::provider() {
-		return this->m_provider;
-	}
+std::vector<mlang::CompilerError *> &CodeParser::errors() {
+  return this->m_errors;
+}
 
-	std::vector<mlang::CompilerError*> &CodeParser::errors() {
-		return this->m_errors;
-	}
+bool CodeParser::sucess() { return this->m_sucess; }
 
-	bool CodeParser::sucess() {
-		return this->m_sucess;
-	}
+mlang::CodeCompileUnit &CodeParser::parse(
+    const std::string &filename, mlang::CodeCompileUnit &compile_unit) {
+  // LOG(DEBUG);
+  this->m_sucess = false;
+  mlang_driver p(compile_unit);
+  // p.trace_parsing = true;
 
-	mlang::CodeCompileUnit&
-	CodeParser::parse(const std::string &filename, mlang::CodeCompileUnit & compile_unit) {
-		//LOG(DEBUG);
-		this->m_sucess = false;
-		mlang_driver p(compile_unit);
-		// p.trace_parsing = true;
+  this->m_sucess = p.parse_file(filename);
 
-		this->m_sucess = p.parse_file(filename);
+  for (auto e : p.errors()) {
+    this->m_errors.push_back(e);
+  }
 
-		for (auto e: p.errors()) {
-			this->m_errors.push_back(e);
-		}
-
-		return p.root();
-	}
+  return p.root();
+}
 }

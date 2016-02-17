@@ -6,7 +6,7 @@
  */
 
 #ifndef CODE_FILE_INCLUDE_HH
-#define	CODE_FILE_INCLUDE_HH
+#define CODE_FILE_INCLUDE_HH
 
 #include <string>
 
@@ -15,22 +15,21 @@
 #include "code_object_visitor.hh"
 
 namespace mlang {
-    class CodeFileInclude : public CodeObject {
-    public:
-        using CodeObject::scope;
-        CodeFileInclude();
-        ~CodeFileInclude();
-        virtual void accept(ICodeObjectVisitor* visitor);
-        virtual bool type_of(CodeObjectKind kind);
-        virtual void scope(CodeScope* scope);
+class CodeFileInclude : public CodeObject {
+ public:
+  using CodeObject::scope;
+  CodeFileInclude();
+  ~CodeFileInclude();
+  virtual void accept(ICodeObjectVisitor* visitor);
+  virtual bool type_of(CodeObjectKind kind);
+  virtual void scope(CodeScope* scope);
 
-        std::string file_name();
-        void file_name(std::string value);
-    private:
-        std::string m_file_name;
-    };
+  std::string file_name();
+  void file_name(std::string value);
+
+ private:
+  std::string m_file_name;
+};
 }
 
-
-#endif	/* CODE_FILE_INCLUDE_HH */
-
+#endif /* CODE_FILE_INCLUDE_HH */

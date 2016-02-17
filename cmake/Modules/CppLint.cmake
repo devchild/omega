@@ -50,42 +50,26 @@ set(STYLE_FILTER ${STYLE_FILTER}-runtime/printf,)
 # Parameters:
 # - TARGET_NAME the name of the target to add
 # - SOURCES_LIST a complete list of source and include files to check
-function(add_style_check_target TARGET_NAME SOURCES_LIST0)# PROJECT)
+function(add_style_check_target TARGET_NAME SOURCES_LIST)# PROJECT)
 
   if(NOT PYTHONINTERP_FOUND)
     return()
   endif()
 
 
-  list(REMOVE_DUPLICATES SOURCES_LIST0)
-  list(SORT SOURCES_LIST0)
+  list(REMOVE_DUPLICATES SOURCES_LIST)
+  list(SORT SOURCES_LIST)
 
-  # filtering out unwanted files
-  set(SOURCES_LIST)
-  foreach(item ${SOURCES_LIST0})
-    #string(REGEX MATCH ".*\\.hpp$" dummy ${item})
-    string(REGEX MATCH "runtime_embedded\\.hpp" dummy ${item})
-    if(NOT dummy)
-      string(REGEX MATCH ".*meta\\.cpp" dummy ${item})
-      if(NOT dummy)
-        list(APPEND SOURCES_LIST ${item})
-      endif()
-    endif()
-  endforeach()
-  #set(SOURCES_LIST ${SOURCES_LIST0}) # just use all files
-
-  # message("LALALA SOURCES_LIST: ${TARGET_NAME}: ${SOURCES_LIST}")
+  #  message("LALALA SOURCES_LIST: ${TARGET_NAME}: ${SOURCES_LIST}")
   add_custom_target(lint_${TARGET_NAME}
     COMMAND "${CMAKE_COMMAND}" -E chdir
             "${CMAKE_CURRENT_SOURCE_DIR}"
             "${PYTHON_EXECUTABLE}"
             "${CMAKE_SOURCE_DIR}/misc/cpplint.py"
             "--filter=${STYLE_FILTER}"
-            "--output=vs7"
             "--counting=detailed"
             "--extensions=cpp,hpp,h,hh"
             "--linelength=100"
-#            "--project=${PROJECT}"
             ${SOURCES_LIST}
     DEPENDS ${SOURCES_LIST}
     COMMENT "Linting ${TARGET_NAME}"

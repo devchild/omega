@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   code_cast_expression.hh
  * Author: mario
  *
@@ -6,39 +6,37 @@
  */
 
 #ifndef CODE_CAST_EXPRESSION_HH
-#define	CODE_CAST_EXPRESSION_HH
+#define CODE_CAST_EXPRESSION_HH
 
 #include "code_expression.hh"
 #include "code_object_collections.hh"
 #include "code_object_visitor.hh"
 
 namespace mlang {
-    class CodeTypeReference;
-    class CodeScope;
-    class ICodeObjectVisitor;
-        
-    class CodeCastExpression : public CodeExpression {
-    public:
-        using CodeObject::scope;
-        CodeCastExpression();
-        ~CodeCastExpression();
-        virtual void accept(ICodeObjectVisitor* visitor);
-        
-        virtual bool type_of(CodeObjectKind kind);
-        virtual void scope(CodeScope* scope);
-        
-        
-        void expression(CodeExpression* value);
-        CodeExpression* expression();
-        
-        void target_type(CodeTypeReference* value);
-        CodeTypeReference* target_type();
-        
-    private:
-        CodeTypeReference* m_target_type;
-        CodeExpression* m_expression;
-    };
+class CodeTypeReference;
+class CodeScope;
+class ICodeObjectVisitor;
+
+class CodeCastExpression : public CodeExpression {
+ public:
+  using CodeObject::scope;
+  CodeCastExpression();
+  ~CodeCastExpression();
+  virtual void accept(ICodeObjectVisitor* visitor);
+
+  virtual bool type_of(CodeObjectKind kind);
+  virtual void scope(CodeScope* scope);
+
+  void expression(CodeExpression* value);
+  CodeExpression* expression();
+
+  void target_type(CodeTypeReference* value);
+  CodeTypeReference* target_type();
+
+ private:
+  CodeTypeReference* m_target_type;
+  CodeExpression* m_expression;
+};
 }
 
-#endif	/* CODE_CAST_EXPRESSION_HH */
-
+#endif /* CODE_CAST_EXPRESSION_HH */

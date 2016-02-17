@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   CompilerResults.hh
  * Author: mario
  *
@@ -6,7 +6,7 @@
  */
 
 #ifndef COMPILERRESULTS_HH
-#define	COMPILERRESULTS_HH
+#define COMPILERRESULTS_HH
 
 #include <vector>
 #include <string>
@@ -14,30 +14,29 @@
 using namespace std;
 
 namespace mlang {
-    class CompilerError;
+class CompilerError;
 
-    class CompilerResults {
-    public:
-        CompilerResults();
+class CompilerResults {
+ public:
+  CompilerResults();
 
-        CompilerResults(const CompilerResults &orig);
+  CompilerResults(const CompilerResults &orig);
 
-        virtual ~CompilerResults();
+  virtual ~CompilerResults();
 
-        vector<CompilerError*> &errors();
+  vector<CompilerError *> &errors();
 
-        vector<std::string> &output();
+  vector<std::string> &output();
 
-    private:
-        vector<CompilerError*> m_errors;
-        vector<std::string> m_output;
-        // CompiledAssembly -> ?
-        // Errors   -> ErrorCollectiong
-        // NativeCompilerReturnValue -> int
-        // Output --> StringCollection
-        // PathToAssembly --> string
-    };
+ private:
+  vector<CompilerError *> m_errors;
+  vector<std::string> m_output;
+  // CompiledAssembly -> ?
+  // Errors   -> ErrorCollectiong
+  // NativeCompilerReturnValue -> int
+  // Output --> StringCollection
+  // PathToAssembly --> string
+};
 }
 
-#endif	/* COMPILERRESULTS_HH */
-
+#endif /* COMPILERRESULTS_HH */

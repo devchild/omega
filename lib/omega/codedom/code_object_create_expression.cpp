@@ -8,52 +8,44 @@
 
 namespace mlang {
 
-CodeObjectCreateExpression::CodeObjectCreateExpression()
-    : CodeExpression()
-{
-	this->m_parameters = new CodeExpressionCollection();
-	this->m_create_type = nullptr;
+CodeObjectCreateExpression::CodeObjectCreateExpression() : CodeExpression() {
+  this->m_parameters = new CodeExpressionCollection();
+  this->m_create_type = nullptr;
 }
 
 CodeObjectCreateExpression::~CodeObjectCreateExpression() {
-	// TODO Auto-generated destructor stub
+  // TODO Auto-generated destructor stub
 }
 
-CodeExpressionCollection *
-CodeObjectCreateExpression::parameters() {
-	return this->m_parameters;
+CodeExpressionCollection* CodeObjectCreateExpression::parameters() {
+  return this->m_parameters;
 }
 
-void
-CodeObjectCreateExpression::create_type(CodeTypeReference* value) {
-	this->m_create_type = value;
+void CodeObjectCreateExpression::create_type(CodeTypeReference* value) {
+  this->m_create_type = value;
 }
 
-CodeTypeReference*
-CodeObjectCreateExpression::create_type(){
-	return this->m_create_type;
+CodeTypeReference* CodeObjectCreateExpression::create_type() {
+  return this->m_create_type;
 }
 
-bool
-CodeObjectCreateExpression::type_of(CodeObjectKind kind) {
-	return kind == CodeObjectKind::CodeObjectCreateExpression || CodeExpression::type_of(kind);
+bool CodeObjectCreateExpression::type_of(CodeObjectKind kind) {
+  return kind == CodeObjectKind::CodeObjectCreateExpression ||
+         CodeExpression::type_of(kind);
 }
 
-void
-CodeObjectCreateExpression::accept(ICodeObjectVisitor* visitor) {
-    visitor->visit(this);
+void CodeObjectCreateExpression::accept(ICodeObjectVisitor* visitor) {
+  visitor->visit(this);
 }
 
-void
-CodeObjectCreateExpression::scope(CodeScope* scope) {
-	CodeExpression::scope(scope);
+void CodeObjectCreateExpression::scope(CodeScope* scope) {
+  CodeExpression::scope(scope);
 
-	if (this->create_type() != nullptr)
-		this->create_type()->scope(scope);
+  if (this->create_type() != nullptr) this->create_type()->scope(scope);
 
-	for(auto x:*this->parameters()){
-		x->scope(scope);
-	}
+  for (auto x : *this->parameters()) {
+    x->scope(scope);
+  }
 }
 
 } /* namespace omega */

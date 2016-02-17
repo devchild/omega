@@ -8,35 +8,32 @@
 #ifndef INCLUDE_CODEDOM_CODE_FIELD_REFERENCE_EXPRESSION_HH
 #define INCLUDE_CODEDOM_CODE_FIELD_REFERENCE_EXPRESSION_HH
 
-
 #include "code_object.hh"
 #include "code_object_collections.hh"
 #include "code_object_visitor.hh"
 
 namespace mlang {
-    class CodeFieldReferenceExpression : public CodeExpression {
+class CodeFieldReferenceExpression : public CodeExpression {
+ public:
+  using CodeObject::scope;
 
-    public:
-        using CodeObject::scope;
+  CodeFieldReferenceExpression();
+  ~CodeFieldReferenceExpression();
 
-        CodeFieldReferenceExpression();
-        ~CodeFieldReferenceExpression();
+  std::string field_name();
+  void field_name(std::string field_name);
 
-        std::string field_name();
-        void field_name(std::string field_name);
+  CodeExpression* target_object();
+  void target_object(CodeExpression* target_object);
 
-        CodeExpression* target_object();
-        void target_object(CodeExpression* target_object);
+  virtual void accept(ICodeObjectVisitor* visitor) override;
+  virtual bool type_of(CodeObjectKind kind) override;
+  void scope(CodeScope* scope) override;
 
-        virtual void accept(ICodeObjectVisitor* visitor) override;
-        virtual bool type_of(CodeObjectKind kind) override;
-        void scope(CodeScope* scope) override;
-
-    private:
-        CodeExpression* m_target_object;
-        std::string m_field_name;
-    };
+ private:
+  CodeExpression* m_target_object;
+  std::string m_field_name;
+};
 }
-
 
 #endif /* INCLUDE_CODEDOM_CODE_FIELD_REFERENCE_EXPRESSION_HH_ */

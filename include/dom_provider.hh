@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   MLangDomProvider.hh
  * Author: mario
  *
@@ -6,36 +6,35 @@
  */
 
 #ifndef MLANGDOMPROVIDER_HH
-#define	MLANGDOMPROVIDER_HH
+#define MLANGDOMPROVIDER_HH
 
 #include <string>
 #include <vector>
 
 namespace mlang {
-    class CodeCompiler;
-    class CodeParser;
-    class CodeGenerator;
-    class SemanticAnalysis;
+class CodeCompiler;
+class CodeParser;
+class CodeGenerator;
+class SemanticAnalysis;
 
-    class DomProvider {
-    public:
-        DomProvider();
+class DomProvider {
+ public:
+  DomProvider();
 
-        DomProvider(const DomProvider &orig);
+  DomProvider(const DomProvider &orig);
 
-        virtual ~DomProvider();
+  virtual ~DomProvider();
 
-        CodeCompiler *CreateCompiler();
+  CodeCompiler *CreateCompiler();
 
-        CodeParser *CreateParser();
+  CodeParser *CreateParser();
 
-        CodeGenerator *CreateGenerator();
+  CodeGenerator *CreateGenerator();
 
-        SemanticAnalysis *CreateSemanticAnalysis();
+  SemanticAnalysis *CreateSemanticAnalysis();
 
-    private:
-    };
+ private:
+};
 }
 
-#endif	/* MLANGDOMPROVIDER_HH */
-
+#endif /* MLANGDOMPROVIDER_HH */

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   MLangCodeParser.hh
  * Author: mario
  *
@@ -6,40 +6,41 @@
  */
 
 #ifndef MLANGCODEPARSER_HH
-#define	MLANGCODEPARSER_HH
+#define MLANGCODEPARSER_HH
 
 #include <vector>
 
 namespace mlang {
 
-    class CodeCompileUnit;
-    class CompilerError;
-    class DomProvider;
+class CodeCompileUnit;
+class CompilerError;
+class DomProvider;
 
-    class CodeParser {
-    public:
-        CodeParser(const DomProvider &p);
+class CodeParser {
+ public:
+  CodeParser(const DomProvider &p);
 
-        CodeParser(const CodeParser &orig);
+  CodeParser(const CodeParser &orig);
 
-        virtual ~CodeParser();
+  virtual ~CodeParser();
 
-        bool sucess();
+  bool sucess();
 
-        std::vector<CompilerError*> &errors();
+  std::vector<CompilerError *> &errors();
 
-        mlang::CodeCompileUnit & parse(const std::string &filename, mlang::CodeCompileUnit & compile_unit);
+  mlang::CodeCompileUnit &parse(const std::string &filename,
+                                mlang::CodeCompileUnit &compile_unit);
 
-        const DomProvider &provider();
+  const DomProvider &provider();
 
-    private:
-        std::vector<CompilerError*> m_errors;
+ private:
+  std::vector<CompilerError *> m_errors;
 
-        // indicates whether the parser could parse the complete file, this says nothing about the errors
-        bool m_sucess;
-        const DomProvider &m_provider;
-    };
+  // indicates whether the parser could parse the complete file, this says
+  // nothing about the errors
+  bool m_sucess;
+  const DomProvider &m_provider;
+};
 }
 
-#endif	/* MLANGCODEPARSER_HH */
-
+#endif /* MLANGCODEPARSER_HH */

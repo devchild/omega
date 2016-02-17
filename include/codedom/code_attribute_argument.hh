@@ -6,38 +6,35 @@
  */
 
 #ifndef CODE_ATTRIBUTE_ARGUMENT_HH
-#define	CODE_ATTRIBUTE_ARGUMENT_HH
+#define CODE_ATTRIBUTE_ARGUMENT_HH
 
 #include "code_object.hh"
 
 namespace mlang {
-    class CodeExpression;
-    class ICodeObjectVisitor;
+class CodeExpression;
+class ICodeObjectVisitor;
 
-    class CodeAttributeArgument : public CodeObject {
+class CodeAttributeArgument : public CodeObject {
+ public:
+  using CodeObject::scope;
 
-    public:
-        using CodeObject::scope;
+  CodeAttributeArgument();
+  ~CodeAttributeArgument();
+  virtual void accept(ICodeObjectVisitor* visitor) override;
 
-        CodeAttributeArgument();
-        ~CodeAttributeArgument();
-        virtual void accept(ICodeObjectVisitor* visitor) override;
+  virtual bool type_of(CodeObjectKind kind) override;
+  void scope(CodeScope* scope) override;
 
-        virtual bool type_of(CodeObjectKind kind) override;
-        void scope(CodeScope* scope) override;
+  std::string name();
+  void name(std::string value);
 
-        std::string name();
-        void name(std::string value);
+  CodeExpression* value();
+  void value(CodeExpression* value);
 
-        CodeExpression* value();
-        void value(CodeExpression* value);
-
-    private:
-        std::string m_name;
-        CodeExpression* m_value;
-    };
+ private:
+  std::string m_name;
+  CodeExpression* m_value;
+};
 }
 
-
-#endif	/* CODE_ASSIGN_EXPRESSION_HH */
-
+#endif /* CODE_ASSIGN_EXPRESSION_HH */

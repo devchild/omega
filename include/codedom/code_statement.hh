@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   code_statement.hh
  * Author: mario
  *
@@ -6,7 +6,7 @@
  */
 
 #ifndef CODE_STATEMENT_HH
-#define	CODE_STATEMENT_HH
+#define CODE_STATEMENT_HH
 
 #include "code_object.hh"
 #include "code_object_collections.hh"
@@ -14,16 +14,15 @@
 #include "code_scope.hh"
 
 namespace mlang {
-    class CodeStatement : public CodeObject {
-    public:
-        using CodeObject::scope;
-        CodeStatement();
-        ~CodeStatement();
-        virtual void scope(CodeScope* scope);
-        virtual bool type_of(CodeObjectKind kind);
-        virtual void accept(ICodeObjectVisitor* visitor) = 0;
-    };
+class CodeStatement : public CodeObject {
+ public:
+  using CodeObject::scope;
+  CodeStatement();
+  ~CodeStatement();
+  virtual void scope(CodeScope* scope);
+  virtual bool type_of(CodeObjectKind kind);
+  virtual void accept(ICodeObjectVisitor* visitor) = 0;
+};
 }
 
-#endif	/* CODE_STATEMENT_HH */
-
+#endif /* CODE_STATEMENT_HH */

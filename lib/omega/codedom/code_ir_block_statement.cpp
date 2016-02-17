@@ -1,38 +1,28 @@
 #include <mlang.hh>
 
 namespace mlang {
-	CodeIrBlockStatement::CodeIrBlockStatement()
-		: CodeStatement()
-	{
-		this->m_content = "";
-	}
+CodeIrBlockStatement::CodeIrBlockStatement() : CodeStatement() {
+  this->m_content = "";
+}
 
-	CodeIrBlockStatement::~CodeIrBlockStatement() {
+CodeIrBlockStatement::~CodeIrBlockStatement() {}
 
-	}
+void CodeIrBlockStatement::accept(ICodeObjectVisitor* visitor) {
+  visitor->visit(this);
+}
 
-	void
-	CodeIrBlockStatement::accept(ICodeObjectVisitor* visitor) {
-		visitor->visit(this);
-	}
+void CodeIrBlockStatement::content(std::string value) {
+  this->m_content = value;
+}
 
-	void
-	CodeIrBlockStatement::content(std::string value) {
-		this->m_content = value;
-	}
+std::string CodeIrBlockStatement::content() { return this->m_content; }
 
-	std::string
-	CodeIrBlockStatement::content() {
-		return this->m_content;
-	}
+bool CodeIrBlockStatement::type_of(CodeObjectKind kind) {
+  return kind == CodeObjectKind::CodeIrBlockStatement ||
+         CodeStatement::type_of(kind);
+}
 
-	bool
-	CodeIrBlockStatement::type_of(CodeObjectKind kind) {
-		return kind == CodeObjectKind::CodeIrBlockStatement || CodeStatement::type_of(kind);
-	}
-
-	void
-	CodeIrBlockStatement::scope(CodeScope* scope) {
-		CodeStatement::scope(scope);
-	}
+void CodeIrBlockStatement::scope(CodeScope* scope) {
+  CodeStatement::scope(scope);
+}
 }

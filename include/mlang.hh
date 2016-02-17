@@ -6,7 +6,7 @@
  */
 
 #ifndef MLANG_HH
-#define	MLANG_HH
+#define MLANG_HH
 
 #include "argvparser.hh"
 #include "compiler_error.hh"
@@ -64,4 +64,4 @@
 #include "codedom/code_attribute_argument.hh"
 #include "codedom/code_attribute_declaration.hh"
 
-#endif	/* MLANG_HH */
+#endif /* MLANG_HH */

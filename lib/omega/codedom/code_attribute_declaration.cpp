@@ -1,41 +1,30 @@
 #include <mlang.hh>
 
 namespace mlang {
-    CodeAttributeDeclaration::CodeAttributeDeclaration()
-        : CodeObject() {
-    	this->m_name = "";
-    }
+CodeAttributeDeclaration::CodeAttributeDeclaration() : CodeObject() {
+  this->m_name = "";
+}
 
-    CodeAttributeDeclaration::~CodeAttributeDeclaration() {
-    }
+CodeAttributeDeclaration::~CodeAttributeDeclaration() {}
 
-    void
-	CodeAttributeDeclaration::accept(ICodeObjectVisitor* visitor) {
-        visitor->visit(this);
-    }
+void CodeAttributeDeclaration::accept(ICodeObjectVisitor* visitor) {
+  visitor->visit(this);
+}
 
-    void
-	CodeAttributeDeclaration::scope(CodeScope* scope) {
-    	CodeObject::scope(scope);
-    }
+void CodeAttributeDeclaration::scope(CodeScope* scope) {
+  CodeObject::scope(scope);
+}
 
-    bool
-	CodeAttributeDeclaration::type_of(CodeObjectKind kind) {
-        return kind == CodeObjectKind::CodeAttributeDeclaration || CodeObject::type_of(kind);
-    }
+bool CodeAttributeDeclaration::type_of(CodeObjectKind kind) {
+  return kind == CodeObjectKind::CodeAttributeDeclaration ||
+         CodeObject::type_of(kind);
+}
 
-    std::string
-	CodeAttributeDeclaration::name() {
-    	return this->m_name;
-    }
+std::string CodeAttributeDeclaration::name() { return this->m_name; }
 
-    void
-	CodeAttributeDeclaration::name(std::string value) {
-    	this->m_name = value;
-    }
+void CodeAttributeDeclaration::name(std::string value) { this->m_name = value; }
 
-    CodeAttributeArgumentCollection&
-	CodeAttributeDeclaration::arguments() {
-    	return this->m_arguments;
-    }
+CodeAttributeArgumentCollection& CodeAttributeDeclaration::arguments() {
+  return this->m_arguments;
+}
 }

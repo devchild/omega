@@ -5,9 +5,8 @@
  *      Author: mario
  */
 
-
 #ifndef MLANGSEMANTICANALYSIS_HH
-#define	MLANGSEMANTICANALYSIS_HH
+#define MLANGSEMANTICANALYSIS_HH
 
 #include <vector>
 
@@ -17,31 +16,29 @@ using namespace std;
 
 namespace mlang {
 
-    class DomProvider;
+class DomProvider;
 
-    class CompilerError;
+class CompilerError;
 
-    class CodeCompileUnit;
+class CodeCompileUnit;
 
-    class SemanticAnalysis {
+class SemanticAnalysis {
+ public:
+  SemanticAnalysis(const DomProvider &p);
 
-    public:
-        SemanticAnalysis(const DomProvider &p);
+  SemanticAnalysis(const SemanticAnalysis &orig);
 
-        SemanticAnalysis(const SemanticAnalysis &orig);
+  virtual ~SemanticAnalysis();
 
-        virtual ~SemanticAnalysis();
+  void analyse(CodeCompileUnit *compile_unit);
 
-        void analyse(CodeCompileUnit *compile_unit);
+  vector<CompilerError *> &errors();
 
-        vector<CompilerError*> &errors();
+ private:
+  vector<CompilerError *> m_errors;
 
-    private:
-        vector<CompilerError *> m_errors;
-
-        const DomProvider &m_provider;
-    };
+  const DomProvider &m_provider;
+};
 }
 
-#endif	/* MLANGSEMANTICANALYSIS_HH */
-
+#endif /* MLANGSEMANTICANALYSIS_HH */

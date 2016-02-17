@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   MLangCodeCompiler.hh
  * Author: mario
  *
@@ -6,34 +6,34 @@
  */
 
 #ifndef MLANGCODECOMPILER_HH
-#define	MLANGCODECOMPILER_HH
+#define MLANGCODECOMPILER_HH
 
 #include <string>
 
 namespace mlang {
-    class CodeCompileUnit;
-    class DomProvider;
-    class CompilerResults;
-    class CompilerParameters;
+class CodeCompileUnit;
+class DomProvider;
+class CompilerResults;
+class CompilerParameters;
 
-    class CodeCompiler {
-    public:
-        CodeCompiler(DomProvider &p);
+class CodeCompiler {
+ public:
+  CodeCompiler(DomProvider &p);
 
-        CodeCompiler(const CodeCompiler &orig);
+  CodeCompiler(const CodeCompiler &orig);
 
-        virtual ~CodeCompiler();
+  virtual ~CodeCompiler();
 
-        CompilerResults *FromDomBatch(CompilerParameters &parameters, mlang::CodeCompileUnit & compile_unit);
+  CompilerResults *FromDomBatch(CompilerParameters &parameters,
+                                mlang::CodeCompileUnit &compile_unit);
 
-        DomProvider &provider();
+  DomProvider &provider();
 
-    private:
-        void IncludeEmbeddedTypes(mlang::CodeCompileUnit *compile_unit);
+ private:
+  void IncludeEmbeddedTypes(mlang::CodeCompileUnit *compile_unit);
 
-        DomProvider &m_provider;
-    };
+  DomProvider &m_provider;
+};
 }
 
-#endif	/* MLANGCODECOMPILER_HH */
-
+#endif /* MLANGCODECOMPILER_HH */
