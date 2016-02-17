@@ -8,7 +8,7 @@
 #ifndef CODE_OBJECT_VISITOR_HH
 #define CODE_OBJECT_VISITOR_HH
 
-namespace mlang {
+namespace omega {
 class CodeObject;
 
 class CodeBinaryOperatorExpression;

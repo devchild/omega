@@ -5,7 +5,7 @@
 #include <dirent.h>
 #include <linker.hh>
 #include <llvm/Support/FileSystem.h>
-#include <mlang.hh>
+#include <omega.hh>
 #include <file_system.hh>
 #include <easylogging++.hh>
 
@@ -13,7 +13,7 @@ INITIALIZE_EASYLOGGINGPP
 
 using namespace std;
 using namespace CommandLineProcessing;
-using namespace mlang;
+using namespace omega;
 
 bool GeneralTextCompare(
     char *pTameText,  // A string without wildcards
@@ -213,7 +213,7 @@ int main(int argc, char **argv) {
   if (total_errors == 0 && parser_success) {
     std::cout << "Identify scopes" << std::endl;
     // I think this part should be moved into to parser part, I don't know.
-    mlang::CodeScope *global_scope = new mlang::CodeScope(nullptr);
+    omega::CodeScope *global_scope = new omega::CodeScope(nullptr);
     compile_unit.scope(global_scope);
 
     // --

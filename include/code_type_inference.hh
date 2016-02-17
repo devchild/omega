@@ -1,5 +1,5 @@
 /*
- * mlang_code_type_inference.hh
+ * omega_code_type_inference.hh
  *
  *  Created on: Nov 11, 2014
  *      Author: mario
@@ -10,7 +10,7 @@
 
 #include "codedom/code_object_visitor.hh"
 
-namespace mlang {
+namespace omega {
 
 class CodeTypeInference : public CodeObjectVisitorBase {
  public:

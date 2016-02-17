@@ -13,10 +13,10 @@
 #include <fstream>
 #include <iomanip>
 
-#include <mlang.hh>
-#include "parser/mlang_driver.hh"
+#include <omega.hh>
+#include "parser/omega_driver.hh"
 
-namespace mlang {
+namespace omega {
 CodeParser::CodeParser(const DomProvider &p) : m_provider(p) {}
 
 CodeParser::CodeParser(const CodeParser &orig) : m_provider(orig.m_provider) {}
@@ -25,17 +25,17 @@ CodeParser::~CodeParser() {}
 
 const DomProvider &CodeParser::provider() { return this->m_provider; }
 
-std::vector<mlang::CompilerError *> &CodeParser::errors() {
+std::vector<omega::CompilerError *> &CodeParser::errors() {
   return this->m_errors;
 }
 
 bool CodeParser::sucess() { return this->m_sucess; }
 
-mlang::CodeCompileUnit &CodeParser::parse(
-    const std::string &filename, mlang::CodeCompileUnit &compile_unit) {
+omega::CodeCompileUnit &CodeParser::parse(
+    const std::string &filename, omega::CodeCompileUnit &compile_unit) {
   // LOG(DEBUG);
   this->m_sucess = false;
-  mlang_driver p(compile_unit);
+  omega_driver p(compile_unit);
   // p.trace_parsing = true;
 
   this->m_sucess = p.parse_file(filename);

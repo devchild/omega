@@ -5,9 +5,9 @@
  * Created on September 11, 2014, 9:34 AM
  */
 
-#include "mlang.hh"
+#include "omega.hh"
 
-namespace mlang {
+namespace omega {
 CodeExpression::CodeExpression() : CodeObject() {}
 
 CodeExpression::~CodeExpression() {}

@@ -1,24 +1,24 @@
 #include <fstream>
 #include <sstream>
 
-#include "mlang_driver.hh"
-#include "mlang_parser.hh"
-#include "mlang_scanner.hh"
+#include "omega_driver.hh"
+#include "omega_parser.hh"
+#include "omega_scanner.hh"
 #include <pstream.hh>
 #include <file_system.hh>
 
-mlang_driver::mlang_driver(mlang::CodeCompileUnit &root)
+omega_driver::omega_driver(omega::CodeCompileUnit &root)
     : trace_scanning(false), trace_parsing(false), m_root(root) {
-  m_errors = new std::vector<mlang::CompilerError *>();
+  m_errors = new std::vector<omega::CompilerError *>();
   m_streamname = "";
   m_success = false;
   m_scanner = nullptr;
   m_parser = nullptr;
 }
 
-mlang_driver::~mlang_driver() {}
+omega_driver::~omega_driver() {}
 
-bool mlang_driver::parse_stream(std::istream &in, const std::string &sname) {
+bool omega_driver::parse_stream(std::istream &in, const std::string &sname) {
   // why was this set to nill?
   // this->m_root = nullptr;
   m_streamname = sname;
@@ -27,12 +27,12 @@ bool mlang_driver::parse_stream(std::istream &in, const std::string &sname) {
   scanner.set_debug(trace_scanning);
   this->m_scanner = &scanner;
 
-  yy::mlang_parser parser(*this);
+  yy::omega_parser parser(*this);
   parser.set_debug_level(trace_parsing);
   return (parser.parse() == 0);
 }
 
-bool mlang_driver::parse_file(const std::string &filename) {
+bool omega_driver::parse_file(const std::string &filename) {
   std::ifstream in(filename.c_str());
   if (!in.good()) {
     std::cout << filename << " does not exist." << std::endl;
@@ -41,7 +41,7 @@ bool mlang_driver::parse_file(const std::string &filename) {
   return parse_stream(in, filename);
 }
 
-bool mlang_driver::include(const std::string &import_statement) {
+bool omega_driver::include(const std::string &import_statement) {
   bool ret = true;
   SourceFile sf(this->m_streamname);
 
@@ -58,26 +58,26 @@ return parse_stream(in, filename);
 */
 }
 
-std::string *mlang_driver::streamname() { return &this->m_streamname; }
+std::string *omega_driver::streamname() { return &this->m_streamname; }
 
-yy::Scanner *mlang_driver::scanner() { return this->m_scanner; }
+yy::Scanner *omega_driver::scanner() { return this->m_scanner; }
 
-mlang::CodeCompileUnit &mlang_driver::root() { return this->m_root; }
+omega::CodeCompileUnit &omega_driver::root() { return this->m_root; }
 
-void mlang_driver::root(mlang::CodeCompileUnit &value) { this->m_root = value; }
+void omega_driver::root(omega::CodeCompileUnit &value) { this->m_root = value; }
 
-bool mlang_driver::success() { return this->m_success; }
+bool omega_driver::success() { return this->m_success; }
 
-void mlang_driver::success(bool value) { this->m_success = value; }
+void omega_driver::success(bool value) { this->m_success = value; }
 
-bool mlang_driver::parse_string(const std::string &input,
+bool omega_driver::parse_string(const std::string &input,
                                 const std::string &sname) {
   std::istringstream iss(input);
   return parse_stream(iss, sname);
 }
 
-mlang::Location *mlang_driver::get_location(const YYLTYPE &l) {
-  mlang::Location *loc = new mlang::Location();
+omega::Location *omega_driver::get_location(const YYLTYPE &l) {
+  omega::Location *loc = new omega::Location();
   loc->file_name(this->m_streamname);
   loc->first_column(l.begin.column);
   loc->last_column(l.end.column);
@@ -86,9 +86,9 @@ mlang::Location *mlang_driver::get_location(const YYLTYPE &l) {
   return loc;
 }
 
-mlang::Location *mlang_driver::get_location(const YYLTYPE &begin,
+omega::Location *omega_driver::get_location(const YYLTYPE &begin,
                                             const YYLTYPE &end) {
-  mlang::Location *loc = new mlang::Location();
+  omega::Location *loc = new omega::Location();
   loc->file_name(this->m_streamname);
   loc->first_column(begin.begin.column);
   loc->last_column(end.end.column);
@@ -97,7 +97,7 @@ mlang::Location *mlang_driver::get_location(const YYLTYPE &begin,
   return loc;
 }
 
-void mlang_driver::error(const yy::location &l, const std::string &m) {
+void omega_driver::error(const yy::location &l, const std::string &m) {
   /*
 int i = 0;
 std::cout << "...... !";
@@ -110,10 +110,10 @@ std::cout << ".";
 std::cout << std::endl;
 std::cout << "Error: "<< m << std::endl << std::endl;
 */
-  mlang::CompilerError *error = new mlang::CompilerError();
+  omega::CompilerError *error = new omega::CompilerError();
   error->message(m);
 
-  mlang::Location *loc = new mlang::Location();
+  omega::Location *loc = new omega::Location();
   loc->file_name(this->m_streamname);
   loc->first_column(l.begin.column);
   loc->last_column(l.end.column);
@@ -124,8 +124,8 @@ std::cout << "Error: "<< m << std::endl << std::endl;
   m_errors->push_back(error);
 }
 
-std::vector<mlang::CompilerError *> &mlang_driver::errors() {
+std::vector<omega::CompilerError *> &omega_driver::errors() {
   return *this->m_errors;
 }
 
-void mlang_driver::error(const std::string &m) { std::cerr << m << std::endl; }
+void omega_driver::error(const std::string &m) { std::cerr << m << std::endl; }

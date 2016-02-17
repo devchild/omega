@@ -12,7 +12,7 @@
 #include <sstream>
 #include <ostream>
 
-namespace mlang {
+namespace omega {
 class CompilerError;
 
 class Location {

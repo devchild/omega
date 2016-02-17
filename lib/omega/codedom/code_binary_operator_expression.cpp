@@ -1,11 +1,11 @@
-#include "mlang.hh"
+#include "omega.hh"
 
-namespace mlang {
+namespace omega {
 CodeBinaryOperatorExpression::CodeBinaryOperatorExpression()
     : CodeExpression() {
   this->m_left = nullptr;
   this->m_right = nullptr;
-  this->m_operator = mlang::CodeBinaryOperatorType::Add;
+  this->m_operator = omega::CodeBinaryOperatorType::Add;
 }
 
 CodeBinaryOperatorExpression::~CodeBinaryOperatorExpression() {}

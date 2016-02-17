@@ -14,7 +14,7 @@
 
 #include <list>
 
-namespace mlang {
+namespace omega {
 
 class CodeNamespace : public CodeObject {
  public:

@@ -13,7 +13,7 @@
 
 using namespace std;
 
-namespace mlang {
+namespace omega {
 class CompilerError;
 
 class CompilerResults {

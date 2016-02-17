@@ -1,8 +1,8 @@
 /* Copyright 2016 DevChild BVBA */
 
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 
 CodeArrayCreateExpression::~CodeArrayCreateExpression() {}
 
@@ -42,4 +42,4 @@ CodeTypeReference* CodeArrayCreateExpression::create_type() {
 void CodeArrayCreateExpression::create_type(CodeTypeReference* value) {
   this->m_create_type = value;
 }
-}  // namespace mlang
+}  // namespace omega

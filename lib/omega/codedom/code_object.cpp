@@ -1,11 +1,11 @@
 #include <string>
 
-#include <mlang.hh>
+#include <omega.hh>
 #include <uuid/uuid.h>
 #include <llvm/IR/Type.h>
 #include <llvm/IR/DerivedTypes.h>
 
-namespace mlang {
+namespace omega {
 const std::string UserDataKind::MLANG_INFERRED_TYPE_REFERENCE =
     "MLANG_INFERRED_TYPE_REFERENCE";
 

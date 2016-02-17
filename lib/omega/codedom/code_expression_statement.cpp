@@ -6,9 +6,9 @@
  * Created on September 11, 2014, 9:34 AM
  */
 
-#include "mlang.hh"
+#include "omega.hh"
 
-namespace mlang {
+namespace omega {
 CodeExpressionStatement::CodeExpressionStatement() : CodeStatement() {
   this->m_expression = nullptr;
 }

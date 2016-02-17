@@ -15,7 +15,7 @@
 #include "code_statement.hh"
 #include "code_expression.hh"
 
-namespace mlang {
+namespace omega {
 class CodeExpressionStatement : public CodeStatement {
  public:
   using CodeObject::scope;

@@ -1,7 +1,7 @@
 
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeConditionStatement::CodeConditionStatement() : CodeStatement() {
   this->m_condition = nullptr;
   this->m_true_statements = new CodeStatementCollection();

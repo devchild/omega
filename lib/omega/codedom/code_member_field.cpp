@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeMemberField::CodeMemberField() : CodeTypeMember() {
   this->m_init_expression = nullptr;
   this->m_type = nullptr;

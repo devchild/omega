@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeParameterDeclarationExpression::CodeParameterDeclarationExpression()
     : CodeExpression() {
   this->m_name = "";

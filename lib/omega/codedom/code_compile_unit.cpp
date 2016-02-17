@@ -1,9 +1,9 @@
-#include <mlang.hh>
+#include <omega.hh>
 #include <iostream>
 
 using namespace std;
 
-namespace mlang {
+namespace omega {
 
 CodeCompileUnit::CodeCompileUnit() : CodeObject() {
   m_namespaces = new CodeNamespaceCollection();

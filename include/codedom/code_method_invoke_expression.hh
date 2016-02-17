@@ -15,7 +15,7 @@
 #include "code_expression.hh"
 #include "code_method_reference_expression.hh"
 
-namespace mlang {
+namespace omega {
 class CodeMethodInvokeExpression : public CodeExpression {
  public:
   using CodeObject::scope;

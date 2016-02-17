@@ -35,12 +35,12 @@
 #include <llvm/Support/ToolOutputFile.h>
 #include <llvm/Support/FormattedStream.h>
 
-#include <mlang.hh>
+#include <omega.hh>
 
 #include <easylogging++.hh>
 INITIALIZE_EASYLOGGINGPP
 
-namespace mlang {
+namespace omega {
 CodeCompiler::CodeCompiler(DomProvider &p) : m_provider(p) {}
 
 CodeCompiler::CodeCompiler(const CodeCompiler &orig)
@@ -175,7 +175,7 @@ static int generateobj(llvm::raw_fd_ostream &out, llvm::Module *module) {
   return 0;
 }
 
-void CodeCompiler::IncludeEmbeddedTypes(mlang::CodeCompileUnit *compile_unit) {
+void CodeCompiler::IncludeEmbeddedTypes(omega::CodeCompileUnit *compile_unit) {
   LOG(TRACE);
   //
   // create embedded types
@@ -350,7 +350,7 @@ void CodeCompiler::IncludeEmbeddedTypes(mlang::CodeCompileUnit *compile_unit) {
 }
 
 CompilerResults *CodeCompiler::FromDomBatch(
-    CompilerParameters &parameters, mlang::CodeCompileUnit &compile_unit) {
+    CompilerParameters &parameters, omega::CodeCompileUnit &compile_unit) {
   LOG(TRACE);
   auto ret = new CompilerResults();
 

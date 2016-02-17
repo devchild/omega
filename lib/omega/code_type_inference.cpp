@@ -1,9 +1,9 @@
-#include "mlang.hh"
+#include "omega.hh"
 #include "code_type_inference.hh"
 
 #include <iostream>
 
-namespace mlang {
+namespace omega {
 CodeTypeInference::CodeTypeInference() { this->m_result = nullptr; }
 
 CodeTypeInference::~CodeTypeInference() {}

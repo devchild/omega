@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeMemberMethod::CodeMemberMethod() : CodeTypeMember() {
   this->m_return_type = nullptr;
   this->m_parameters = new CodeParameterDeclarationExpressionCollection();

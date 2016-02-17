@@ -14,7 +14,7 @@
 
 #include "code_type_member.hh"
 
-namespace mlang {
+namespace omega {
 class CodeMemberField : public CodeTypeMember {
  public:
   using CodeObject::scope;

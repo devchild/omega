@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 
 CodeCastExpression::CodeCastExpression() : CodeExpression() {
   this->m_expression = nullptr;

@@ -12,7 +12,7 @@
 #include <list>
 #include <map>
 
-namespace mlang {
+namespace omega {
 class Location;
 class CodeScope;
 class ICodeObjectVisitor;

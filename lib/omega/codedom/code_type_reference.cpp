@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 
 CodeTypeReference::CodeTypeReference() : CodeObject() {
   this->m_base_type = "";

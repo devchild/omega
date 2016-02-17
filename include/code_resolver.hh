@@ -9,7 +9,7 @@
 #include <include/codedom/code_binary_operator_expression.hh>
 #include <include/codedom/code_member_method.hh>
 
-namespace mlang {
+namespace omega {
 class CodeScope;
 class CodeObject;
 class CodeVariableReferenceExpression;

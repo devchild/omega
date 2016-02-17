@@ -11,7 +11,7 @@
 #include <list>
 #include <string>
 
-namespace mlang {
+namespace omega {
 class CodeObject;
 
 class CodeScope {

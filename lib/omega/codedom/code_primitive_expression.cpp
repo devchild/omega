@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 
 CodePrimitiveExpression::CodePrimitiveExpression() : CodeExpression() {
   this->m_value = nullptr;

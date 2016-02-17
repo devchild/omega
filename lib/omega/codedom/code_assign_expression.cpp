@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeAssignExpression::CodeAssignExpression() : CodeExpression() {
   this->m_left = nullptr;
   this->m_right = nullptr;

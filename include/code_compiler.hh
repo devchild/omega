@@ -10,7 +10,7 @@
 
 #include <string>
 
-namespace mlang {
+namespace omega {
 class CodeCompileUnit;
 class DomProvider;
 class CompilerResults;
@@ -25,12 +25,12 @@ class CodeCompiler {
   virtual ~CodeCompiler();
 
   CompilerResults *FromDomBatch(CompilerParameters &parameters,
-                                mlang::CodeCompileUnit &compile_unit);
+                                omega::CodeCompileUnit &compile_unit);
 
   DomProvider &provider();
 
  private:
-  void IncludeEmbeddedTypes(mlang::CodeCompileUnit *compile_unit);
+  void IncludeEmbeddedTypes(omega::CodeCompileUnit *compile_unit);
 
   DomProvider &m_provider;
 };

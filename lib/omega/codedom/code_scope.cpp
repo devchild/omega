@@ -1,7 +1,7 @@
-#include <mlang.hh>
+#include <omega.hh>
 #include <cstdlib>
 
-namespace mlang {
+namespace omega {
 
 CodeScope::CodeScope(CodeScope* parent) {
   this->scope_ended = false;

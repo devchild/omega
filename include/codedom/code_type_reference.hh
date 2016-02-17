@@ -11,7 +11,7 @@
 
 #include "code_object.hh"
 
-namespace mlang {
+namespace omega {
 class ICodeObjectVisitor;
 enum class CodeObjectKind;
 class CodeScope;

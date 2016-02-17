@@ -8,7 +8,7 @@
 #ifndef CODE_IR_BLOCK_STATEMENT_HH
 #define CODE_IR_BLOCK_STATEMENT_HH
 
-namespace mlang {
+namespace omega {
 class CodeScope;
 class CodeExpression;
 class CodeStatement;

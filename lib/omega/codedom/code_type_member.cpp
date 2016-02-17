@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeTypeMember::CodeTypeMember() : CodeObject() {}
 
 std::string CodeTypeMember::name() { return this->m_name; }

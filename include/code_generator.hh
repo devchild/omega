@@ -20,7 +20,7 @@
 #include "codedom/code_object_visitor.hh"
 #include "codedom/code_object_collections.hh"
 
-namespace mlang {
+namespace omega {
 
 class DomProvider;
 
@@ -33,7 +33,7 @@ class CodeGenerator {
   virtual ~CodeGenerator();
 
   llvm::Module *GenerateCodeFromCompileUnit(
-      mlang::CodeCompileUnit *compile_unit);
+      omega::CodeCompileUnit *compile_unit);
 
   /*
       CodeCompileUnit e,
@@ -46,7 +46,7 @@ class CodeGenerator {
 
  private:
   llvm::Function *CreateFunction(llvm::Module *module,
-                                 mlang::CodeMemberMethod *method);
+                                 omega::CodeMemberMethod *method);
 
   llvm::FunctionType *GetFunctionType(
       CodeTypeReference *code_type_reference,

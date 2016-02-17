@@ -14,7 +14,7 @@
 #include "code_object_collections.hh"
 #include "code_object_visitor.hh"
 
-namespace mlang {
+namespace omega {
 class CodeTypeMember : public CodeObject {
  public:
   using CodeObject::scope;

@@ -1,5 +1,5 @@
 /*
- * mlang_semantic_analysis.hh
+ * omega_semantic_analysis.hh
  *
  *  Created on: Dec 25, 2014
  *      Author: mario
@@ -14,7 +14,7 @@
 
 using namespace std;
 
-namespace mlang {
+namespace omega {
 
 class DomProvider;
 

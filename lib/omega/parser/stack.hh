@@ -41,7 +41,7 @@
 #include <vector>
 
 namespace yy {
-#line 46 "/home/mario/Projects/mlang.src/lib/mlang/parser/stack.hh"  // stack.hh:133
+#line 46 "/home/mario/Projects/omega.src/lib/mlang/parser/stack.hh"  // stack.hh:133
 template <class T, class S = std::vector<T> >
 class stack {
  public:
@@ -102,6 +102,6 @@ class slice {
 };
 
 }  // yy
-#line 157 "/home/mario/Projects/mlang.src/lib/mlang/parser/stack.hh"  // stack.hh:133
+#line 157 "/home/mario/Projects/omega.src/lib/mlang/parser/stack.hh"  // stack.hh:133
 
 #endif  // !YY_YY_HOME_MARIO_PROJECTS_MLANG_SRC_LIB_MLANG_PARSER_STACK_HH_INCLUDED

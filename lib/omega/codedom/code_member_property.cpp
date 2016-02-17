@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeMemberProperty::CodeMemberProperty() : CodeTypeMember() {}
 CodeMemberProperty::~CodeMemberProperty() {}
 void CodeMemberProperty::accept(ICodeObjectVisitor* visitor) {

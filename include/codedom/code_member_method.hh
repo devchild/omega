@@ -14,7 +14,7 @@
 
 #include "code_type_member.hh"
 
-namespace mlang {
+namespace omega {
 
 class CodeNamespace;
 class CodeTypeReference;

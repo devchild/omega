@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace mlang {
+namespace omega {
 CompilerParameters::CompilerParameters() {
   this->m_optimize = false;
   this->m_generate_executable = true;

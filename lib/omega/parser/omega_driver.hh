@@ -1,18 +1,18 @@
-#ifndef mlang_DRIVER_HH
-#define mlang_DRIVER_HH
+#ifndef omega_DRIVER_HH
+#define omega_DRIVER_HH
 #include <string>
 #include <map>
-#include <mlang_parser.hh>
-#include <mlang_scanner.hh>
-#include <mlang.hh>
+#include <omega_parser.hh>
+#include <omega_scanner.hh>
+#include <omega.hh>
 #include <compiler_error.hh>
 
 // Conducting the whole scanning and parsing of Calc++.
-class mlang_driver {
+class omega_driver {
  public:
-  mlang_driver(mlang::CodeCompileUnit &value);
+  omega_driver(omega::CodeCompileUnit &value);
 
-  virtual ~mlang_driver();
+  virtual ~omega_driver();
 
   // Handling the scanner.
   bool trace_scanning;
@@ -23,7 +23,7 @@ class mlang_driver {
 
   void error(const std::string &m);
 
-  std::vector<mlang::CompilerError *> &errors();
+  std::vector<omega::CompilerError *> &errors();
 
   bool parse_stream(std::istream &in, const std::string &sname);
 
@@ -37,24 +37,24 @@ class mlang_driver {
 
   yy::Scanner *scanner();
 
-  mlang::CodeCompileUnit &root();
+  omega::CodeCompileUnit &root();
 
-  void root(mlang::CodeCompileUnit &value);
+  void root(omega::CodeCompileUnit &value);
 
   bool success();
 
   void success(bool value);
 
-  mlang::Location *get_location(const YYLTYPE &location);
+  omega::Location *get_location(const YYLTYPE &location);
 
-  mlang::Location *get_location(const YYLTYPE &begin, const YYLTYPE &end);
+  omega::Location *get_location(const YYLTYPE &begin, const YYLTYPE &end);
 
  private:
-  mlang::CodeCompileUnit &m_root;
+  omega::CodeCompileUnit &m_root;
   yy::Scanner *m_scanner;
-  yy::mlang_parser *m_parser;
+  yy::omega_parser *m_parser;
   std::string m_streamname;
   bool m_success;
-  std::vector<mlang::CompilerError *> *m_errors;
+  std::vector<omega::CompilerError *> *m_errors;
 };
-#endif  // ! mlang_DRIVER_HH
+#endif  // ! omega_DRIVER_HH

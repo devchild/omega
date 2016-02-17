@@ -10,7 +10,7 @@
 
 #include <vector>
 
-namespace mlang {
+namespace omega {
 
 class CodeCompileUnit;
 class CompilerError;
@@ -28,8 +28,8 @@ class CodeParser {
 
   std::vector<CompilerError *> &errors();
 
-  mlang::CodeCompileUnit &parse(const std::string &filename,
-                                mlang::CodeCompileUnit &compile_unit);
+  omega::CodeCompileUnit &parse(const std::string &filename,
+                                omega::CodeCompileUnit &compile_unit);
 
   const DomProvider &provider();
 

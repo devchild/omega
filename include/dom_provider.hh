@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-namespace mlang {
+namespace omega {
 class CodeCompiler;
 class CodeParser;
 class CodeGenerator;

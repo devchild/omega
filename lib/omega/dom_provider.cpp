@@ -5,9 +5,9 @@
  * Created on June 23, 2014, 11:24 PM
  */
 
-#include "mlang.hh"
+#include "omega.hh"
 
-namespace mlang {
+namespace omega {
 DomProvider::DomProvider() {}
 
 DomProvider::DomProvider(const DomProvider &orig) {}

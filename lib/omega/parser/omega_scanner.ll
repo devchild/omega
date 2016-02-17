@@ -4,8 +4,8 @@
 # include <climits>
 # include <iomanip>
 # include <string>
-# include "mlang_scanner.hh"
-# include "mlang_parser.hh"
+# include "omega_scanner.hh"
+# include "omega_parser.hh"
 
 
 //
@@ -25,10 +25,10 @@
 #ifndef YY_DECL
 
 #define	YY_DECL									\
-    yy::mlang_parser::token_type				\
+    yy::omega_parser::token_type				\
     yy::Scanner::lex(							\
-	yy::mlang_parser::semantic_type* yylval,	\
-	yy::mlang_parser::location_type* yylloc		\
+	yy::omega_parser::semantic_type* yylval,	\
+	yy::omega_parser::location_type* yylloc		\
     )
 #endif
 
@@ -71,8 +71,8 @@ string_literal         				{regular_string}|{verbatim_string}
 
  /*** BEGIN EXAMPLE - Change the example lexer rules below ***/
 %{
-  typedef yy::mlang_parser::token token;
-  typedef yy::mlang_parser::token_type token_type;
+  typedef yy::omega_parser::token token;
+  typedef yy::omega_parser::token_type token_type;
 %}
 
 {string_literal} {
@@ -298,22 +298,22 @@ Scanner::Scanner(std::istream* in,
     : MLangFlexLexer(in, out)
 {
 	this->current_line_indent = 0;
- 	this->keywords = std::map<std::string, mlang_parser::token_type>();
- 	this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("def", mlang_parser::token::DEF));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("return", mlang_parser::token::TOK_RETURN));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("sizeof", mlang_parser::token::SIZEOF));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("end", mlang_parser::token::BLOCK_END));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("if", mlang_parser::token::IF));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("else", mlang_parser::token::ELSE));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("while", mlang_parser::token::WHILE));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("namespace", mlang_parser::token::NAMESPACE));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("class", mlang_parser::token::CLASS));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("struct", mlang_parser::token::STRUCT));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("include", mlang_parser::token::INCLUDE));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("ir", mlang_parser::token::IR));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("asm", mlang_parser::token::ASM));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("new", mlang_parser::token::NEW));
-    this->keywords.insert(std::map<std::string, mlang_parser::token_type>::value_type("external", mlang_parser::token::EXTERNAL));
+ 	this->keywords = std::map<std::string, omega_parser::token_type>();
+ 	this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("def", omega_parser::token::DEF));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("return", omega_parser::token::TOK_RETURN));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("sizeof", omega_parser::token::SIZEOF));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("end", omega_parser::token::BLOCK_END));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("if", omega_parser::token::IF));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("else", omega_parser::token::ELSE));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("while", omega_parser::token::WHILE));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("namespace", omega_parser::token::NAMESPACE));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("class", omega_parser::token::CLASS));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("struct", omega_parser::token::STRUCT));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("include", omega_parser::token::INCLUDE));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("ir", omega_parser::token::IR));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("asm", omega_parser::token::ASM));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("new", omega_parser::token::NEW));
+    this->keywords.insert(std::map<std::string, omega_parser::token_type>::value_type("external", omega_parser::token::EXTERNAL));
 }
 
 Scanner::~Scanner()
@@ -336,13 +336,13 @@ Scanner::begin_block() {
 	yy_push_state(BLOCK);
 }
 
-mlang_parser::token_type 
+omega_parser::token_type 
 Scanner::token_for(const std::string lexeme)
 {
-  std::map<std::string, mlang_parser::token_type>::const_iterator ret = this->keywords.find(lexeme);
+  std::map<std::string, omega_parser::token_type>::const_iterator ret = this->keywords.find(lexeme);
   if (ret == this->keywords.end())
   {
-    return mlang_parser::token::IDENTIFIER;
+    return omega_parser::token::IDENTIFIER;
   }
   return ret->second;
 }

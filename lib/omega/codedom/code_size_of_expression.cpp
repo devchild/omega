@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 
 CodeSizeOfExpression::CodeSizeOfExpression() : CodeExpression() {
   this->m_type = nullptr;

@@ -10,7 +10,7 @@
 
 #include "code_expression.hh"
 
-namespace mlang {
+namespace omega {
 class CodeAssignExpression : public CodeExpression {
  public:
   using CodeObject::scope;

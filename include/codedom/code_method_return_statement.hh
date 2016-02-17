@@ -12,7 +12,7 @@
 #include "code_object_collections.hh"
 #include "code_object_visitor.hh"
 
-namespace mlang {
+namespace omega {
 class CodeMethodReturnStatement : public CodeStatement {
  public:
   using CodeObject::scope;

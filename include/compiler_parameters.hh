@@ -13,7 +13,7 @@
 
 using namespace std;
 
-namespace mlang {
+namespace omega {
 class CompilerParameters {
  public:
   CompilerParameters();

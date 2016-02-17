@@ -2,11 +2,11 @@
 // Created by VANHECKE Mario on 09/09/15.
 //
 
-#include "mlang.hh"
+#include "omega.hh"
 
-using namespace mlang;
+using namespace omega;
 
-CodeObject *mlang::CodeResolver::on_resolve(
+CodeObject *omega::CodeResolver::on_resolve(
     CodeVariableReferenceExpression *object) {
   CodeScope *current_scope = object->scope();
 
@@ -33,7 +33,7 @@ CodeObject *mlang::CodeResolver::on_resolve(
   return nullptr;
 }
 
-CodeObject *mlang::CodeResolver::on_resolve(
+CodeObject *omega::CodeResolver::on_resolve(
     CodeFieldReferenceExpression *object) {
   auto target_type_reference =
       CodeTypeInference::get_type_reference(object->target_object());
@@ -49,7 +49,7 @@ CodeObject *mlang::CodeResolver::on_resolve(
   return nullptr;
 }
 
-CodeTypeDeclaration *mlang::CodeResolver::on_resolve(
+CodeTypeDeclaration *omega::CodeResolver::on_resolve(
     CodeTypeReference *code_type_reference) {
   CodeScope *current_scope = code_type_reference->scope();
 
@@ -68,7 +68,7 @@ CodeTypeDeclaration *mlang::CodeResolver::on_resolve(
   return nullptr;
 }
 
-CodeMemberMethod *mlang::CodeResolver::on_resolve(
+CodeMemberMethod *omega::CodeResolver::on_resolve(
     CodeMethodInvokeExpression *object) {
   std::list<CodeMemberMethod *> methods;
 
@@ -175,7 +175,7 @@ CodeMemberMethod *mlang::CodeResolver::on_resolve(
   return nullptr;
 }
 
-CodeTypeDeclaration *mlang::CodeResolver::resolve(
+CodeTypeDeclaration *omega::CodeResolver::resolve(
     CodeTypeReference *code_type_reference) {
   CodeTypeDeclaration *ret =
       (CodeTypeDeclaration *)code_type_reference->user_data(
@@ -189,7 +189,7 @@ CodeTypeDeclaration *mlang::CodeResolver::resolve(
   }
 }
 
-CodeObject *mlang::CodeResolver::resolve(
+CodeObject *omega::CodeResolver::resolve(
     CodeVariableReferenceExpression *object) {
   auto ret =
       (CodeObject *)object->user_data(UserDataKind::MLANG_RESOLVED_VARIABLE);
@@ -202,7 +202,7 @@ CodeObject *mlang::CodeResolver::resolve(
   }
 }
 
-CodeObject *mlang::CodeResolver::resolve(CodeFieldReferenceExpression *object) {
+CodeObject *omega::CodeResolver::resolve(CodeFieldReferenceExpression *object) {
   auto ret =
       (CodeObject *)object->user_data(UserDataKind::MLANG_RESOLVED_VARIABLE);
   if (ret != nullptr)
@@ -214,7 +214,7 @@ CodeObject *mlang::CodeResolver::resolve(CodeFieldReferenceExpression *object) {
   }
 }
 
-CodeMemberMethod *mlang::CodeResolver::resolve(
+CodeMemberMethod *omega::CodeResolver::resolve(
     CodeMethodInvokeExpression *object) {
   auto ret = (CodeMemberMethod *)object->user_data(
       UserDataKind::MLANG_RESOLVED_METHOD);
@@ -227,7 +227,7 @@ CodeMemberMethod *mlang::CodeResolver::resolve(
   }
 }
 
-CodeBinaryOperatorType mlang::CodeResolver::get_operator_type(
+CodeBinaryOperatorType omega::CodeResolver::get_operator_type(
     CodeMemberMethod *object) {
   for (auto attr : object->custom_attributes()) {
     if (attr->arguments().size() != 1) return CodeBinaryOperatorType::None;
@@ -266,7 +266,7 @@ CodeBinaryOperatorType mlang::CodeResolver::get_operator_type(
   return CodeBinaryOperatorType::None;
 }
 
-CodeMemberMethod *mlang::CodeResolver::on_resolve(
+CodeMemberMethod *omega::CodeResolver::on_resolve(
     CodeBinaryOperatorExpression *object) {
   CodeScope *current_scope = object->scope();
   while (current_scope != nullptr) {
@@ -301,7 +301,7 @@ CodeMemberMethod *mlang::CodeResolver::on_resolve(
   return nullptr;
 }
 
-CodeMemberMethod *mlang::CodeResolver::resolve(
+CodeMemberMethod *omega::CodeResolver::resolve(
     CodeBinaryOperatorExpression *object) {
   auto ret = (CodeMemberMethod *)object->user_data(
       UserDataKind::MLANG_RESOLVED_METHOD);

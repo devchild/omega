@@ -1,5 +1,5 @@
 /*
- * mlang_semantic_analysis.cpp
+ * omega_semantic_analysis.cpp
  *
  *  Created on: Dec 25, 2014
  *      Author: mario
@@ -8,11 +8,11 @@
 #include <vector>
 #include <iostream>
 
-#include <mlang.hh>
+#include <omega.hh>
 
 #include <easylogging++.hh>
 
-namespace mlang {
+namespace omega {
 
 class SemanticPass : public CodeObjectVisitorBase {
  private:
@@ -54,7 +54,7 @@ class LoadTypes : public SemanticPass {
   std::map<std::string, CodeTypeDeclaration *> type_declarations() {
     return m_type_declarations;
   }
-
+ 
   LoadTypes(vector<CompilerError *> &errors) : SemanticPass(errors) {}
 
   virtual ~LoadTypes() {}
@@ -449,15 +449,15 @@ class DetectCyclicStructures : public SemanticPass {
 };
 }
 
-mlang::SemanticAnalysis::SemanticAnalysis(const DomProvider &p)
+omega::SemanticAnalysis::SemanticAnalysis(const DomProvider &p)
     : m_provider(p) {}
 
-mlang::SemanticAnalysis::SemanticAnalysis(const SemanticAnalysis &orig)
+omega::SemanticAnalysis::SemanticAnalysis(const SemanticAnalysis &orig)
     : m_provider(orig.m_provider) {}
 
-mlang::SemanticAnalysis::~SemanticAnalysis() {}
+omega::SemanticAnalysis::~SemanticAnalysis() {}
 
-void mlang::SemanticAnalysis::analyse(CodeCompileUnit *compile_unit) {
+void omega::SemanticAnalysis::analyse(CodeCompileUnit *compile_unit) {
   LoadTypes types(this->errors());
   compile_unit->accept(&types);
 
@@ -469,6 +469,6 @@ void mlang::SemanticAnalysis::analyse(CodeCompileUnit *compile_unit) {
   compile_unit->accept(&detect_cyclic_structures);
 }
 
-vector<mlang::CompilerError *> &mlang::SemanticAnalysis::errors() {
+vector<omega::CompilerError *> &omega::SemanticAnalysis::errors() {
   return this->m_errors;
 }

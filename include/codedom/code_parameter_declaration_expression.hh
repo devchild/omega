@@ -15,7 +15,7 @@
 #include "code_expression.hh"
 #include "code_member_method.hh"
 
-namespace mlang {
+namespace omega {
 class CodeParameterDeclarationExpression : public CodeExpression {
  public:
   using CodeObject::scope;

@@ -6,7 +6,7 @@
  */
 
 #include "compiler_error.hh"
-namespace mlang {
+namespace omega {
 CompilerError::CompilerError() { this->m_has_location = false; }
 
 CompilerError::CompilerError(const CompilerError& orig) {}

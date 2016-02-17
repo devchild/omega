@@ -13,7 +13,7 @@
 #include "code_object_visitor.hh"
 #include "code_scope.hh"
 
-namespace mlang {
+namespace omega {
 class CodeStatement : public CodeObject {
  public:
   using CodeObject::scope;

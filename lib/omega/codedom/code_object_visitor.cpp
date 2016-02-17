@@ -5,9 +5,9 @@
  *      Author: mario
  */
 
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 ICodeObjectVisitor::ICodeObjectVisitor() {}
 
 ICodeObjectVisitor::~ICodeObjectVisitor() {}

@@ -10,7 +10,7 @@
 
 #include "code_expression.hh"
 
-namespace mlang {
+namespace omega {
 class CodeScope;
 class CodeExpression;
 class ICodeObjectVisitor;

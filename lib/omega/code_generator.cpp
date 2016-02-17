@@ -17,11 +17,11 @@
 #include <llvm/IR/InlineAsm.h>
 #include <llvm/Support/Host.h>
 
-#include <mlang.hh>
+#include <omega.hh>
 
 #include <easylogging++.hh>
 
-namespace mlang {
+namespace omega {
 
 class LLVMUserData {
  public:
@@ -311,7 +311,7 @@ static llvm::FunctionType *get_malloc_functiontype(llvm::Module *mod) {
 }
 
 llvm::Module *CodeGenerator::GenerateCodeFromCompileUnit(
-    mlang::CodeCompileUnit *compile_unit) {
+    omega::CodeCompileUnit *compile_unit) {
   llvm::Module *module = new llvm::Module("in_memory_module", m_context);
   module->setDataLayout(
       "e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-f32:32:32-f64:"
@@ -379,7 +379,7 @@ obj->type_of(CodeObjectKind::CodeFieldReferenceExpression)))
 */
 
 llvm::Function *CodeGenerator::CreateFunction(llvm::Module *module,
-                                              mlang::CodeMemberMethod *method) {
+                                              omega::CodeMemberMethod *method) {
   // Type *Result, ArrayRef<Type*> Params, bool IsVarArgs
 
   /*

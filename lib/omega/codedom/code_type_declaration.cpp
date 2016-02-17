@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeTypeDeclaration::CodeTypeDeclaration() : CodeTypeMember() {
   this->m_is_class = false;
   this->m_is_struct = false;

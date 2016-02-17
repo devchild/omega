@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeMethodReturnStatement::~CodeMethodReturnStatement() {}
 
 CodeMethodReturnStatement::CodeMethodReturnStatement() : CodeStatement() {

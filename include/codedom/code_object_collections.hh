@@ -10,7 +10,7 @@
 
 #include <list>
 
-namespace mlang {
+namespace omega {
 class CodeObject;
 class CodeMemberMethod;
 class CodeNamespace;

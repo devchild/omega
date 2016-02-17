@@ -12,7 +12,7 @@
 #include "code_object_collections.hh"
 #include "code_object_visitor.hh"
 
-namespace mlang {
+namespace omega {
 class CodeTypeDeclaration : public CodeTypeMember {
  public:
   using CodeTypeMember::scope;

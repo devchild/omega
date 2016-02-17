@@ -1,5 +1,5 @@
 /*
- * File:   mlang.hh
+ * File:   omega.hh
  * Author: mario
  *
  * Created on June 23, 2014, 11:09 PM

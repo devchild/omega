@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeIterationStatement::CodeIterationStatement() : CodeStatement() {
   this->m_increment_statement = nullptr;
   this->m_init_statement = nullptr;

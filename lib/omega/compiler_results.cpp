@@ -7,14 +7,14 @@
 
 #include "compiler_results.hh"
 
-namespace mlang {
+namespace omega {
 CompilerResults::CompilerResults() {}
 
 CompilerResults::CompilerResults(const CompilerResults &orig) {}
 
 CompilerResults::~CompilerResults() {}
 
-vector<mlang::CompilerError *> &CompilerResults::errors() {
+vector<omega::CompilerError *> &CompilerResults::errors() {
   return this->m_errors;
 }
 

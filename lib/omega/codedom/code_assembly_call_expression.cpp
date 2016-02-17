@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeAssemblyCallExpression::CodeAssemblyCallExpression() : CodeExpression() {
   this->m_return_type = nullptr;
   this->m_content = "";

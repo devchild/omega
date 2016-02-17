@@ -1,6 +1,6 @@
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 CodeNamespace::CodeNamespace() : CodeObject() {
   this->m_name = "";
   this->m_types = new CodeTypeDeclarationCollection();

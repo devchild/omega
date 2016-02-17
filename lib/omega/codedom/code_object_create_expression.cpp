@@ -4,9 +4,9 @@
  *  Created on: Oct 27, 2014
  *      Author: mario
  */
-#include <mlang.hh>
+#include <omega.hh>
 
-namespace mlang {
+namespace omega {
 
 CodeObjectCreateExpression::CodeObjectCreateExpression() : CodeExpression() {
   this->m_parameters = new CodeExpressionCollection();

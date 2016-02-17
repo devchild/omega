@@ -5,36 +5,36 @@ configure_file(config.h.in "${CMAKE_CURRENT_BINARY_DIR}/config.h" @ONLY)
 #
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/parser)
 FIND_PACKAGE(FLEX REQUIRED)
-SET(FlexOutput ${CMAKE_CURRENT_BINARY_DIR}/parser/mlang_scanner.cpp)
+SET(FlexOutput ${CMAKE_CURRENT_BINARY_DIR}/parser/omega_scanner.cpp)
 IF(FLEX_FOUND)
     ADD_CUSTOM_COMMAND(
       OUTPUT ${FlexOutput}
       COMMAND ${FLEX_EXECUTABLE}
               --outfile=${FlexOutput}
-              ${CMAKE_CURRENT_SOURCE_DIR}/parser/mlang_scanner.ll
-      COMMENT "Generating mlang_scanner.cpp"
-      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parser/mlang_scanner.ll
+              ${CMAKE_CURRENT_SOURCE_DIR}/parser/omega_scanner.ll
+      COMMENT "Generating omega_scanner.cpp"
+      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parser/omega_scanner.ll
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
 ENDIF()
-SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/parser/mlang_scanner.cpp GENERATED)
+SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/parser/omega_scanner.cpp GENERATED)
 
 FIND_PACKAGE(BISON REQUIRED)
-SET(BisonOutput ${CMAKE_CURRENT_BINARY_DIR}/parser/mlang_parser.cpp)
-SET(BisonOutputHeader ${CMAKE_CURRENT_BINARY_DIR}/parser/mlang_parser.hh)
+SET(BisonOutput ${CMAKE_CURRENT_BINARY_DIR}/parser/omega_parser.cpp)
+SET(BisonOutputHeader ${CMAKE_CURRENT_BINARY_DIR}/parser/omega_parser.hh)
 IF(BISON_FOUND)
     ADD_CUSTOM_COMMAND(
       OUTPUT ${BisonOutput}
       COMMAND ${BISON_EXECUTABLE}
               --defines=${BisonOutputHeader}
               --output=${BisonOutput}
-              ${CMAKE_CURRENT_SOURCE_DIR}/parser/mlang_parser.yy
-      COMMENT "Generating mlang_parser.cpp"
-      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parser/mlang_parser.yy
+              ${CMAKE_CURRENT_SOURCE_DIR}/parser/omega_parser.yy
+      COMMENT "Generating omega_parser.cpp"
+      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parser/omega_parser.yy
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
 ENDIF()
-SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/parser/mlang_parser.cpp GENERATED)
+SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_BINARY_DIR}/parser/omega_parser.cpp GENERATED)
 SET_SOURCE_FILES_PROPERTIES(${FlexOutput} PROPERTIES OBJECT_DEPENDS ${BisonOutputHeader})
 
 set(PROJECT_FILES
@@ -96,7 +96,7 @@ set(PROJECT_FILES
     # ./../../include/
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/argvparser.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/linker.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/mlang.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../include/omega.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/compiler_error.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/compiler_parameters.hh
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include/compiler_results.hh
@@ -113,8 +113,8 @@ set(PROJECT_FILES
     ${CMAKE_CURRENT_BINARY_DIR}/config.h
 
     # ./parser/
-    ${CMAKE_CURRENT_SOURCE_DIR}/parser/mlang_driver.hh
-    ${CMAKE_CURRENT_SOURCE_DIR}/parser/mlang_driver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/omega_driver.hh
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/omega_driver.cpp
     ${BisonOutput}
     ${FlexOutput}
  )

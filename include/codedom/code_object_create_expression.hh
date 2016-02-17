@@ -12,7 +12,7 @@
 #include "code_object_collections.hh"
 #include "code_object_visitor.hh"
 
-namespace mlang {
+namespace omega {
 
 class CodeNamespace;
 class CodeTypeReference;
@@ -36,6 +36,6 @@ class CodeObjectCreateExpression : public CodeExpression {
   CodeTypeReference* m_create_type;
 };
 
-} /* namespace mlang */
+} /* namespace omega */
 
 #endif /* INCLUDE_CODEDOM_CODE_OBJECT_CREATE_EXPRESSION_HH_ */
