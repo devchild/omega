@@ -56,4 +56,4 @@ CodeObjectCreateExpression::scope(CodeScope* scope) {
 	}
 }
 
-} /* namespace mlang */
+} /* namespace omega */

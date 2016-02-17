@@ -1,1 +1,1 @@
-add_subdirectory(mlang)
+add_subdirectory(omega)

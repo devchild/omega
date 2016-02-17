@@ -31,7 +31,7 @@
 // version 2.2 of Bison.
 
 /**
- ** \file /home/mario/Projects/mlang.src/lib/mlang/parser/stack.hh
+ ** \file /home/mario/Projects/omega.src/lib/omega/parser/stack.hh
  ** Define the yy::stack class.
  */
 

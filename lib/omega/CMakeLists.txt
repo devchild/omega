@@ -130,37 +130,38 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../include/)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/parser)
 
-add_library(libmlang SHARED ${PROJECT_FILES})
+add_library(libomega SHARED ${PROJECT_FILES})
+add_style_check_target(libomega ${PROJECT_FILES})
 
 #
 # Find the libraries that correspond to the LLVM components
 # that we wish to use
 #
 llvm_map_components_to_libnames(llvm_libs all)
-target_compile_features(libmlang PRIVATE cxx_range_for)
+target_compile_features(libomega PRIVATE cxx_range_for)
 
 #
-# Link libmlang against the llvm libraries
+# Link libomega against the llvm libraries
 #
-target_link_libraries(libmlang ${llvm_libs})
+target_link_libraries(libomega ${llvm_libs})
 
 #
-# We want the output to be named libmlang
+# We want the output to be named libomega
 #
-# set_target_properties(libmlang PROPERTIES OUTPUT_NAME mlang)
-# set_target_properties(libmlang PROPERTIES PUBLIC_HEADER "${PUBLIC_HEADER_FILES}")
-set_target_properties(libmlang PROPERTIES 
+# set_target_properties(libomega PROPERTIES OUTPUT_NAME omega)
+# set_target_properties(libomega PROPERTIES PUBLIC_HEADER "${PUBLIC_HEADER_FILES}")
+set_target_properties(libomega PROPERTIES
 	LINKER_LANGUAGE CXX
 	MACOSX_RPATH TRUE
 	INSTALL_NAME_DIR "@rpath"
-	OUTPUT_NAME mlang
+	OUTPUT_NAME omega
 	INSTALL_RPATH_USE_LINK_PATH TRUE
 	)
 
-install(TARGETS libmlang
+install(TARGETS libomega
   # IMPORTANT: Add the foo library to the "export-set"
-  EXPORT MlangTargets
+  EXPORT OmegaTargets
   RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
   LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
-  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/mlang"
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/omega"
     COMPONENT dev)

@@ -66,7 +66,7 @@ namespace mlang {
 	private:
 		static llvm::Type *code_type_reference_get_llvm_type(CodeTypeReference *code_type_reference) {
 			llvm::Type *ret = nullptr;
-			CodeTypeDeclaration * code_type_declaration = CodeResolver::resolve(code_type_reference);
+			CodeTypeDeclaration* code_type_declaration = CodeResolver::resolve(code_type_reference);
 			if (code_type_declaration->is_embedded() && code_type_declaration->name() == "Array") {
 				if (code_type_reference->array_element_type() != nullptr) {
 					llvm::Type *element_type = LLVMUserData::get_llvm_type(code_type_reference->array_element_type());

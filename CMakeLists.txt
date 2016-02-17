@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(mlang)
+project(omega)
 
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/Users/mario/Projects/yoda.obj" CACHE FILEPATH "where to generate the cmake build files")
 # set(LLVM_DIR "/Users/mario/Projects/llvm-3.6.2.bin/share/llvm/cmake" CACHE FILEPATH "where to find the llvm cmake build files")
@@ -47,6 +47,7 @@ ENDIF("${isSystemDir}" STREQUAL "-1")
 include(CheckIncludeFile)
 include(CheckLibraryExists)
 include(CheckCXXCompilerFlag)
+include(CppLint)
 
 #
 # Locate LLVM.
@@ -66,11 +67,11 @@ add_definitions(${LLVM_DEFINITIONS})
 #
 # Main configuration.
 #
-set(MLANG_MAJOR_VERSION 0)
-set(MLANG_MINOR_VERSION 1)
-set(MLANG_PATCH_VERSION 0)
-set(MLANG_VERSION
-  ${MLANG_MAJOR_VERSION}.${MLANG_MINOR_VERSION}.${MLANG_PATCH_VERSION})
+set(OMEGA_MAJOR_VERSION 0)
+set(OMEGA_MINOR_VERSION 1)
+set(OMEGA_PATCH_VERSION 0)
+set(OMEGA_VERSION
+  ${OMEGA_MAJOR_VERSION}.${OMEGA_MINOR_VERSION}.${OMEGA_PATCH_VERSION})
 
 # Offer the user the choice of overriding the installation directories
 set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
@@ -80,7 +81,7 @@ set(INSTALL_INCLUDE_DIR include CACHE PATH
 if(WIN32 AND NOT CYGWIN)
   set(DEF_INSTALL_CMAKE_DIR CMake)
 else()
-  set(DEF_INSTALL_CMAKE_DIR lib/CMake/Mlang)
+  set(DEF_INSTALL_CMAKE_DIR lib/CMake/Omega)
 endif()
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH
   "Installation directory for CMake files")
@@ -110,34 +111,34 @@ add_subdirectory(lib)
 # ===============================
 
 # Add all targets to the build-tree export set
-export(TARGETS mlang libmlang
-  FILE "${PROJECT_BINARY_DIR}/MlangTargets.cmake")
+export(TARGETS omega libomega
+  FILE "${PROJECT_BINARY_DIR}/OmegaTargets.cmake")
  
 # Export the package for use from the build-tree
 # (this registers the build-tree with a global CMake-registry)
-export(PACKAGE mlang)
+export(PACKAGE omega)
  
 # Create the FooBarConfig.cmake and FooBarConfigVersion files
 file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}"
    "${INSTALL_INCLUDE_DIR}")
 # ... for the build tree
 set(CONF_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
-configure_file(MlangConfig.cmake.in
-  "${PROJECT_BINARY_DIR}/MlangConfig.cmake" @ONLY)
+configure_file(OmegaConfig.cmake.in
+  "${PROJECT_BINARY_DIR}/OmegaConfig.cmake" @ONLY)
 # ... for the install tree
-set(CONF_INCLUDE_DIRS "\${MLANG_CMAKE_DIR}/${REL_INCLUDE_DIR}")
-configure_file(MlangConfig.cmake.in
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/MlangConfig.cmake" @ONLY)
+set(CONF_INCLUDE_DIRS "\${OMEGA_CMAKE_DIR}/${REL_INCLUDE_DIR}")
+configure_file(OmegaConfig.cmake.in
+  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/OmegaConfig.cmake" @ONLY)
 # ... for both
-configure_file(MlangConfigVersion.cmake.in
-  "${PROJECT_BINARY_DIR}/MlangConfigVersion.cmake" @ONLY)
+configure_file(OmegaConfigVersion.cmake.in
+  "${PROJECT_BINARY_DIR}/OmegaConfigVersion.cmake" @ONLY)
  
-# Install the MlangConfig.cmake and MlangConfigVersion.cmake
+# Install the OmegaConfig.cmake and OmegaConfigVersion.cmake
 install(FILES
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/MlangConfig.cmake"
-  "${PROJECT_BINARY_DIR}/MlangConfigVersion.cmake"
+  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/OmegaConfig.cmake"
+  "${PROJECT_BINARY_DIR}/OmegaConfigVersion.cmake"
   DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)
  
 # Install the export set for use with the install-tree
-install(EXPORT MlangTargets DESTINATION
+install(EXPORT OmegaTargets DESTINATION
   "${INSTALL_CMAKE_DIR}" COMPONENT dev)
