@@ -156,14 +156,16 @@ static int generateobj(llvm::raw_fd_ostream &out, llvm::Module *module) {
 
   llvm::Triple TheTriple(module->getTargetTriple());
   if (TheTriple.getTriple().empty())
-    TheTriple.setTriple(llvm::sys::getDefaultTargetTriple());
+    TheTriple.setTriple("x86_64-apple-macosx");
 
   const llvm::Target *TheTarget =
       llvm::TargetRegistry::lookupTarget(TheTriple.getTriple(), Err);
+
   std::string MCPU, FeaturesStr;
   llvm::TargetMachine *machineTarget = TheTarget->createTargetMachine(
       TheTriple.getTriple(), MCPU, FeaturesStr, Options);
 
+      module->setDataLayout( machineTarget->createDataLayout() );
   // Figure out where we are going to send the output...
   // llvm::raw_fd_ostream FOS(out);
   if (machineTarget->addPassesToEmitFile(

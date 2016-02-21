@@ -55,13 +55,13 @@ int Linker::createExecutable(std::vector<std::string> &fileNames,
    * -lSystem
    * /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.2/lib/darwin/libclang_rt.osx.a
    */
-  // args.push_back("-e");
-  // args.push_back("start");
+  args.push_back("-e");
+  args.push_back("_start");
 
-  // args.push_back("-demangle");
+  args.push_back("-demangle");
   // args.push_back("-dynamic");
 
-  // args.push_back("-arch"); args.push_back("x86_64");
+  args.push_back("-arch"); args.push_back("x86_64");
   // args.push_back("-macosx_version_min"); args.push_back("10.11.0");
   // args.push_back("-syslibroot");
   // args.push_back("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
@@ -75,7 +75,7 @@ int Linker::createExecutable(std::vector<std::string> &fileNames,
 
   // args.push_back("/usr/lib/libstdc++.6.dylib");
   // args.push_back("-lm");
-  // args.push_back("-lSystem");
+  args.push_back("-lSystem");
   args.push_back("-lc");
   // args.push_back("/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.2/lib/darwin/libclang_rt.osx.a");
   // args.push_back("--entry"); args.push_back("main");
