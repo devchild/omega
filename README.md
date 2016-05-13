@@ -1,10 +1,10 @@
-#The yoda-project.
+#The omega-project.
 
 [wiki](https://github.com/devchild/yoda-project/wiki)
 
-The yoda-project is my attempt to build a compiler for my very own invented programming language.
+The omega-project is my attempt to build a compiler for my very own invented programming language.
 
-In lack of a final (better) name for this language I name this the yoda-project. If you have a proposition for a cool new name for this language, please let me know.
+In lack of a final (better) name for this language I name this the omega-project. If you have a proposition for a cool new name for this language, please let me know.
 
 The programming language that is being designed here is a mixture of python and c#. The compiler itself is written in c++ and uses llvm for the low level code generation. The parser bits are generated using bison and flex.
 
@@ -50,17 +50,17 @@ make install
 If you have cloned or downloaded a version of this project you should be fine.
 First let us create a folder for building this project.
 ```
-mkdir yoda.obj
+mkdir omega.obj
 ```
 move into the the new folder.
 ```
-cd yoda.obj
+cd omega.obj
 ```
 First we will need to generate the makefile for this project on your system.
 For this cmake needs to know where it can find the installed version of llvm.
 Replace PATH_TO_WHERE_YOU_WANT_TO_INSTALL_LLVM with where you the llvm bin files are located 
 ```
-cmake -DLLVM_DIR={PATH_TO_WHERE_YOU_WANT_TO_INSTALL_LLVM}/share/llvm/cmake/ ../yoda.src/
+cmake -DLLVM_DIR={PATH_TO_WHERE_YOU_WANT_TO_INSTALL_LLVM}/share/llvm/cmake/ ../omega.src/
 ```
 And finaly build the project.
 ```
@@ -73,12 +73,12 @@ Currently the compiler itself is called mlang and is located in ./tools/mlang/
 
 Compiling files can be done by executing following command.
 ```
-./mlang --out=helloworld inputfile.ml
+./omega --out=helloworld inputfile.ml
 ```
 
 Compiling multiple files into a single executable can be done by executing following command.
 ```
-./mlang --out=helloworld *.ml
+./omega --out=helloworld *.ml
 ```
 
 
