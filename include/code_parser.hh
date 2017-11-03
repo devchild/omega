@@ -9,6 +9,7 @@
 #define MLANGCODEPARSER_HH
 
 #include <vector>
+#include <string>
 
 namespace omega {
 

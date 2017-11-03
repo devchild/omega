@@ -17,9 +17,9 @@
 #include <llvm/IR/Module.h>
 #include <llvm/IR/Function.h>
 #include <llvm/IR/BasicBlock.h>
-#include <llvm/Bitcode/ReaderWriter.h>
+#include <llvm/Bitcode/BitcodeWriter.h>
 #include <llvm/Support/raw_ostream.h>
-
+#include <llvm/ADT/Triple.h>
 #include <llvm/IR/LegacyPassManager.h>
 #include <llvm/IR/CallingConv.h>
 #include <llvm/IR/Verifier.h>
@@ -34,6 +34,10 @@
 #include <llvm/Target/TargetMachine.h>
 #include <llvm/Support/ToolOutputFile.h>
 #include <llvm/Support/FormattedStream.h>
+#include <llvm/Support/FileSystem.h>
+#include <llvm/ADT/Optional.h>
+#include <llvm/Support/CodeGen.h>
+
 
 #include <omega.hh>
 
@@ -78,7 +82,7 @@ void runLLVMOptimizations1(llvm::Module *module) {
 
   // Set up the module-level optimizations we want
   llvm::legacy::PassManager modulePassManager;
-  modulePassManager.add(llvm::createAlwaysInlinerPass());
+  modulePassManager.add(llvm::createAlwaysInlinerLegacyPass());
   modulePassManager.add(llvm::createGlobalOptimizerPass());
 
   // Optimize the whole module
@@ -156,14 +160,15 @@ static int generateobj(llvm::raw_fd_ostream &out, llvm::Module *module) {
 
   llvm::Triple TheTriple(module->getTargetTriple());
   if (TheTriple.getTriple().empty())
-    TheTriple.setTriple("x86_64-apple-macosx");
+    TheTriple.setTriple(llvm::sys::getDefaultTargetTriple());
 
   const llvm::Target *TheTarget =
       llvm::TargetRegistry::lookupTarget(TheTriple.getTriple(), Err);
 
   std::string MCPU, FeaturesStr;
+  auto RM = llvm::Optional<llvm::Reloc::Model>();
   llvm::TargetMachine *machineTarget = TheTarget->createTargetMachine(
-      TheTriple.getTriple(), MCPU, FeaturesStr, Options);
+      TheTriple.getTriple(), MCPU, FeaturesStr, Options, RM);
 
       module->setDataLayout( machineTarget->createDataLayout() );
   // Figure out where we are going to send the output...

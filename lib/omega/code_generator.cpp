@@ -290,9 +290,9 @@ class LLVMMethodPrototypeGenerationPass : public GenerationPass {
     function->setCallingConv(llvm::CallingConv::C);
   }
 };
-
+static llvm::LLVMContext TheContext;
 CodeGenerator::CodeGenerator(const DomProvider &p)
-    : m_provider(p), m_context(llvm::getGlobalContext()) {}
+    : m_provider(p), m_context(TheContext) {}
 
 CodeGenerator::CodeGenerator(const CodeGenerator &orig)
     : m_provider(orig.m_provider), m_context(orig.m_context) {}
@@ -568,8 +568,9 @@ void CodeEmitLLVM::on_visit(CodeObject *object) {
 void CodeEmitLLVM::on_visit(CodeParameterDeclarationExpression *object) {
   auto llvm_type = LLVMUserData::get_llvm_type(object->type());
   auto name = object->name();
+
   llvm::AllocaInst *alloc =
-      new llvm::AllocaInst(llvm_type, name.c_str(), this->m_block);
+      new llvm::AllocaInst(llvm_type, NULL, name, this->m_block);
   this->m_l_result = alloc;
 }
 
@@ -611,7 +612,7 @@ void CodeEmitLLVM::on_visit(CodePrimitiveExpression *object) {
         true, llvm::GlobalValue::PrivateLinkage, str_val, "");
 
     str_var->setInitializer(str_val);
-
+    
     llvm::Constant *zero =
         llvm::Constant::getNullValue(llvm::IntegerType::getInt64Ty(ctx));
 
@@ -686,7 +687,7 @@ void CodeEmitLLVM::on_visit(CodeVariableDeclarationStatement *object) {
   auto llvm_type = LLVMUserData::get_llvm_type(object->type());
 
   llvm::AllocaInst *alloc =
-      new llvm::AllocaInst(llvm_type, name.c_str(), this->m_block);
+      new llvm::AllocaInst(llvm_type, NULL, name, this->m_block);
   this->m_l_result = alloc;
   if (object->init_expression() != nullptr) {
     auto expr_res =
@@ -1042,8 +1043,7 @@ void CodeEmitLLVM::on_visit(CodeConditionStatement *object) {
   bool has_false_block = object->false_statements()->size();
   llvm::LLVMContext &context = this->m_block->getContext();
   auto parent_function = this->m_block->getParent();
-  auto true_val = llvm::ConstantInt::get(
-      context, llvm::APInt(32, llvm::StringRef("0"), 10));
+  
 
   llvm::BasicBlock *label_if_end =
       llvm::BasicBlock::Create(context, "if.end", parent_function, 0);
@@ -1066,18 +1066,28 @@ void CodeEmitLLVM::on_visit(CodeConditionStatement *object) {
   llvm::CmpInst *compare_instr = static_cast<llvm::CmpInst *>(tmp);
   llvm::CmpInst *result_tobool = nullptr;
   if (compare_instr == nullptr)
+  {
+    auto true_val = llvm::ConstantInt::get(
+      context, llvm::APInt(32, llvm::StringRef("0"), 10));
     result_tobool = new llvm::ICmpInst(*this->m_block, llvm::ICmpInst::ICMP_NE,
                                        tmp, true_val, "tobool");
+  }
   else
-    result_tobool = compare_instr;
+  {
+    auto true_val = llvm::ConstantInt::get(
+      context, llvm::APInt(8, llvm::StringRef("0"), 10));
+    result_tobool = new llvm::ICmpInst(*this->m_block, llvm::ICmpInst::ICMP_NE,
+      tmp, true_val, "tobool");
+  }
 
   if (has_false_block)
     this->m_l_result = llvm::BranchInst::Create(label_if_true, label_if_false,
                                                 result_tobool, this->m_block);
   else
+  {
     this->m_l_result = llvm::BranchInst::Create(label_if_true, label_if_end,
                                                 result_tobool, this->m_block);
-
+  }
   // true
   this->m_block = label_if_true;
   for (auto statement : *object->true_statements()) {
@@ -1147,8 +1157,7 @@ void CodeEmitLLVM::on_visit(CodeIterationStatement *object) {
 
   // label_cond
   if (object->test_expression() != nullptr) {
-    auto true_val = llvm::ConstantInt::get(
-        context, llvm::APInt(32, llvm::StringRef("0"), 10));
+    
     /*
     CodeEmitLLVM *gen_condition =
                                 new CodeEmitLLVM(label_for_cond);
@@ -1162,13 +1171,21 @@ void CodeEmitLLVM::on_visit(CodeIterationStatement *object) {
     llvm::CmpInst *compare_instr = static_cast<llvm::CmpInst *>(tmp);
     llvm::CmpInst *result_tobool = nullptr;
     if (compare_instr == nullptr)
-      result_tobool = new llvm::ICmpInst(
-          *label_for_cond, llvm::ICmpInst::ICMP_NE, tmp, true_val, "tobool");
+    {
+      auto true_val = llvm::ConstantInt::get(
+        context, llvm::APInt(32, llvm::StringRef("0"), 10));
+      result_tobool = new llvm::ICmpInst(*label_for_cond, llvm::ICmpInst::ICMP_NE, tmp, true_val, "tobool");
+    }
     else
-      result_tobool = compare_instr;
+    {
+      auto true_val = llvm::ConstantInt::get(
+        context, llvm::APInt(8, llvm::StringRef("0"), 10));
+      result_tobool = new llvm::ICmpInst(*label_for_cond, llvm::ICmpInst::ICMP_NE, tmp, true_val, "tobool");
 
-    llvm::BranchInst::Create(label_for_body, label_for_end, result_tobool,
-                             label_for_cond);
+      //result_tobool = compare_instr;
+    }
+
+    llvm::BranchInst::Create(label_for_body, label_for_end, result_tobool, label_for_cond);
   } else {
     llvm::BranchInst::Create(label_for_cond, label_for_body);
   }

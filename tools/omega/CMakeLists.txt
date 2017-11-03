@@ -4,7 +4,7 @@ add_executable(omega main.cpp)
 # that we wish to use
 # llvm_map_components_to_libnames(llvm_libs support core irreader)
 
-target_link_libraries(omega libomega)
+target_link_libraries(omega libomega uuid)
 
 # enable c++11
 target_compile_features(omega PRIVATE cxx_range_for)

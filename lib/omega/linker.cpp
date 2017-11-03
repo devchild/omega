@@ -56,7 +56,7 @@ int Linker::createExecutable(std::vector<std::string> &fileNames,
    * /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.2/lib/darwin/libclang_rt.osx.a
    */
   args.push_back("-e");
-  args.push_back("_start");
+  args.push_back("start");
 
   args.push_back("-demangle");
   // args.push_back("-dynamic");
@@ -75,8 +75,8 @@ int Linker::createExecutable(std::vector<std::string> &fileNames,
 
   // args.push_back("/usr/lib/libstdc++.6.dylib");
   // args.push_back("-lm");
-  args.push_back("-lSystem");
-  args.push_back("-lc");
+  // args.push_back("-lSystem");
+  // args.push_back("-lc");
   // args.push_back("/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/7.0.2/lib/darwin/libclang_rt.osx.a");
   // args.push_back("--entry"); args.push_back("main");
   std::cout << "executing tool" << std::endl;

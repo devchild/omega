@@ -15,3 +15,13 @@ Int32 add(Int32 x, Int32 y):
         %3 = add i32 %1, %2
         store i32 %3, i32* %ret
     return ret
+
+[Operator("*")]
+Int32 multiply(Int32 x, Int32 y):
+    Int32 ret
+    ir:
+        %1 = load i32, i32* %x
+        %2 = load i32, i32* %y
+        %3 = mul i32 %1, %2
+        store i32 %3, i32* %ret
+    return ret
